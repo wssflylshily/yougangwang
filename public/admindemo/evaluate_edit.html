@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/admin/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/assets/admin/css/skins/_all-skins.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
+  
+  
+  <style>
+    .sidebar-menu>li.divider,
+    .sidebar-menu .treeview-menu>li.divider {
+        height: 1px;
+        margin: 1px 0;
+        overflow: hidden;
+        background-color: #1a2226;
+    }
+
+    .sidebar-menu .treeview-menu>li.divider {
+        margin: 5px 10px;
+        background-color: #35444c;
+    }
+    .com_row{ width: 100%; overflow-y: hidden;}
+    .zl_table{ width: 100%;}
+	.zl_table tr td{ padding: 10px 10px;}
+	.zl_table input[type='text']:disabled{ background: #f5f5f5;}
+	.zl_table input[type='text'],.zl_table input[type='password']{ background: #fff; border: 1px solid #ddd; padding: 5px 8px; width: 90%;}
+	.zl_table .span1{ display: inline-block; vertical-align: middle;}
+  	.evaluate{ font-size: 18px;}
+  	.evaluate i{ margin-right: 5px;}
+  	.tj_td label{ font-weight: normal; display: inline-block; margin-left: 5px;}
+  /*.img_upload{ float: left; width: 180; position: relative;}
+  .img_upload img{ margin-bottom: 3px;}
+  .img_upload .gb_close{ font-size: 24px; background: #FFFFFF; position: absolute; left: 1px; top: 1px; z-index: 2;}*/
+  </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="/admin" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>后台</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg text-left"><b>优钢（管理后台）</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="/assets/admin/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Alexander Pierce</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                <p>超级管理员</p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">资料</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">退出</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p style="line-height: 36px;">您好，管理员</p>
+        </div>
+      </div>
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="header"><!--主导航--></li>
+        <li>
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>后台首页</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+
+        <li class="divider"></li>
+
+        <li class="treeview">
+          <a href="javascript:;">
+            <i class="fa fa-files-o"></i>
+            <span>会员管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="index.html"><i class="fa fa-circle-o"></i> 商家会员</a></li>
+            <li><a href="user_manage.html"><i class="fa fa-circle-o"></i> 注册会员</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="javascript:;">
+            <i class="fa fa-files-o"></i>
+            <span>商品管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="product_now.html"><i class="fa fa-circle-o"></i> 现货管理</a></li>
+            <li><a href="product_future.html"><i class="fa fa-circle-o"></i> 期货管理</a></li>
+            <li><a href="product_hotsale.html"><i class="fa fa-circle-o"></i> 特卖管理</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="javascript:;">
+            <i class="fa fa-files-o"></i>
+            <span>合同管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="contract_list.html"><i class="fa fa-circle-o"></i> 合同列表</a></li>
+          </ul>
+        </li>
+
+        <li class="divider"></li>
+
+        <li class="treeview">
+          <a href="javascript:;">
+            <i class="fa fa-files-o"></i>
+            <span>订单管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
+            <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
+            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+        	<a href="javascript:;">
+        		<i class="fa fa-book"></i>
+        		<span>网站设置</span>
+        		<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        	</a>
+        	<ul class="treeview-menu">
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
+          	<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
+        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
+        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
+        	</ul>
+        </li>
+        <li class="treeview">
+        	<a href="javascript:;">
+        		<i class="fa fa-book"></i>
+        		<span>基本信息</span>
+        		<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        	</a>
+        	<ul class="treeview-menu">
+        		<li><a href="bannermanage.html"><i class="fa fa-circle-o"></i> banner管理</a></li>
+            <li><a href="website_city.html"><i class="fa fa-circle-o"></i> 城市管理</a></li>
+            <li><a href="website_steel.html"><i class="fa fa-circle-o"></i> 钢铁信息</a></li>
+            <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
+        	</ul>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        会员管理
+        <small>买卖会员</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li>会员管理</li>
+        <li class="active">买卖会员</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="box collapsed-box">
+        <div class="box-header with-border">
+          <h3 class="box-title"><a href="javascript:history.back();"><i class="fa fa-reply"></i></a></h3>
+
+          <div class="box-tools pull-right">
+            <button type="submit" class="btn btn-sm btn-success pull-right"><i class="fa fa-save"></i> 保存</button>
+          </div>
+        </div>
+      </div>
+      <!-- /.box -->
+
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+      		<div class="box box-info" style="padding-bottom: 60px;">
+	            <div class="box-header with-border">
+	              <h3 class="box-title">评价信息</h3>
+	            </div>
+	      		<table class="zl_table">
+	    			<tr>
+	    				<td width="100" align="right">订单号</td>
+	    				<td>1222558899664444</td>
+	    			</tr>
+	    			<tr>
+	    				<td align="right">评价用户</td>
+	    				<td>用户1</td>
+	    			</tr>
+	    			<tr>
+	    				<td align="right">评价星级</td>
+	    				<td style="color: #FF0000;" data_score="4" class="evaluate">
+	    					<i class="fa" title="差评"></i>
+	    					<i class="fa" title="差评"></i>
+	    					<i class="fa" title="中评"></i>
+	    					<i class="fa" title="中评"></i>
+	    					<i class="fa" title="好评"></i>
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td align="right" valign="top">评价选项</td>
+	    				<td class="tj_td">
+	    					<label style="font-weight: normal;"><input type="checkbox"> 是否按时发货</label>
+	    					<label style="font-weight: normal;"><input type="checkbox"> 是否满足客户需求</label>
+	    					<label style="font-weight: normal;"><input type="checkbox"> 质量是否无损伤</label>
+	    					<label style="font-weight: normal;"><input type="checkbox"> 是否服务态度好</label>
+	    					<label style="font-weight: normal;"><input type="checkbox"> 物流是否快</label>
+	    					<label style="font-weight: normal;"><input type="checkbox"> 是否按时开发票</label>
+	    					
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td align="right" valign="top">评价内容</td>
+	    				<td>
+	    					<textarea style="width: 100%; padding: 10px; height: 160px;" placeholder="输入评价内容">好评！！！</textarea>
+	    				</td>
+	    			</tr>                                                                                                                                                                                                           
+	    		</table>
+			
+      		</div>
+      	</div>
+        
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2016 <a href="#">YouGang</a>.</strong> All rights
+    reserved.
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap 3.3.6 资料查看/退出-->
+<script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App 适应-->
+<script src="/assets/admin/js/app.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script>
+	function evaluate_star(score){
+		$(".evaluate .fa").each(function(index,e){
+	    	//var score=parseInt($(".evaluate").attr("data_score"));
+	    	if(index<score)
+	    	{
+	    		$(this).addClass("fa-star").removeClass("fa-star-o");
+	    	}
+	    	else
+	    	{
+	    		$(this).addClass("fa-star-o").removeClass("fa-star");
+	    	}
+	    });
+	}
+  $(function () {
+  	//  fa-star-o
+  	evaluate_star(parseInt($(".evaluate").attr("data_score")));
+    
+    $(".evaluate .fa").click(function(){
+    	//console.log($(this).index());
+    	evaluate_star($(this).index()+1);
+    	$(".evaluate").attr("data_score",$(this).index()+1)
+    });
+    
+    
+  });
+</script>
+</body>
+</html>
