@@ -144,38 +144,38 @@
 									</tr>
 									<tr>
 										<td align="right">公司名称<em>*</em></td>
-										<td>{{$sellerinfo->name}}</td>
+										<td>{{$sellerinfo->name or ''}}</td>
 										{{--<td><input type="text" name="name" value="{{$sellerinfo->name}}" style="width: 235px;"></td>--}}
 									</tr>
 									<tr>
 										<td align="right">公司简称<em>*</em></td>
-										<td><input type="text" name="gsjc" value="{{$sellerinfo->short_name}}" style="width: 100px;"></td>
+										<td><input type="text" name="gsjc" value="{{$sellerinfo->short_name or ''}}" style="width: 100px;"></td>
 									</tr>
 									<tr>
 										<td align="right">主营产品</td>
-										<td><input type="text" name="zycp" value="{{$sellerinfo->business_product}}" style="width: 235px;"></td>
+										<td><input type="text" name="zycp" value="{{$sellerinfo->business_product or ''}}" style="width: 235px;"></td>
 									</tr>
 									<tr>
 										<td align="right">经营方式</td>
 										<td>
-											<label class="disinblock"><input type="checkbox" name="jyfs[]" class="check_btn" <?php if(in_array("1",$show_jyfs))echo "checked" ?> value="1"> 现货销售</label>
-											<label class="disinblock"><input type="checkbox" name="jyfs[]" class="check_btn" <?php if(in_array("2",$show_jyfs))echo "checked" ?> value="2"> 期货销售</label>
+											<label class="disinblock"><input type="checkbox" name="jyfs[]" class="check_btn" <?php if($show_jyfs)if(in_array("现货销售",$show_jyfs))echo "checked" ?> value="现货销售"> 现货销售</label>
+											<label class="disinblock"><input type="checkbox" name="jyfs[]" class="check_btn" <?php if($show_jyfs)if(in_array("期货销售",$show_jyfs))echo "checked" ?> value="期货销售"> 期货销售</label>
 										</td>
 									</tr>
 									<tr>
 										<td align="right">物流</td>
 										<td>
-											<label class="disinblock"><input type="checkbox" name="wl[]" class="check_btn" value="1" <?php if(in_array("1",$show_wl))echo "checked" ?>> 自己提供物流</label>
-											<label class="disinblock"><input type="checkbox" name="wl[]" class="check_btn" value="2" <?php if(in_array("2",$show_wl))echo "checked" ?>> 平台物流</label>
-											<label class="disinblock"><input type="checkbox" name="wl[]" class="check_btn" value="3" <?php if(in_array("3",$show_wl))echo "checked" ?>> 买家自提</label>
+											<label class="disinblock"><input type="checkbox" name="wl[]" class="check_btn" value="自己提供物流" <?php if ($show_wl)if(in_array("自己提供物流",$show_wl))echo "checked" ?>> 自己提供物流</label>
+											<label class="disinblock"><input type="checkbox" name="wl[]" class="check_btn" value="平台物流" <?php if ($show_wl)if(in_array("平台物流",$show_wl))echo "checked" ?>> 平台物流</label>
+											<label class="disinblock"><input type="checkbox" name="wl[]" class="check_btn" value="买家自提" <?php if ($show_wl)if(in_array("买家自提",$show_wl))echo "checked" ?>> 买家自提</label>
 										</td>
 									</tr>
-									<tr>
+									{{--<tr>
 										<td align="right">工艺加工</td>
 										<td><div class="gyjg_show">
-											{{--<span class="gyspan">倒角</span>
+											<span class="gyspan">倒角</span>
 											<span class="gyspan">防腐</span>
-											<span class="gyspan">切割</span>--}}
+											<span class="gyspan">切割</span>
 											<a href="javascript:;" class="edit_gy">编辑</a>
 										</div>
 											<div style="display:none" class="haha">
@@ -183,14 +183,21 @@
 
 											</div>
 										</td>
-									</tr>
+									</tr>--}}
 									<tr>
 										<td align="right">经营地区</td>
-										<td><input type="text" name="jydq" value="{{$sellerinfo->business_area}}" style="width: 235px;"></td>
+										<td><input type="text" name="jydq" value="{{$sellerinfo->business_area or ''}}" style="width: 235px;"></td>
+									</tr>
+									<tr>
+										<td width="210" align="right">地图图片<em>*</em></td>
+										<td><div class="span1"><img src="{{$sellerinfo->address_pic or ''}}" width="210" height="130" class="address_pic"></div>
+											<a href="javascript:;" class="sctx" id="address_pic">上传</a>
+											<input type="file" name="address_pic" style="opacity:0">
+										</td>
 									</tr>
 									<tr>
 										<td align="right">公司简介</td>
-										<td><textarea name="gsjj" style="width: 336px; height: 115px;">{{$sellerinfo->summary}}</textarea></td>
+										<td><textarea name="gsjj" style="width: 336px; height: 115px;">{{$sellerinfo->summary or ''}}</textarea></td>
 									</tr>
 									<tr>
 										<td align="right" style="vertical-align: top;">是否为协议商</td>

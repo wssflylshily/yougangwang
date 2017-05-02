@@ -136,11 +136,8 @@
                 </div>
 
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
+
             </div>
         </div>
     </div>

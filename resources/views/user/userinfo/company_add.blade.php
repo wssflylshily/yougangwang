@@ -74,8 +74,8 @@
                    
                     <!--公司证件-->
                     <div class="tab_select per_infor clear" style="display:block">
-                    	<table class="zl_table">
                         <form action="/user/companyinfo" method="post" enctype="multipart/form-data">
+                    	<table class="zl_table">
                         {!! csrf_field(); !!}
                         <input type="hidden" value="{{$user_id}}" name="user_id">
                         <input type="hidden" value="{{$status}}" name="status">
@@ -111,7 +111,7 @@
                     			<td width="240">	
                     				<span class="span1"><img src="" class="licence_path" style="width: 168px; height: 138px;"></span>
                     				<a href="#" class="sctx" id="licence_path">上传</a>
-                                    <input type="file" name="licence_path" style="opacity:0">
+                                    <input type="file" name="licence_path" style="width:60px;opacity:0">
                     			</td>
                     			<td align="right" width="160">
                     				组织机构代码证<em>*</em>
@@ -119,7 +119,7 @@
                     			<td>	
                     				<span class="span1"><img src="" class="code_path" style="width: 168px; height: 138px;"></span>
                     				<a href="#" class="sctx" id="code_path">上传</a>
-                                    <input type="file" name="code_path" style="opacity:0">
+                                    <input type="file" name="code_path" style="width:60px;opacity:0">
                     			</td>
                     		</tr>
                     	</table>
@@ -131,36 +131,33 @@
                     			<td>
                     				<span class="span1"><img src="" class="gong_path" style="width: 128px; height: 128px;"></span>
                     				<a href="#" class="sctx" id="gong_path">上传</a>
-                                    <input type="file" name="gong_path" style="opacity:0">
+                                    <input type="file" name="gong_path" style="width:60px;opacity:0">
                     			</td>
-                    			<td align="right">
+                    			<td width="120" align="right">
                     				合同章<em>*</em>
                     			</td>
                     			<td>	
                     				<span class="span1"><img src="" class="contract_path" style="width: 128px; height: 128px;"></span>
                     				<a href="#" class="sctx" id="contract_path">上传</a>
-                                    <input type="file" name="contract_path" style="opacity:0">
+                                    <input type="file" name="contract_path" style="width:60px;opacity:0">
                     			</td>
-                    			<td align="right">
+                    			<td width="120" align="right">
                     				法人章<em>*</em>
                     			</td>
                     			<td>	
                     				<span class="span1"><img src="" class="owner_path" style="width: 128px; height: 128px;"></span>
                     				<a href="#" class="sctx" id="owner_path">上传</a>
-                                    <input type="file" name="owner_path" style="opacity:0">
+                                    <input type="file" name="owner_path" style="width:60px;opacity:0">
                     			</td>
                     		</tr>
                     		<tr>
                     			<td>&nbsp;</td>
-                    			<td colspan="5"><button class="tj_btn">保存</button></td>
+                    			<td colspan="5" align="center"><button class="tj_btn">保存</button></td>
                     		</tr>
-                              </form>
                     	</table>
+                     </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
     <!--modify-->
     <div class="com_div">
     	<div class="box_shadow"></div>

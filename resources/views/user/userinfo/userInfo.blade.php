@@ -121,7 +121,7 @@
                     			</tr>
                     			<tr>
                     				<td align="right">手机号</td>
-                    				<td><span style="padding-right: 10px;">{{$users->tel}}</span><a href="javascript:;" class="modify_tel_btn">修改</a></td>
+                    				<td><span style="padding-right: 10px;">{{ substr($users->mobile,0,3) }}****{{ substr($users->mobile,7,4) }}</span><a href="javascript:;" class="modify_tel_btn">修改</a></td>
                     			</tr>
                     			<tr>
                     				<td align="right">密码</td>
@@ -153,13 +153,13 @@
     		<div>
     			<h2>修改密码<span class="R">请牢记您修改的密码</span></h2>
     			<table>
-    				<tr>
+    				{{--<tr>
     					<td width="92" align="right">当前密码：</td>
     					<td>xu********</td>
-    				</tr>
+    				</tr>--}}
     				<tr>
     					<td align="right">当前手机号：</td>
-    					<td>136****9999 <a class="fsyzm" href="javascript:;">发送验证码</a></td>
+    					<td>{{ substr($users->mobile,0,3) }}****{{ substr($users->mobile,7,4) }} <a class="fsyzm" href="javascript:;">发送验证码</a></td>
     				</tr>
     				<tr>
     					<td align="right">输入验证码：</td>
@@ -185,7 +185,7 @@
     			<table>
     				<tr>
     					<td align="right">当前手机号：</td>
-    					<td>136****9999 <a class="fsyzm" href="javascript:;">发送验证码</a></td>
+    					<td>{{ substr($users->mobile,0,3) }}****{{ substr($users->mobile,7,4) }} <a class="fsyzm" href="javascript:;">发送验证码</a></td>
     				</tr>
     				<tr>
     					<td align="right">输入验证码：</td>

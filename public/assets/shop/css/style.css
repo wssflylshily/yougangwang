@@ -80,16 +80,28 @@ a{text-decoration: none; color: #5e86e1;}
 .menu_bg .R ul li.future-publish:hover{ background-color: #449d44; border-color: #398439;}
 
 /*index_style*/
+.index_xiaoxi{ position: absolute; z-index: 10; left: 0px; padding: 0px 15px; width: 310px; top:0px; height: 400px; background: #ffffff;}
+.index_xiaoxi h2{ margin-top: 5px; background: url(../img/ygsy_03.png) left center no-repeat; text-align: left; padding-left: 26px; line-height: 38px; color: #416ccc; font-size: 16px;}
+
+.index_xiaoxi ul li{ padding: 1px 0px; height: 39px; overflow: hidden; border-bottom: 1px dashed #cccccc; line-height: 39px;}
+.index_xiaoxi ul li a{ padding-left: 20px; background: url(../img/ygsy_10.png) 3px center no-repeat; color: #666666; font-size: 14px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+.index_xiaoxi ul li:hover a{ color: #416ccc;}
+
+
+
 /*banner*/
-.flexslider { margin: 0px auto; position: relative; width: 100%; height:450px; overflow: hidden; zoom: 1; min-width:1200px; z-index:2; }
+.flexslider{ margin-top: 2px; position: relative; width: 100%; height:400px; overflow: hidden; zoom: 1; min-width:1200px; z-index:2; }
 .flexslider .slides li { width: 100%; height: 100%; }
+.flexslider .slides li a{display: block; height: 100%;}
+.flexslider .slides li img{ height: 100%; width: 100%;}
 .flex-control-nav { width: 100%; position: absolute; bottom: 15px; text-align: center; }
-.flex-control-nav li { margin: 0 2px; display: inline-block; zoom: 1; *display: inline; width:14px; height:14px; background:#c3c7c9; }
-.flex-control-paging li a { display: block; height: 14px; overflow: hidden; text-indent: -99em; /*width: 16px;*/ cursor: pointer; }
-.flex-control-paging li a.flex-active,.flex-control-paging li.active a { background: #000000; }
+.flex-control-nav li { margin: 0 2px; display: inline-block; zoom: 1; *display: inline; width:14px; height:14px; border-radius: 50%; background:#807e7a; }
+.flex-control-paging li a { display: block; height: 14px; border-radius: 50%; overflow: hidden; text-indent: -99em; /*width: 16px;*/ cursor: pointer; }
+.flex-control-paging li a.flex-active,.flex-control-paging li.active a { background: #3e5ea9; }
 .flexslider .slides a img { width: 100%; height: 100%; display: block; background-position:center top; background-repeat:no-repeat; }
 .index_div .lit_menu{ padding: 40px 0px;}
-.index_div .lit_menu li{ width: 300px;}
+/*.index_div .lit_menu li{ width: 300px;}*/
+.index_div .lit_menu li{ width: 20%;}
 .index_div .lit_menu li img{ width: 100px; height: 100px; border-radius: 20px;}
 .index_div .lit_menu li .R{ width: 180px;}
 .index_div .lit_menu li h2{ font-size: 28px; color: #666666; font-weight: normal;}
@@ -97,6 +109,7 @@ a{text-decoration: none; color: #5e86e1;}
 .index_div .lit_menu li:nth-child(2) h2 span{ border-color: #81d6ff;}
 .index_div .lit_menu li:nth-child(3) h2 span{ border-color: #8dde97;}
 .index_div .lit_menu li:nth-child(4) h2 span{ border-color: #fde591;}
+.index_div .lit_menu li:nth-child(5) h2 span{ border-color: #EE82EE;}
 .index_div .lit_menu li .font{ font-size: 15px; color: #666666; padding: 10px 0px;}
 .index_div .lit_menu li a{ display: block;}
 .index_div .lit_title{ margin-bottom: 20px; border-top: 1px solid #ececec; border-bottom: 1px solid #ececec; height: 40px;}
@@ -413,7 +426,7 @@ a{text-decoration: none; color: #5e86e1;}
 .futures_fb .select_div{ position: absolute; left: -30px; top: 30px; border: 1px solid #ff4b4b; background: #fff7f7; border-radius: 4px; padding: 10px; display: none;}
 .futures_fb .select_div .sj{ background: url(../img/sj2_03.png) 50px top no-repeat; margin-top: -16px; height: 16px;}
 .futures_fb .select_div ul li{ line-height: 28px; font-size: 13px; color: #666666;}
-.futures_fb .select_num.show .select_div{ display: block;}
+.futures_fb .select_num:hover .select_div{ display: block;}
 /*com_distance*/
 .com_distance{ margin: 10px 0px;}
 .com_distance > span{ display: inline-block; padding-right: 20px;}
@@ -671,3 +684,10 @@ a{text-decoration: none; color: #5e86e1;}
 .common_table .state_red{ color: #ee0000;}
 .common_table .state_blue{ color: #406ccd;}
 .common_table .state_green{ color: #14d400;}
+
+/*财务*/
+.common_table.caiwu table tr td{ border: 1px solid #eaeaea;}
+.common_table.caiwu table tr td.tl{text-align: left;}
+.common_table.caiwu table tr td.tr{text-align: right;}
+.caiwu .h1{ font-size: 18px; padding: 10px; border-bottom: 2px solid #416ccc; color: #416ccc;}
+

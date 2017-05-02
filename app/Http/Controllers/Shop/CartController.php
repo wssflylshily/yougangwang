@@ -8,6 +8,7 @@ use App;
 use Auth;
 use Request;
 use Validator;
+use DB;
 
 class CartController extends Controller
 {
@@ -19,14 +20,13 @@ class CartController extends Controller
                            ->lists('seller_id')
                            ->unique()
                            ->toArray();
-
         $result['seller_cnt'] = count($sellers);
-        $result['cart_goods'] = App\Cart::where('user_id', Auth::user()->id)
+        $result['cart_goods'] = App\Cart::where('carts.user_id', Auth::user()->id)
                                         ->has('ori')
-                                        ->orderByRaw('instr(\',' . implode(',', $sellers) . ',\', CONCAT(\',\',seller_id,\',\'))')
-                                        ->orderBy('created_at', 'desc')
+                                        ->orderByRaw('instr(\',' . implode(',', $sellers) . ',\', CONCAT(\',\',gt_carts.seller_id,\',\'))')
+                                        ->orderBy('carts.created_at', 'desc')
                                         ->get();
-
+        $result['areas'] = DB::table('areas')->where('parentId','<>' , 0)->get();
         return view('shop.cart.index', $result);
     }
 
@@ -168,7 +168,7 @@ class CartController extends Controller
 
                 // 验证库存
                 foreach ($vaild_goods as $goods) {
-                    if ($good->buy_number > $goods->ori->stock) {
+                    if ($goods->buy_number > $goods->ori->stock) {
                         throw new Exception('要结算的现货库存不足');
                     }
                 }
@@ -179,5 +179,211 @@ class CartController extends Controller
         }
 
         return $response;
+    }
+
+    //推荐方案一
+    //孙璠 2017.2.17
+    public function getRecommendOne()
+    {
+        $db_sellers = App\Seller::query();
+        $check_carts_id = Request::input('goods_id');
+
+        for ($i = 0; $i < count($check_carts_id); $i++) {
+            $check_carts[$i] = App\Cart::query()->where('id', $check_carts_id[$i])->first();
+        }
+        for ($i = 0; $i < count($check_carts); $i++) {
+            $check_goods[$i] = App\Goods::query()->where('id', $check_carts[$i]['goods_id'])->first();
+        }
+
+        for ($i = 0; $i < count($check_goods); $i++) {
+            $goods[$i] = App\Goods::query()
+                ->where('material', $check_goods[$i]->material)
+                ->where('outer_diameter', $check_goods[$i]->outer_diameter)
+                ->where('thickness', $check_goods[$i]->thickness)
+                ->where('length', $check_goods[$i]->length)
+                ->where('stock', '>', $check_carts[$i]->buy_number)
+                ->select('id','seller_id')
+                ->get();
+            //var_dump($goods[0][$i]->seller_id);
+
+        }
+        $j = 0;
+        for ($j; $j < count($goods); $j++) {
+            $a = $goods[$j];
+            if (count($a)<1){
+                $j++;
+            }elseif (count($a)>1){
+                break;
+            }
+        }
+
+        $sameArr = array();
+        $k = $j+1;
+
+        for ($k; $k < count($goods); $k++) {
+            if (count($goods[$k])<1){
+                continue;
+            }
+            $b = $goods[$k];
+
+            if (count($a)==1 && count($b)==1)
+            {
+                if ($a->seller_id=$b->seller_id){
+                    $sameArr[] = $a->seller_id;
+                }
+            }elseif (count($a)==1 && count($b)>1)
+            {
+                foreach ($b as $item){
+                    if ($a->seller_id == $item->seller_id){
+                        $sameArr[] = $a->seller_id;
+                    }
+                }
+            }elseif (count($b)==1 && count($a)>1)
+            {
+                foreach ($a as $item){
+                    if ($b->seller_id == $item->seller_id){
+                        $sameArr[] = $b->seller_id;
+                    }
+                }
+            }else {
+                foreach ($a as $item)
+                {
+                    foreach ($b as $value)
+                    {
+                        if ($item->seller_id == $value->seller_id){
+                            $sameArr[] = $item->seller_id;
+                        }
+                    }
+                }
+            }
+            $a = $sameArr;
+        }
+        if(!empty($a)){
+            $a = array_unique($a);
+            $a = array_values($a);
+        }
+
+        for ($i = 0; $i < count($a); $i++) {
+            $return[$i]['seller'] = $a[$i];
+            $return[$i]['seller_name'] = App\Seller::query()->where('id',$a[$i])->value('name');
+            for ($j = 0; $j < count($check_goods); $j++)
+            {
+                $return[$i]['goods'][$j] = App\Goods::query()
+                    ->where('seller_id', $a[$i])
+                    ->where('material', $check_goods[$j]->material)
+                    ->where('outer_diameter', $check_goods[$j]->outer_diameter)
+                    ->where('thickness', $check_goods[$j]->thickness)
+                    ->where('length', $check_goods[$j]->length)
+                    ->where('stock', '>', $check_carts[$j]->buy_number)
+                    ->first();
+                $return[$i]['goods'][$j]['buy_num'] = $check_carts[$j]->buy_number;
+            }
+        }
+        echo json_encode($return);
+    }
+
+    //推荐方案二
+    //孙璠 2017.2.17
+    public function getRecommendTwo()
+    {
+        //$db_sellers = App\Seller::query();
+        $check_carts_id = Request::input('goods_id');
+
+        for ($i = 0; $i < count($check_carts_id); $i++) {
+            $check_carts[$i] = App\Cart::query()->where('id', $check_carts_id[$i])->first();
+        }
+        for ($i = 0; $i < count($check_carts); $i++) {
+            $check_goods[$i] = App\Goods::query()->where('id', $check_carts[$i]['goods_id'])->first();
+        }
+
+        for ($i = 0; $i < count($check_goods); $i++) {
+            $goods[$i] = App\Goods::query()
+                ->where('material', $check_goods[$i]->material)
+                ->where('outer_diameter', $check_goods[$i]->outer_diameter)
+                ->where('thickness', $check_goods[$i]->thickness)
+                ->where('length', $check_goods[$i]->length)
+                ->where('stock', '>', $check_carts[$i]->buy_number)
+                ->select('id','area_code')
+                ->get();
+            //var_dump($goods[0][$i]->seller_id);
+
+        }
+        $j = 0;
+        for ($j; $j < count($goods); $j++) {
+            $a = $goods[$j];
+            if (count($a)<1){
+                $j++;
+            }elseif (count($a)>1){
+                break;
+            }
+        }
+
+        $sameArr = array();
+        $k = $j+1;
+
+        for ($k; $k < count($goods); $k++) {
+            if (count($goods[$k])<1){
+                continue;
+            }
+            $b = $goods[$k];
+
+            if (count($a)==1 && count($b)==1)
+            {
+                if ($a->area_code=$b->area_code){
+                    $sameArr[] = $a->area_code;
+                }
+            }elseif (count($a)==1 && count($b)>1)
+            {
+                foreach ($b as $item){
+                    if ($a->area_code == $item->area_code){
+                        $sameArr[] = $a->area_code;
+                    }
+                }
+            }elseif (count($b)==1 && count($a)>1)
+            {
+                foreach ($a as $item){
+                    if ($b->area_code == $item->area_code){
+                        $sameArr[] = $b->area_code;
+                    }
+                }
+            }else {
+                foreach ($a as $item)
+                {
+                    foreach ($b as $value)
+                    {
+                        if ($item->area_code == $value->area_code){
+                            $sameArr[] = $item->area_code;
+                        }
+                    }
+                }
+            }
+            $a = $sameArr;
+        }
+        $a = array_unique($a);
+        $a = array_values($a);
+
+        for ($i = 0; $i < count($a); $i++) {
+            $return[$i]['area_code'] = $a[$i];
+            $return[$i]['area_name'] = DB::table('areas')->where('areaId', $a[$i])->first();
+            for ($j = 0; $j < count($check_goods); $j++)
+            {
+                $return[$i]['goods'][$j] = App\Goods::query()
+                    ->where('area_code', $a[$i])
+                    ->where('material', $check_goods[$j]->material)
+                    ->where('outer_diameter', $check_goods[$j]->outer_diameter)
+                    ->where('thickness', $check_goods[$j]->thickness)
+                    ->where('length', $check_goods[$j]->length)
+                    ->where('stock', '>', $check_carts[$j]->buy_number)
+                    ->first();
+                $return[$i]['goods'][$j]['buy_num'] = $check_carts[$j]->buy_number;
+            }
+        }
+
+        echo json_encode($return);
+    }
+
+    public function postRecommend()
+    {
+        dd(Request::all());
     }
 }

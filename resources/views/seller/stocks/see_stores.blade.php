@@ -3,14 +3,24 @@
     <!-- content-->
     <div class="mid_div marok spseeCangku">
     	<div class="tit clear">
-    		<p class="L">无缝管仓库</p>
+    		<p class="L">{{$variety}}仓库</p>
     		<div class="R">
-    			<a href="javascript:;" class="add">添加商品</a> 
-    			{{--<a href="javascript:;" class="out">导出Excel表格</a> --}}
+    			<a href="javascript:;" class="add">添加商品</a>
+                <a href="{{ route('seller.stocks.import') }}" class="out">导入Excel表格</a>
+    			<a href="{{ route('seller.stocks.output') }}" class="out">导出Excel表格</a>
     		</div>
     	</div>
     	<div class="btns clear">
-    		<a href="javascript:;" class="L set">批量设置特卖</a>
+
+            <form action="{{ route('seller.stocks.file') }}" method="post"
+                  enctype="multipart/form-data">
+                <label for="file">Filename:</label>
+                <input type="file" name="file" id="file" />
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <br />
+                <input type="submit" name="submit" value="Submit" />
+                <a href="javascript:;" class="L set">批量设置特卖</a>
+            </form>
     		<a href="javascript:;" class="L cancel">批量取消特卖</a>
             <span style="color: red;margin-left: 5px;" class="L message1">@if($result){{ $result }}@endif</span>
     		<a href="javascript:;" class="R del">批量删除</a>
@@ -79,13 +89,13 @@
             <ul class="clear">
                 <li>材质
                     <select class="material">
-                        @foreach ( config('const.goods_material') as $material)
-                            <option value="{{ $material }}" @if (Request::input('material') == $material) selected @endif > {{ $material }}</option>
+                        @foreach ( $materials as $material)
+                            <option value="{{ $material->name }}" @if (Request::input('material') == $material->name) selected @endif > {{ $material->name }}</option>
                         @endforeach
                     </select>
                 </li>
                 <li>地区
-                    <select name="province">
+                    <select name="province" class="province">
                         <option value="">选择地区</option>
                         @foreach($provinces as $province)
                             <option value="{{ $province->areaId }}">{{ $province->areaName }}</option>
@@ -93,7 +103,7 @@
                     </select>
                 </li>
                 <li>城市
-                    <select name="city">
+                    <select name="city" class="city">
                         <option value="">选择城市</option>
                     </select>
                 </li>
@@ -102,22 +112,22 @@
             <ul class="clear">
                 <li>品种
                     <select class="variety" >
-                        @foreach ( config('const.goods_variety') as $variety)
-                            <option value="{{ $variety }}" @if (Request::input('variety') == $variety) selected @endif > {{ $variety }}</option>
+                        @foreach ( $varieties as $variety)
+                            <option value="{{ $variety->name }}" @if (Request::input('variety') == $variety->name) selected @endif > {{ $variety->name }}</option>
                         @endforeach
                     </select>
                 </li>
                 <li>标准
                     <select class="standard">
-                        @foreach ( config('const.goods_standard') as $standard)
-                            <option value="{{ $standard }}" @if (Request::input('standard') == $standard) selected @endif > {{ $standard }}</option>
+                        @foreach ( $standards as $standard)
+                            <option value="{{ $standard->name }}" @if (Request::input('standard') == $standard->name) selected @endif > {{ $standard->name }}</option>
                         @endforeach
                     </select>
                 </li>
                 <li>钢厂
                     <select class="steelmill">
-                        @foreach ( config('const.goods_steelmill') as $steelmill)
-                            <option value="{{ $steelmill }}" @if (Request::input('steelmill') == $steelmill) selected @endif > {{ $steelmill }}</option>
+                        @foreach ( $steelmills as $steelmill)
+                            <option value="{{ $steelmill->name }}" @if (Request::input('steelmill') == $steelmill->name) selected @endif > {{ $steelmill->name }}</option>
                         @endforeach
                     </select>
                 </li>
@@ -129,7 +139,8 @@
                     <ul class="td2">
                         <li>外径 <input type="text" class="outer_diameter"/> mm</li>
                         <li>厚度 <input type="text" class="houdu"/> mm</li>
-                        <li class="last">长度 <input type="text" class="length"/> m</li>
+                        <li>长度 <input type="text" class="length"/> m</li>
+                        <li class="last">价格 <input type="text" class="goods_price"/> 元/吨</li>
                     </ul>
                 </div>
                 <div class="right clear">
@@ -144,15 +155,21 @@
                 </div>
             </div>
             <!-- 价格-->
-            <ul class="clear">
-                <li>价格
-                    <select class="goods_price">
-                        @foreach ( config('const.goods_price') as $price)
-                            <option value="{{ $price }}" @if (Request::input('goods_price') == $price) selected @endif > {{ $price }}</option>
-                        @endforeach
-                    </select>元/吨
+            {{-- <ul class="guigeNum clear">
+                 <li>
+                     <select class="goods_price">
+                         @foreach ( config('const.goods_price') as $price)
+                             <option value="{{ $price }}" @if (Request::input('goods_price') == $price) selected @endif > {{ $price }}</option>
+                         @endforeach
+                     </select>元/吨
+                    <div class="td1">价格</div>
+                    <ul class="td2">
+                        <li>
+                            <input class="goods_price" type="text" name="goods_price" value=""/>元/吨
+                        </li>
+                    </ul>
                 </li>
-            </ul>
+            </ul>--}}
         </div>
         <div class="bot">
             <a href="javascript:;" class="back">返回</a>

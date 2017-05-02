@@ -52,7 +52,7 @@ class AuthController extends Controller
 
             $get_user = App\User::where('email', Request::input('account'))->first();
 
-            if(!$get_user || $get_user->role != 'admin') {
+            if(!$get_user || $get_user->role_id == '') {
                 throw new Exception('帐号不存在');
             }
 

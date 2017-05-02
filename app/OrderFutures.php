@@ -22,4 +22,14 @@ class OrderFutures extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    //关联期货报价表
+    public function offer()
+    {
+    	return $this->belongsTo('App\FutureOffers');
+    }
+    
+    public function order(){
+    	return $this->belongsTo('App\Order');
+    }
 }

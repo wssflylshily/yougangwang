@@ -22,4 +22,10 @@ class FutureOffers extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    public function future()
+    {
+    	return $this->belongsTo('App\OrderFutures');
+    }
+    
 }

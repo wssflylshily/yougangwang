@@ -28,7 +28,7 @@ class AuthController extends Controller
             'result'    => true,
             'message'   => '登录成功，正在跳转',
         ];
-
+       //dd(Request::input('mobile'));
         try {
 
             $validator = Validator::make(Request::all(), [
@@ -56,6 +56,16 @@ class AuthController extends Controller
                 throw new Exception('登录失败，密码不正确');
             }
 
+            $mobile =  Request::input('mobile');
+            //dd($mobile);
+            $user = App\User::query();
+            $ok = $user->where('mobile',$mobile)->first();
+
+           // $st = $ok->status;
+            $status = $ok['user_status'];
+            if($status == '-1'){
+                throw new Exception('登录失败，被禁用');
+            }
             $response['result'] = true;
 
         } catch (Exception $e) {
@@ -137,6 +147,8 @@ class AuthController extends Controller
     public function getLogout()
     {
         Auth::logout();
-        return redirect(route('shop.home'));
+        return redirect(route('auth.login'));
     }
+
+
 }

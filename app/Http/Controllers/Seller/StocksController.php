@@ -8,6 +8,9 @@ use Validator;
 use App;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Excel;
+require('./PHPExcel/PHPExcel.php');//引入PHP EXCEL类
+
 
 class StocksController extends Controller{
 
@@ -15,7 +18,24 @@ class StocksController extends Controller{
 	public function publish(){
 	    $area = DB::table('areas')->where('parentId', 0)->get();
 	    $this->publishGoods();
-		return view('seller.stocks.publish',['result' => "",'provinces' => $area]);
+
+        //品种
+        $db1 = App\Variety::query();
+        $result['varieties'] = $db1->get();
+
+        //材质
+        $db2 = App\Material::query();
+        $result['materials'] = $db2->get();
+
+        //标准
+        $db3 = App\Standard::query();
+        $result['standards'] = $db3->get();
+
+        //钢厂
+        $db4 = App\SteelMill::query();
+        $result['steelmills'] = $db4->get();
+
+		return view('seller.stocks.publish',['result' => "",'provinces' => $area], $result);
 	}
 
     /**
@@ -28,10 +48,27 @@ class StocksController extends Controller{
         try{
             $area = DB::table('areas')->where('parentId', 0)->get();
             $public_result = $this->publishGoods();
+
+            //品种
+            $db1 = App\Variety::query();
+            $result['varieties'] = $db1->get();
+
+            //材质
+            $db2 = App\Material::query();
+            $result['materials'] = $db2->get();
+
+            //标准
+            $db3 = App\Standard::query();
+            $result['standards'] = $db3->get();
+
+            //钢厂
+            $db4 = App\SteelMill::query();
+            $result['steelmills'] = $db4->get();
+
             if ($public_result == 1){
-                return view('seller.stocks.publish',['result' => "发布成功！",'provinces' => $area]);
+                return view('seller.stocks.publish',['result' => "发布成功！",'provinces' => $area],$result);
             }else{
-                return view('seller.stocks.publish',['result' => $public_result,'provinces' => $area]);
+                return view('seller.stocks.publish',['result' => $public_result,'provinces' => $area],$result);
             }
         }catch (Exception $e){
             throw $e;
@@ -45,8 +82,22 @@ class StocksController extends Controller{
      */
 	public function mystores(){
         $db = App\Goods::query();
-        $goods = $db->orderBy('created_at', 'desc')->take(10)->get();
-		return view('seller.stocks.mystores',['goods' => $goods]);
+        $sellerid = Auth::user()->id;
+        $seller = App\Seller::query()->where('user_id',$sellerid)->first();
+        //$sellerid = 1;
+        $groups = $db->where('seller_id', $sellerid)
+            ->groupBy('variety')->get();
+        $i=0;
+        $goods=array();
+        foreach ($groups as $item)
+        {
+            $goods[$i] = App\Goods::query()->where('seller_id', $sellerid)
+                ->where('variety', $item->variety)
+                ->leftJoin('areas', 'areas.areaId', '=', 'goods.area_code')
+                ->orderBy('created_at', 'desc')->take(10)->get();
+            $i++;
+        }
+		return view('seller.stocks.mystores',['groups' => $groups, 'goods' => $goods,'seller'=>$seller]);
 	}
 
     /**
@@ -57,8 +108,30 @@ class StocksController extends Controller{
 	public function seeStores(){
         $db = App\Goods::query();
         $area = DB::table('areas')->where('parentId', 0)->get();
-        $goods = $db->leftJoin('areas', 'areas.areaId', '=', 'goods.area_code')->orderBy('created_at', 'desc')->paginate(10);
-		return view('seller.stocks.see_stores',['goods' => $goods, 'provinces' => $area, 'result' => Request::input('result')?Request::input('result'):""]);
+        $variety = Request::input('variety');
+        $goods = $db->where('seller_id', Auth::user()->id)
+            ->where('variety', Request::input('variety'))
+            ->leftJoin('areas', 'areas.areaId', '=', 'goods.area_code')
+            ->orderBy('created_at', 'desc')->paginate(10);
+//dd($goods);
+        session(['site'=>$goods]);
+        //品种
+        $db1 = App\Variety::query();
+        $result['varieties'] = $db1->get();
+
+        //材质
+        $db2 = App\Material::query();
+        $result['materials'] = $db2->get();
+
+        //标准
+        $db3 = App\Standard::query();
+        $result['standards'] = $db3->get();
+
+        //钢厂
+        $db4 = App\SteelMill::query();
+        $result['steelmills'] = $db4->get();
+
+        return view('seller.stocks.see_stores',['goods' => $goods, 'provinces' => $area, 'result' => Request::input('result')?Request::input('result'):"",'variety'=>$variety], $result);
 	}
 
     /**
@@ -233,7 +306,24 @@ class StocksController extends Controller{
             $area = DB::table('areas')->where('parentId', 0)->get();
             $goods = $db->where('id', Request::input('id'))->first();
             $city = DB::table('areas')->where('parentId', $goods->province)->get();
-            return view('seller.stocks.editor_stores',['goods' => $goods, 'result' => '', 'provinces' => $area, 'cities' => $city]);
+
+            //品种
+            $db1 = App\Variety::query();
+            $result['varieties'] = $db1->get();
+
+            //材质
+            $db2 = App\Material::query();
+            $result['materials'] = $db2->get();
+
+            //标准
+            $db3 = App\Standard::query();
+            $result['standards'] = $db3->get();
+
+            //钢厂
+            $db4 = App\SteelMill::query();
+            $result['steelmills'] = $db4->get();
+
+            return view('seller.stocks.editor_stores',['goods' => $goods, 'result' => '', 'provinces' => $area, 'cities' => $city], $result);
         }catch (Exception $e){
             throw $e;
         }
@@ -307,15 +397,6 @@ class StocksController extends Controller{
         }
     }
 
-    /**
-     * 商铺订单
-     * 孙璠
-     * 2016.12.29
-     */
-    protected function getOrder()
-    {
-        return view('seller.stocks.order');
-    }
     
     /**
      * 现货订单列表
@@ -381,6 +462,232 @@ class StocksController extends Controller{
             $db->where('order_sn', Request::input('order_sn'))->update(['status' => Request::input('status')]);
         }
         return redirect(route('seller.stocks.orders'));
+    }
+
+    /**
+     * 开发票
+     * 孙璠
+     * 2016.12.29
+     */
+    protected function getInvoice()
+    {
+        //$this->changeOrderStatus(Request::input('order_sn'),8);
+        $db_orders = App\Order::query();
+        $order =$db_orders
+            ->where('order_sn',Request::input('order_sn'))
+            ->with('goods')
+            ->with('seller')
+            ->first();
+        return view('seller.stocks.invoice', ['order' => $order, 'result' => '']);
+    }
+
+    //Excel导出
+    //韩京远
+    public function getOutput()
+    {
+        $sellerid = Auth::user()->id;
+        $seller = App\Seller::query()->where('user_id',$sellerid)->first();
+        //$session = new Session;
+        $cellData = session('site');
+        header("Content-type:application/vnd.ms-excel");
+        header("Content-Disposition:attachment;filename=test.xls");
+        header("Content-type:application/vnd.ms-excel;charset=gbk");
+        header('Cache-Control: max-age=0');
+        $str = "";
+        $title = array('特卖产品','地区','品种','材质','规格','钢厂','吨数','单价');
+        for ($i = 0;$i < count($title);$i++){
+            $str .= iconv("UTF-8", "GBK", "$title[$i]"). "\t";
+        }
+        $str .= "\n";
+        foreach($cellData as $k=>$v){
+            if($v['type'] == 9){
+                $str .= iconv("UTF-8", "GBK","热卖"). "\t";
+            }else{
+                $str .= iconv("UTF-8", "GBK",""). "\t";
+            }
+            $str .= iconv("UTF-8", "GBK",$v['areaName']). "\t";
+            $str .= iconv("UTF-8", "GBK",$v['variety']). "\t";
+            $str .= iconv("UTF-8", "GBK",$v['material']). "\t";
+            $str .= iconv("UTF-8", "GBK",$v['length']."*".$v['thickness']."*".$v['outer_diameter']). "\t";
+            $str .= iconv("UTF-8", "GBK",$seller['name']). "\t";
+            $str .= iconv("UTF-8", "GBK",$v['stock']). "\t";
+            $str .= iconv("UTF-8", "GBK",$v['price']). "\t";
+            $str .= "\n";
+        }
+        echo $str;
+        die();
+    }
+
+    public function getFile()
+    {
+//        if ($_FILES["file"]["size"] < 20000)
+//        {
+        $name = time().'.xlsx';
+            if ($_FILES["file"]["error"] > 0)
+            {
+                echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+            }
+            else
+            {
+//                echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+//                echo "Type: " . $_FILES["file"]["type"] . "<br />";
+//                echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+//                echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+
+                if (file_exists("./upload/" . $name))
+                {
+                    echo $_FILES["file"]["name"] . " already exists. ";
+                }
+                else
+                {
+                    move_uploaded_file($_FILES["file"]["tmp_name"],
+                        "./upload/" . $name);
+//                    echo "Stored in: " . "./upload/" . $_FILES["file"]["name"];
+                }
+            }
+//        }
+//        else
+//        {
+//            echo "Invalid file";
+//        }
+            $new = $this->format_excel2array('./upload/'.$name);
+       //dd($new);
+            foreach ($new as $v)
+            {
+                //dd($v['A']);
+                $db_goods = new App\Goods();
+               // $db_area = new App\Areas();
+                $db_goods->seller_id = Auth::user()->id;
+                if($v['A'] =="热卖")
+                {
+                    $db_goods->type = 9;
+                }else{
+                    $db_goods->type = 0;
+                }
+                      //0.现货
+                $db_goods->name = $v['B'];
+                $db_goods->detail = $v['C'];
+                $db_goods->price = $v['D'];
+                $db_goods->unit = $v['E'];
+                $db_goods->stock = $v['F'];
+                $province = DB::table('areas')->where('areaName',$v['G'])->first();
+               // dd( $province->areaId);
+                if($province)
+                {
+                    $db_goods->province = $province->areaId;
+                }else{
+                    return "省错误！";
+                }
+                $province1 = DB::table('areas')->where('areaName',$v['H'])->first();
+                if($province1)
+                {
+                    $db_goods->area_code = $province->areaId;
+                }else{
+                    return "市错误！";
+                }
+                $db_goods->variety = $v['I'];
+                $db_goods->standard = $v['J'];
+                $db_goods->material = $v['K'];
+                $db_goods->steelmill = $v['L'];
+                $db_goods->outer_diameter = $v['M'];
+                $db_goods->thickness = $v['N'];
+                $db_goods->length = $v['O'];
+                $db_goods->save();
+            }
+
+                if ($db_goods->save()){
+                    return "成功上传";
+                }else{
+                    return "网络错误！";
+                }
+
+    }
+
+    public function getImport()
+    {
+        if ($_FILES["file"]["type"] == "excel/xlsx")
+        {
+            $name = time().'.xlsx';
+            if ($_FILES["file"]["error"] > 0)
+            {
+                echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+            }
+            else
+            {
+                echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+                echo "Type: " . $_FILES["file"]["type"] . "<br />";
+                echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+                echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+
+                if (file_exists("upload/" . $_FILES["file"]["name"]))
+                {
+//                    echo $_FILES["file"]["name"] . " already exists. ";
+                }
+                else
+                {
+                    move_uploaded_file($_FILES["file"]["tmp_name"],
+                        "upload/" . $_FILES["file"]["name"]);
+//                    echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
+                }
+            }
+        }
+        else
+        {
+            echo "文件格式不正确！";
+        }
+    }
+
+    /*
+    * 将excel转换为数组 by aibhsc
+    * */
+
+    function format_excel2array($filePath='',$sheet=0){
+        if(empty($filePath) or !file_exists($filePath)){die('file not exists');}
+        $PHPReader = new \PHPExcel_Reader_Excel2007();        //建立reader对象
+        if(!$PHPReader->canRead($filePath)){
+            $PHPReader = new \PHPExcel_Reader_Excel5();
+            if(!$PHPReader->canRead($filePath)){
+                echo 'no Excel';
+                return ;
+            }
+        }
+        $PHPExcel = $PHPReader->load($filePath);        //建立excel对象
+        $currentSheet = $PHPExcel->getSheet($sheet);        //**读取excel文件中的指定工作表*/
+        $allColumn = $currentSheet->getHighestColumn();        //**取得最大的列号*/
+        $allRow = $currentSheet->getHighestRow();        //**取得一共有多少行*/
+        $data = array();
+        for($rowIndex=2;$rowIndex<=$allRow;$rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for($colIndex='A';$colIndex<=$allColumn;$colIndex++){
+                $addr = $colIndex.$rowIndex;
+                $cell = $currentSheet->getCell($addr)->getValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $data[$rowIndex][$colIndex] = $cell;
+            }
+        }
+        return $data;
+    }
+
+
+
+    public function read($filename,$encode='utf-8'){
+        include_once('./Excel/PHPExcel.php');
+
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objReader->setReadDataOnly(true);
+        $objPHPExcel = $objReader->load($filename);
+        $objWorksheet = $objPHPExcel->getActiveSheet();
+        $highestRow = $objWorksheet->getHighestRow();
+        $highestColumn = $objWorksheet->getHighestColumn();
+        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+        $excelData = array();
+        for ($row = 1; $row <= $highestRow; $row++) {
+            for ($col = 0; $col < $highestColumnIndex; $col++) {
+                $excelData[$row][] =(string)$objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
+            }
+        }
+        return $excelData;
     }
 
 }

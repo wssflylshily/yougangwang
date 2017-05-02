@@ -6,14 +6,51 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Request;
 use Validator;
+use App;
+use DB;
 
 class ContractController extends Controller
 {
     public function getIndex()
     {
-        $result['contract_list'] = \App\Contract::withTrashed()->orderBy('id', 'desc')->paginate(10);
+
+        /*$result['contract_list'] = \App\Contract::withTrashed()->orderBy('id', 'desc')->paginate(10);
         /*dd($result);exit;*/
-        return view('admin.contract.contract_list', $result);
+        //return view('admin.contract.contract_list', $result);
+        $query = App\Contract::query();
+        /*dd($query);*/
+        /*dd(Request::input('order_sn'));*/
+        if (!empty(Request::query())){
+
+            if (Request::input('order_sn'))
+            {
+                $order_info = DB::table('orders')->select('id')->where('order_sn', 'like','%'.Request::input('order_sn').'%')->get();
+                foreach($order_info as $k=>$v){
+                    $order_ids[$k] = $v->id;
+                }
+                /*var_dump($order_ids);exit;*/
+                /*$order_id = $order_info['order_id'];*/
+                if(!empty($order_ids)){
+                    $query->whereIn('order_id',$order_ids);
+                }else{
+                    $query->where('order_id',0);
+                }
+
+            }
+            if (Request::input('contract_sn'))
+            {
+                $query->where('contract_sn','like',"%".Request::input('contract_sn')."%");
+            }
+        }
+
+        $contract['contract_list'] = $query
+            ->select('orders.order_sn','contract_sn','contracts.created_at','contracts.supplier_agent','contracts.demander_agent','contracts.price_amount','contracts.status')
+            ->leftJoin('orders', 'contracts.order_id','=','orders.id')
+            ->orderBy('contracts.created_at', 'desc')
+            ->paginate(10);
+
+
+        return view('admin.contract.contract_list', $contract);
     }
 
     public function getAdd()
@@ -121,5 +158,19 @@ class ContractController extends Controller
         }
 
         return $response;
+    }
+
+    public function getDetail($order_sn)
+    {
+        $response = [];
+
+        $response['order'] =App\Order::where('order_sn', $order_sn)
+            ->with('goods')
+            ->with('user')
+            ->with('seller')
+            ->first();
+
+//        dd(Request::input('order_sn'));
+        return view('admin.contract.detail', $response);
     }
 }

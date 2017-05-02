@@ -18,6 +18,7 @@
                         <li><a href="{{ route('seller.contract.home') }}">未签约</a></li>
                         <li class="line"></li>
                         <li class="on"><a href="{{ route('seller.contract.already') }}">已签约</a></li>
+                        <li><a href="{{ route('seller.contract.cancel') }}">已作废</a></li>
                         <li class="right"><p class="tip"><b></b>优钢网提示您：如果您的订单合同自发起之日起买卖双方没有签约成功，系统将自动终止双方的签约。</p></li>
                     </ul>
                     <!-- table-->
@@ -34,14 +35,15 @@
                             @if($orders)
                                 @foreach($orders as $order)
                                     <ul class="tr clear">
-                                        <li class="td1">{{ $order->order_sn }}</li>
-                                        <li class="td2">{{ $order->create_time }}</li>
-                                        <li class="td3">{{ $order->contract_sn }}</li>
-                                        <li class="td4">{{ $order->seller->name }}</li>
+                                        <li class="td1">{{ $order->order_sn or ''}}</li>
+                                        <li class="td2">{{ $order->create_time or ''}}</li>
+                                        <li class="td3">{{ $order->contract_sn or ''}}</li>
+                                        <li class="td4">{{ $order->seller->name or ''}}</li>
                                         <li class="td5">@if($order->cstate == 2)等待买家确认@elseif($order->cstate == 3)完成@else已取消@endif</li>
                                         <li class="td6">
 
                                             {{--<a href="javascript:;" data-htid="1" class="btnGrayBd4 qxqy_toast">取消签约</a>--}}
+                                            <a href="{{ route('user.stocks.PDF', ['order_sn' => $order->order_sn]) }}" class="btnGrayBd4">生成PDF</a>
                                         </li>
                                     </ul>
                                 @endforeach
@@ -100,11 +102,7 @@
                     </div>
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>

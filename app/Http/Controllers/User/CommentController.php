@@ -29,6 +29,7 @@ class CommentController extends Controller
         //订单信息
         $db_orders = App\Comments::query();
         $rs =$db_orders
+            ->where('user_id', Auth::user()->id)
             ->with('order')
             ->paginate(8);
         return view('user.comment.index', ['rs' => $rs]);

@@ -10,25 +10,7 @@
             <p class="line"></p>
         </div>
         <div class="content clear">
-            <ul class="L">
-                <li><a href="/seller">我的店铺</a></li>
-                <li><a href="/spots/publish">发布现货</a></li>
-                <li><a href="/futures/publish">发布期货</a></li>
-                <li><a href="/seller/futuresList">期货询单</a></li>
-                <li><a href="/seller/futuresOffer">期货报单</a></li>
-                <li><a href="/seller/contract">我的合同</a></li>
-                <li class="on"><a href="/seller/myfutures">我的期货</a></li>
-                 <li><a href="/spots/mystores">我的仓库</a></li>
-                <li class="line"></li>
-                <!-- <li><a href="#">我的产品</a></li>
-                <li><a href="#">发布活动</a></li>
-                <li><a href="#">我的评价</a></li>
-                <li><a href="#">我的积分</a></li> -->
-                <li><a href="#">订单记录</a></li>
-                <li class="line"></li>
-                <!-- <li><a href="#">维权中心</a></li>
-                <li><a href="#">活动中心</a></li> -->
-            </ul>
+            @include('_layouts.seller_left')
             <div class="R">
                 <!-- 我的期货-->
                 <div class="orderQihuo">
@@ -400,11 +382,7 @@
                     </ul>
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>

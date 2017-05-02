@@ -98,6 +98,7 @@ User.prototype.startSelected = function()
     $('input:checked[name="pro_id[]"]').each(function() {
         selected.push($(this).val());
     });
+    alert(selected);
 
     if (selected.length < 1) {
         alert('您没有选中要启用的商品');
@@ -116,16 +117,16 @@ User.prototype.startSelected = function()
     if (self.waiting === true) {
         alert('请稍候...有其他操作正在执行');
     }
-    self.waiting = true;
+    //self.waiting = true;
 
-//  $.post('/admin/user/delete', data, function(response) {
+//  $.post('/admin/stocks/active', data, function(response) {
 //      if (response.result !== true) {
 //          $.toaster({ priority : 'danger', title : '失败', message : response.message });
 //          return false;
 //      }
 //
 //      $.toaster({ priority : 'success', title : '成功', message : response.message });
-////        window.location.reload();
+// //        window.location.reload();
 //  }).complete(function(){
 //      self.waiting = false;
 //  }).error(function(){

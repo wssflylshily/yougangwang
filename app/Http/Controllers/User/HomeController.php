@@ -110,7 +110,6 @@ class HomeController extends Controller
 
         $user = new \App\User();
         $user_id = Auth::user()->id;
-        
         // $users = $user->all();
         $users = $user->select('realname','realname_auth','credit_degree','avatar_pic','compony','consignee','id')->find($user_id);
         // dd($users);
@@ -135,8 +134,50 @@ class HomeController extends Controller
         if(!$users->avatar_pic){
             $users->avatar_pic = '/assets/shop/img/person/headimg.jpg';
         }
+
+        $num[0] = DB::table('orders')      //待签约
+        ->where('type',2)
+        ->where('user_id',$user_id)
+        ->where('status',-1)
+        ->where('deleted_at',null)
+        ->count();
         
-        return view('user.home.index_futures',['users'=>$users]);
+        $num[1] = DB::table('orders')      //待付款
+        ->where('type',2)
+        ->where('user_id',$user_id)
+        ->where('status', 2)
+        ->orwhere('status',3)
+        ->where('deleted_at',null)
+        ->count();
+        
+        $num[2] = DB::table('orders')      //待收货
+        ->where('type',2)
+        ->where('user_id',$user_id)
+        ->where('status', 5)
+        ->where('deleted_at',null)
+        ->count();
+        
+        $num[4] = DB::table('orders')      //待评价
+        ->where('type',2)
+        ->where('user_id',$user_id)
+        ->where('status', 9)
+        ->where('deleted_at',null)
+        ->count();
+        
+        $db_orders = App\Order::query();
+        $db_orders->where('type' , 2);
+        $db_orders->where('user_id' , $user_id);
+        $status = Request::input('status');
+        if (Request::input('status') != null){
+        	$db_orders->where('status' , Request::input('status'));
+        }
+        $orders =$db_orders
+		        ->orderBy('created_at', 'desc')
+		        ->paginate(20);
+        
+        //(strtotime($order->created_at)-time())/(60*60*24)
+        
+        return view('user.home.index_futures',['users'=>$users,'orders'=>$orders,'status'=>$status,'num'=>$num]);
     }
 
     /**

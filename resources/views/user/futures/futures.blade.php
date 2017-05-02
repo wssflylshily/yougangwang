@@ -13,7 +13,8 @@
                 <!-- 我的期货-->
                 <div class="orderQihuo">
                     <ul class="tab clear">
-                        <li class="on"><a href="#">我的期货</a></li>
+                        <li ><a href="{{ route('user.stocks') }}">现货</a></li>
+                        <li class="on"><a href="{{ route('user.futures') }}">期货</a></li>
                     </ul>
                     <!-- 我的期货-->
                     <div class="orderCon">
@@ -56,14 +57,16 @@
                                         订单号：{{ $order->order_sn }}
                                     </li>
                                     <li class="two">
-                                    @if($order->offers_cnt()>0)
+                                    @if($order->offers_cnt()>0&&$order->status==0)
                                     	已有 <b class="orange">{{ $order->offers_cnt() }}家</b> 商家接单
-                                    @else	暂无商家接单
-                                    @endif</li>
+                                    @elseif($order->offers_cnt()>0&&$order->status!=0)	已选择接单商家
+                                    @else 暂无商家接单
+                                    @endif
+                                    </li>
                                     @if($order->seller_id > 0)
                                     <li class="three">
                                     	<?php //dd($order->seller->user); ?>
-                                        <a href="javascript:;" data_tel="{{$order->seller->user->mobile}}" class="contact"></a>
+                                        <a href="javascript:;" data_tel="{{$order->seller->user->mobile or '' }}" class="contact"></a>
                                     </li>
                                     @endif
                                 </ul>
@@ -73,25 +76,36 @@
                                             <li class="col7">
                                         	@foreach($order->futures as $future)
                                                 <ul>
-                                                    <li class="td1">{{ $future->area_id }}</li>
-                                                    <li class="td2">{{ $future->variety }}</li>
-                                                    <li class="td3">{{ $future->standard }}</li>
-                                                    <li class="td4">{{ $future->material }}</li>
-                                                    <li class="td5">{{ $future->steelmill }}</li>
-                                                    <li class="td6">{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}</li>
-                                                    <li class="td7">{{ $future->stock }}</li>
+                                                    <li class="td1">{{ $future->area or '全部' }}</li>
+                                                    <li class="td2">{{ $future->variety or '全部' }}</li>
+                                                    <li class="td3">{{ $future->standard or '全部' }}</li>
+                                                    <li class="td4">{{ $future->material or '全部' }}</li>
+                                                    <li class="td5">{{ $future->steelmill or '全部' }}</li>
+                                                    <li class="td6">
+                                                    @if($future->length_type==2)
+                                                    {{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}
+                                                    @else
+                                                    {{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }} ~ {{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}
+                                                    @endif</li>
+                                                    <li class="td7">{{ $future->stock }} {{$future->unit}}</li>
                                                 </ul>
                                                 @endforeach
                                             </li>
                                             <li class="td8">
-                                                <p class="black">￥{{$order->order_amount}}</p>
-                                                <p class="f12">(含运费：￥{{$order->postsge}})</p>
+                                                <p class="black">￥{{$order->order_amount or 0}}</p>
+                                                <p class="f12">(含运费：￥{{$order->postsge or 0}})</p>
                                             </li>
                                             <li class="td9">
-                                                @if($order->status==0&&$order->offers_cnt()>0)
+                                            	@if($order->status==0&&$order->offers_cnt()<=0)
+                                            	<a href="javascript:;" class="f12 textRed">等待商家接单</a>
+                                                @elseif($order->status==0&&$order->offers_cnt()>0)
                                                 <a href="javascript:;" class="f12 textRed">待选择商家</a>
-                                                @elseif($order->status==-1)
+                                                @elseif($order->status==-1&&$order->contract == null)
                                                 <a href="javascript:;" class="f12 textRed">待签约</a>
+                                                @elseif($order->status==-1&&$order->contract->status==1)
+                                                <a href="javascript:;" class="f12 textRed">等待商家签约</a>
+                                                @elseif($order->status==-1&&$order->contract->status==2)
+                                                <a href="javascript:;" class="f12 textRed">待确认合同</a>
                                                 @elseif($order->status==2)
                                                 <a href="javascript:;" class="f12 textRed">待付首款</a>
                                                 @elseif($order->status==3)
@@ -105,24 +119,28 @@
                                                 @elseif($order->status==7)
                                                 <a href="javascript:;" class="f12 textRed">待开发票</a>
                                                 @elseif($order->status==8)
-                                                <a href="javascript:;" class="f12 textRed">待收发票</a>
+                                                <a href="javascript:;" class="f12 textRed">已开发票</a>
                                                 @elseif($order->status==9)
                                                 <a href="javascript:;" class="f12 textRed">待评价</a>
                                                 @elseif($order->status==99)
                                                 <a href="javascript:;" class="f12 textRed">交易完成</a>
                                             	@endif
-                                                <a href="#" class="f12">订单详情</a>
+                                                <!-- <a href="#" class="f12">订单详情</a> -->
                                             </li>
                                             <li class="td10">
                                             
                                             	@if($order->status==0&&$order->offers_cnt() > 0)
                                             	<a href="{{ route('user.futures.takeOrder',['order_sn'=>$order->order_sn]) }}" class="btnSelectShagnjia btnBlue4">选择商家</a>
-                                            	@elseif($order->status==-1)
-                                                <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>2])}}" class="btnSelectShagnjia btnBlue4">签约</a>
+                                            	@elseif($order->status==-1&&$order->contract == null)
+                                                <a href="{{route('shop.futures.signContract',['order_id'=>$order->id])}}" class="btnSelectShagnjia btnBlue4">签约</a>
+                                                @elseif($order->status==-1&&$order->contract->status==1)
+                                                @elseif($order->status==-1&&$order->contract->status==2)
+                                                <a href="{{route('shop.futures.signContract',['order_id'=>$order->id])}}" class="btnSelectShagnjia btnBlue4">确认合同</a>
                                                 @elseif($order->status==2)
-                                                <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>3])}}" class="btnFukuan btnRed2">付首款</a>
+                                                <a href="{{route('shop.futures.payOrder',['order_id'=>$order->id])}}" class="btnFukuan btnRed2">付首款</a>
                                                 @elseif($order->status==3)
-                                                <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>4])}}" class="btnFukuan btnRed2">付尾款</a>
+                                                <!-- <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>4])}}" class="btnFukuan btnRed2">付尾款</a> -->
+                                                <a href="{{route('shop.futures.payOrder',['order_id'=>$order->id])}}" class="btnFukuan btnRed2">付尾款</a>
                                                 @elseif($order->status==4)
                                                 <!-- <a href="#" class="btnShangjiaTui btnGrayBd4">查看物流</a> -->
                                                 @elseif($order->status==5)
@@ -133,9 +151,10 @@
                                                 <!-- <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>8])}}" class="btnSelectShagnjia btnBlue4">开发票</a> -->
                                                 <a href="{{route('user.futures.invoice',['order_id'=>$order->id])}}" class="btnSelectShagnjia btnBlue4">开发票</a>
                                                 @elseif($order->status==8)
-                                                <a href="#" class="btnSelectShagnjia btnBlue4">查看发票</a>
+                                                <a href="{{route('seller.futures.invoice',['order_id'=>$order->id])}}" class="btnSelectShagnjia btnBlue4">查看发票</a>
                                                 @elseif($order->status==9)
-                                                <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>99])}}" class="btnSelectShagnjia btnBlue4">去评价</a>
+                                                <!-- <a href="{{route('user.futures.changeStatus',['order_id'=>$order->id,'status'=>99])}}" class="btnSelectShagnjia btnBlue4">去评价</a> -->
+                                                <a href="{{route('user.futures.completion',['order_id'=>$order->id])}}" class="btnSelectShagnjia btnBlue4">去评价</a>
                                                 @elseif($order->status==99)
                                                 <!-- <a href="#" class="btnShangjiaTui btnGrayBd4">交易完成</a> -->
                                             	@endif
@@ -444,11 +463,7 @@
                     </ul> -->
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
@@ -458,6 +473,7 @@
 	        var tel=$(this).attr("data_tel");
 	        $.alert("请拨打电话："+tel, "联系方式");
 	    });
+        $("#futures").addClass("on");
      })
     </script>
 @endsection

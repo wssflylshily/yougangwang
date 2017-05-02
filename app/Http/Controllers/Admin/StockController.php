@@ -61,10 +61,27 @@ class StockController extends Controller
         }
         $area = DB::table('areas')->where('parentId', 0)->get();
         /*dd($areas);*/
-        $goods['goods_list'] = $query->where('type','0')
+        $goods['goods_list'] = $query->where('type', 0)
             ->leftJoin('areas', 'areas.areaId', '=', 'goods.area_code')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+
+        //品种
+        $db1 = App\Variety::query();
+        $goods['varieties'] = $db1->get();
+
+        //材质
+        $db2 = App\Material::query();
+        $goods['materials'] = $db2->get();
+
+        //标准
+        $db3 = App\Standard::query();
+        $goods['standards'] = $db3->get();
+
+        //钢厂
+        $db4 = App\SteelMill::query();
+        $goods['steelmills'] = $db4->get();
+
         /*dd($goods);*/
        /* return view('shop.stocks.index', ['goods' => $goods, 'provinces' => $area, 'cities' => $city]);*/
         return view('admin.stock.product_now', $goods,[ 'provinces' => $area, 'cities' => $city]);
@@ -181,6 +198,48 @@ class StockController extends Controller
             }
 
             \App\User::destroy(Request::input('user_id'));
+
+        } catch(Exception $e) {
+            $response['result']  = false;
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    public function postActive()
+    {
+        $response = [
+            'result'    => true,
+            'message'   => '修改成功',
+        ];
+
+        try {
+
+            $has_admin = \App\Goods::whereIn('id', Request::input('goods_id'))
+                ->update(['status' => Request::input('status')]);
+
+
+        } catch(Exception $e) {
+            $response['result']  = false;
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    public function postSpecial()
+    {
+        $response = [
+            'result'    => true,
+            'message'   => '修改成功',
+        ];
+
+        try {
+
+            $has_admin = \App\Goods::whereIn('id', Request::input('goods_id'))
+                ->update(['type' => Request::input('status')]);
+
 
         } catch(Exception $e) {
             $response['result']  = false;

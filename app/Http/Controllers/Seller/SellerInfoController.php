@@ -7,7 +7,7 @@ use Validator;
 use DB;
 use App\Technics;
 use App\Seller;
-use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class SellerInfoController extends Controller{
     protected $user_id = 2;
@@ -41,7 +41,7 @@ class SellerInfoController extends Controller{
         $req = request();
         /*dd(request());*/
         //获取工艺
-        $user_id = $this->user_id;
+        $user_id = Auth::user()->id;
         $gongyi = Request::input('gyname');
         $gprice = Request::input('gyprice');
         $jyfs = Request::input('jyfs');
@@ -80,11 +80,19 @@ class SellerInfoController extends Controller{
                 $file_res = $req->file('logo_pic')->move($public_path.$path,$imgname);
                 $seller->logo_pic = $path.$imgname;
             }
+            if($req->hasFile('address_pic') && $req->file('address_pic')->isValid()){
+                $public_path = public_path();
+                $date = date('/Y/m/d/',time());
+                $imgname = time().rand(1000,9999).'.png';
+                $path = "/assets/uploads/sellers".$date;
+                $file_res = $req->file('address_pic')->move($public_path.$path,$imgname);
+                $seller->address_pic = $path.$imgname;
+            }
             /*$seller->name = Request::input('name');*/
             if($wl){
                 $seller->logistics_type = $cunwl;
             }
-            if(Request::input('sfxy')){
+            if(Request::input('dengji')){
                 $seller->level = Request::input('dengji');
             }else{
                 $seller->level = 0;

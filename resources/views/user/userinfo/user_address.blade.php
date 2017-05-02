@@ -21,6 +21,9 @@
     <script src="/assets/shop/js/pages/cart.js"></script>
     <!--新添加-->
     <script>
+        $("#address").addClass("on");
+    </script>
+    <script>
         $(function(){
             $("#save_addr").click(function(){
                 var addr_ragion=$("select[name='addr_ragion']").val();
@@ -196,7 +199,7 @@
                     success:function(data){
                         /*console.log(data);*/
                         var data1 = JSON.parse(data);
-                        /*console.log(data1);*/
+                        console.log(data1);
                         /*console.log(data.length)*/
                         $("input[name='addressId']").val(nowId);
                         $("select[name='addr_ragion']").val(data1[0].province);
@@ -211,6 +214,12 @@
                         $("input[name='addr_phone0']").val(data1[0].tel1);
                         $("input[name='addr_phone1']").val(data1[0].tel2);
                         $("input[name='addr_phone2']").val(data1[0].tel3);
+                        if (data1[0].is_default===1){
+                            $('input[name="remeber_moren"]').attr("checked",true);
+                        }else {
+                            $('input[name="remeber_moren"]').attr("checked",false);
+                        }
+
                     },
                     error: function(){
                     }
@@ -377,13 +386,13 @@
                     	<div style="margin-top: 50px; margin-bottom: 50px;">
                     		<table class="zl_table addr_table">
                     			<tr class="tr01">
-                    				<td>收货人</td>
-                    				<td>所在地区</td>
-                    				<td>详细地址</td>
-                    				<td>邮编</td>
-                    				<td>电话/手机</td>
-                    				<td>操作</td>
-                    				<td>设置</td>
+                    				<td width="100">收货人</td>
+                    				<td width="150">所在地区</td>
+                    				<td width="*">详细地址</td>
+                    				<td width="60">邮编</td>
+                    				<td width="120">电话/手机</td>
+                    				<td width="100">操作</td>
+                    				<td width="100">设置</td>
                     			</tr>
                                 @foreach ($address as $addr)
                                     <tr >

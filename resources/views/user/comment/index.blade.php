@@ -19,9 +19,25 @@
                         @if($rs)
                             @foreach($rs as $com)
                                 <li>
-                                    <h2><span class="s01">订单编号：{{ $com->order->order_sn }} </span><span class="s02">商家名称：{{ $com->order->seller->name }}</span><span class="contact_sj"></span></h2>
+                                    <h2><span class="s01">订单编号：{{ $com->order->order_sn or ''}} </span><span class="s02">商家名称：{{ $com->order->seller->name or ''}}</span></h2>
                                     <div class="evaluate_font">
-                                        <b>评价内容:</b>
+                                        <b style="float: left">星级评价:</b>
+                                        @if($com)
+                                            <div class="com_star" style="float: left">
+                                                @for($i=0;$i<$com->star;$i++)
+                                                    <span title="1" class="on"></span>
+                                                @endfor
+                                            </div>
+                                        @else
+                                            <div class="com_star">
+                                                <span title="1"></span>
+                                                <span title="2"></span>
+                                                <span title="3"></span>
+                                                <span title="4"></span>
+                                                <span title="5"></span>
+                                            </div>
+                                        @endif
+                                        <b style="margin-left: 20px;">评价内容:</b>
                                         {{ $com->message }}
                                     </div>
                                 </li>
@@ -57,15 +73,14 @@
                     {!! $rs->render() !!}
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
     <!-- footer-->
+    <script>
+        $("#comment").addClass("on");
+    </script>
 @endsection
 
 @section('footer')

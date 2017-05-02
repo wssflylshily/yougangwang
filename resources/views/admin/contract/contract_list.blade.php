@@ -32,273 +32,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="/admin" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>后台</b></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg text-left"><b>优钢（管理后台）</b></span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="/assets/admin/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>超级管理员</p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">资料</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">退出</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p style="line-height: 36px;">您好，管理员</p>
-        </div>
-      </div>
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      {{--<ul class="sidebar-menu">
-        <li class="header"><!--主导航--></li>
-        <li>
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>后台首页</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>会员管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="index.html"><i class="fa fa-circle-o"></i> 商家会员</a></li>
-            <li><a href="user_manage.html"><i class="fa fa-circle-o"></i> 注册会员</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>商品管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="product_now.html"><i class="fa fa-circle-o"></i> 现货管理</a></li>
-            <li><a href="product_future.html"><i class="fa fa-circle-o"></i> 期货管理</a></li>
-            <li><a href="product_hotsale.html"><i class="fa fa-circle-o"></i> 特卖管理</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>合同管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="contract_list.html"><i class="fa fa-circle-o"></i> 合同列表</a></li>
-          </ul>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>订单管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-            <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-        	<a href="javascript:;">
-        		<i class="fa fa-book"></i>
-        		<span>网站设置</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        	</a>
-        	<ul class="treeview-menu">
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
-          	<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
-        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
-        	</ul>
-        </li>
-        <li class="treeview">
-        	<a href="javascript:;">
-        		<i class="fa fa-book"></i>
-        		<span>基本信息</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        	</a>
-        	<ul class="treeview-menu">
-        		<li><a href="bannermanage.html"><i class="fa fa-circle-o"></i> banner管理</a></li>
-            <li><a href="website_city.html"><i class="fa fa-circle-o"></i> 城市管理</a></li>
-            <li><a href="website_steel.html"><i class="fa fa-circle-o"></i> 钢铁信息</a></li>
-            <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
-        	</ul>
-        </li>
-      </ul>--}}
-
-      <ul class="sidebar-menu">
-        <li class="header"><!--主导航--></li>
-        <li>
-          <a href="/admin">
-            <i class="fa fa-dashboard"></i> <span>后台首页</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>会员管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/seller"><i class="fa fa-circle-o"></i> 商家会员</a></li>
-            <li><a href="/admin/user"><i class="fa fa-circle-o"></i> 注册会员</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>商品管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/stock"><i class="fa fa-circle-o"></i> 现货管理</a></li>
-            <li><a href="/admin/future"><i class="fa fa-circle-o"></i> 期货管理</a></li>
-            <li><a href="/admin/hot"><i class="fa fa-circle-o"></i> 特卖管理</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>合同管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/contract"><i class="fa fa-circle-o"></i> 合同列表</a></li>
-          </ul>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>订单管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-
-            <li><a href="/admin/order"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-            <li><a href="{{URL::route('admin.order.future')}}"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            {{--<li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}
-          </ul>
-        </li>
-        {{--<li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-book"></i>
-            <span>网站设置</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
-          </ul>
-        </li>--}}
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-book"></i>
-            <span>基本信息</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/banner"><i class="fa fa-circle-o"></i> banner管理</a></li>
-            <li><a href="website_city.html"><i class="fa fa-circle-o"></i> 城市管理</a></li>
-            <li><a href="website_steel.html"><i class="fa fa-circle-o"></i> 钢铁信息</a></li>
-            <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+  @include('admin._layouts.header')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -333,14 +67,21 @@
               <label for="inputName" class="col-sm-2 control-label">订单编号</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName" placeholder="订单编号">
+                <input type="text" class="form-control" id="inputName" placeholder="订单编号" name="order_sn" name="{{Request()->order_sn}}">
               </div>
             </div>
+            {{--<div class="form-group">
+              <label for="inputName" class="col-sm-2 control-label">供货人</label>
+
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName" placeholder="供货人" name="supplier_agent">
+              </div>
+            </div>--}}
             <div class="form-group">
               <label for="inputTel" class="col-sm-2 control-label">合同编号</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTel" placeholder="合同编号">
+                <input type="text" class="form-control" id="inputTel" placeholder="合同编号" name="contract_sn" {{Request()->contract_sn}}>
               </div>
             </div>
           </div>
@@ -390,24 +131,32 @@
                 </thead>
                 <tbody>
                   @foreach($contract_list as $contract)
-                  @endforeach
                   <tr>
-                    <td><input type="checkbox" name="user_id[]" value="1"></td>
-                    <td>2602065004365800</td>
-                    <td>GDB2345346</td>
-                    <td>2016-06-17</td>
-                    <td>方先生</td>
-                    <td>钢厂</td>
+                    <td><input type="checkbox" name="user_id[]" value="{{$contract->id}}"></td>
+                    <td>{{$contract->order_sn}}</td>
+                    <td>{{$contract->contract_sn}}</td>
+                    <td>{{$contract->created_at->format('Y-m-d')}}</td>
+                    <td>{{$contract->demander_agent}}</td>
+                    <td>{{$contract->supplier_agent}}</td>
                     <td>
-                      <span class="label label-danger">买家有疑义</span>
+                      @if($contract->status==1)
+                        <span class="label label-default">合同生成</span>
+                      @elseif($contract->status==2)
+                        <span class="label label-default">卖家签约</span>
+                      @elseif($contract->status==3)
+                        <span class="label label-success">已完成</span>
+                      @elseif($contract->status==100)
+                        <span class="label label-danger">已取消</span>
+                      @endif
                     </td>
-                    <td>20580</td>
+                    <td>{{$contract->price_amount}}</td>
                     <td>
-                      <a href="contract_detail.html" class="btn btn-xs btn-default">
+                      <a href="{{ route('admin.contract.detail', ['order_sn' => $contract->order_sn]) }}" class="btn btn-xs btn-default">
                         查看详情
                       </a>
                     </td>
                   </tr>
+                  @endforeach
                  {{-- <tr>
                     <td><input type="checkbox" name="user_id[]" value="1"></td>
                     <td>2602065004365800</td>
@@ -489,7 +238,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="border: none;">
-              <!--{!! page_render($contract_list) !!}-->
+              {{--{!! page_render($contract_list) !!}--}}
+              {!! $contract_list->appends(Request::query())->render() !!}
             </div>
             <!-- /.box-body -->
           </div>
@@ -568,11 +318,11 @@
 //  });    
     //按条件筛选
     $(".form-horizontal").submit(function(){
-    	if($("#inputName").val()==""&&$("#inputTel").val()=="")
+    	/*if($("#inputName").val()==""&&$("#inputTel").val()=="")
     	{
     		alert("没有任何筛选条件");
     		return false;
-    	}
+    	}*/
     })
   });
 </script>

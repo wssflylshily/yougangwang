@@ -56,12 +56,12 @@
 				</div>
 				<!--订单情况-->
 				<div class="order_list">
-					<h2>{{ $goods->seller->name }}</h2>
+					<h2>{{ $goods->seller->name or ''}}</h2>
 					<ul class="order_ul">
 						<li class="clear shangpin">
-							<input type="hidden" name="buy_id" value="{{ $goods->id }}">
-							<input type="hidden" name="buy_number" value="{{ $goods_num }}">
-							<input type="hidden" name="seller_id" value="{{ $goods->seller->id }}">
+							<input type="hidden" name="buy_id" value="{{ $goods->id or ''}}">
+							<input type="hidden" name="buy_number" value="{{ $goods_num or ''}}">
+							<input type="hidden" name="seller_id" value="{{ $goods->seller->id or ''}}">
 							<div class="L two single_txt">{{ $goods->areaName or '' }}</div>
 							<div class="L three single_txt">{{ $goods->variety or '' }}</div>
 							<div class="L four single_txt">{{ $goods->standard or '' }}</div>
@@ -74,21 +74,21 @@
 						<li class="final clear">
 							<div class="L">
 								<span>物流方式：</span>
-								<span><label><input type="radio" class="radio_btn wlfangshi" checked="checked" value="1"> 买家自提</label></span>
-								{{--<span><label><input type="radio" class="radio_btn wlfangshi" value="2"> 商家承担</label></span>
-								<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>--}}
+								<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" checked="checked" value="1"> 买家自提</label></span>
+								<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" value="2"> 商家承担</label></span>
+								{{--<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>--}}
 							</div>
 							<div class="R">
 								<span>付款方式：</span>
-								<span><label><input type="radio" class="radio_btn fkfangshi" value="1" checked="checked"> 全额付款</label></span>
-								{{--<span><label><input type="radio" class="radio_btn fkfangshi" value="1"> 货到付款</label></span>--}}
+								<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="1" checked="checked"> 全额付款</label></span>
+								<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="1"> 货到付款</label></span>
 							</div>
 						</li>
 						<li class="final clear">
 							<div class="L another" style="display: none;">
-								<span><input type="checkbox" value="1" class="check_btn lwzhifu"> 加工</span>
-								<span><input type="checkbox" value="2" class="check_btn lwzhifu"> 防腐</span>
-								<span><input type="checkbox" value="3" class="check_btn lwzhifu"> 苫盖</span>
+								<span><input type="checkbox" value="加工" name="technology[]" class="check_btn lwzhifu"> 加工</span>
+								<span><input type="checkbox" value="防腐" name="technology[]" class="check_btn lwzhifu"> 防腐</span>
+								<span><input type="checkbox" value="苫盖" name="technology[]" class="check_btn lwzhifu"> 苫盖</span>
 							</div>
 							<div class="R">（货款）：<em class="one_pay">￥{{ $buy_price }}</em></div>
 						</li>

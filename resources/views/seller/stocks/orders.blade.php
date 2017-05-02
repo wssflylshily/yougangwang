@@ -13,7 +13,8 @@
                 <!-- 我的现货 我的期货 我的合同-->
                 <div class="orderQihuo">
                     <ul class="tab clear">
-                        <li class="on"><a href="meHeTongHistory1.html">现货订单</a></li>
+                        <li  class="on"><a href="{{ route('seller.stocks.orders') }}">现货订单</a></li>
+                        <li><a href="/seller/futuresOrders">期货订单</a></li>
                     </ul>
                     <!-- 我的现货-->
                     <div class="orderCon">
@@ -100,20 +101,26 @@
                                                         <a href="#" class="f12 textBlue">待评价</a>
                                                     @elseif($order->status == 99)
                                                         <a href="#" class="f12">交易成功</a>
+                                                    @elseif($order->status == 100)
+                                                        <a href="#" class="f12">订单取消</a>
                                                     @endif
-                                                    <a href="#" class="f12">订单详情</a>
+                                                    {{--<a href="#" class="f12">订单详情</a>--}}
                                                 </li>
                                                 <li class="td10">
                                                     @if($order->status == 4)
-                                                        <a href="{{ route('seller.stocks.change', ['order_sn' => $order->order_sn, 'status' => 5]) }}" class="btnFukuan btnRed2">发货</a>
+                                                        {{--<a href="{{ route('seller.stocks.change', ['order_sn' => $order->order_sn, 'status' => 5]) }}" class="btnFukuan btnRed2">发货</a>--}}
+                                                        <a id="send_captcha" href="javascript:void(0);" data_id="{{ $order->id }}" class="btnFukuan btnRed2">发货</a>
                                                     @elseif($order->status == -1 && $order->contract && $order->contract->status == 1 )
                                                         <a href="{{ route('user.stocks.contract', ['order_sn' => $order->order_sn]) }}" class="btnShouhuo btnRed4">签约</a>
                                                     @elseif($order->status == 5)
-                                                        <a href="{{ route('seller.stocks.change', ['order_sn' => $order->order_sn, 'status' => 6]) }}" class="btnShouhuo btnRed4">已收货</a>
+                                                        {{--<a href="{{ route('seller.stocks.change', ['order_sn' => $order->order_sn, 'status' => 6]) }}" class="btnShouhuo btnRed4">已收货</a>--}}
+                                                        <a id="receive" href="javascript:void(0);" data_id="{{ $order->id }}" class="btnShouhuo btnRed4">已收货</a>
                                                     @elseif($order->status == 6)
                                                         <a href="{{ route('seller.stocks.change', ['order_sn' => $order->order_sn, 'status' => 7]) }}" class="btnShouhuo btnRed4">结算</a>
                                                     @elseif($order->status == 8)
-                                                        <a href="{{ route('seller.stocks.change', ['order_sn' => $order->order_sn, 'status' => 9]) }}" class="btnShouhuo btnBlue4">已开发票</a>
+                                                        <a href="{{ route('seller.stocks.invoice', ['order_sn' => $order->order_sn]) }}" class="btnShouhuo btnBlue4">开发票</a>
+                                                    @elseif($order->status == 99)
+                                                        <a href="{{ route('user.stocks.completion', ['order_sn' => $order->order_sn]) }}" class="btnShouhuo btnBlue4">查看评论</a>
                                                     @endif
                                                 </li>
                                             </ul>
@@ -124,25 +131,83 @@
                         </ul>
                     </div>
                 </div>
+                <input id="csrfToken" type="hidden" value="{{ csrf_token() }}">
                 <div class="fenyeArea clear">
                     {!! $order_goods->render() !!}
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
-    
+
+    <!-- Toaster -->
+    <script src="/plugins/jquery-toaster/jquery.toaster.js"></script>
+
+    <!-- pages script -->
+    <script src="/plugins/jquery-form/jquery.form.min.js"></script>
+    <script src="/assets/base.js"></script>
+
     <script type="text/javascript">
+        $("#stocks_order").addClass("on");
     $(function(){
     	$(document).on("click", ".thead .contact", function() {
 	        var tel=$(this).attr("data_tel");
 	        $.alert("请拨打电话："+tel, "联系方式");
 	    });
+
+        var base = new Base();
+        base.initForm();
+
+        $(document).on('click', '#send_captcha', function() {
+            var data = {
+                order_id  : $(this).attr("data_id"),
+                _token  : $('#csrfToken').val()
+            };
+
+            $.post('{{ route('seller.stocks.sendgoodssms') }}', data, function(response) {
+                if (response.result !== true) {
+                    $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                    self.waiting = false;
+                    return false;
+                }
+
+                $.toaster({ priority : 'success', title : '成功', message : response.message });
+                window.location.reload();
+            })
+        });
+
+        $(document).on('click', '#receive', function() {
+            $.prompt({
+                text: "",
+                title: "输入收货码",
+                onOK: function(text) {
+//                    $.alert("您的收货码是:"+text);
+                    var data = {
+                        order_id  : $("#receive").attr("data_id"),
+                        code : text,
+                        _token  : $('#csrfToken').val()
+                    };
+                    //alert(data.order_id);return;
+
+                    $.post('{{ route('seller.stocks.receive') }}', data, function(response) {
+                        console.log(response)
+                        if (response.result !== true) {
+                            $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                            self.waiting = false;
+                            return false;
+                        }
+
+                        $.toaster({ priority : 'success', title : '成功', message : response.message });
+                        window.location.reload();
+                    })
+                },
+                onCancel: function() {
+                    console.log("取消了");
+                },
+                input: ''
+            });
+        });
      })
     </script>
     <!-- footer-->

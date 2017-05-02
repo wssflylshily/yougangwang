@@ -1,238 +1,185 @@
-@extends('_layouts.shop')
 @php($active = 'special')
+@extends('_layouts.shop')
+
 
 @section('main-content')
 		<!--select-->
 		<div class="mid_div exchange com_div">
 			<form action="/special" method="get">
-				<div class="select_div">
-					<div>
-						<select name="province">
-							<option value="0">选择地区</option>
-							@foreach($provinces as $province)
-								<option @if($province->areaId == Request::input('province')) selected @endif value="{{ $province->areaId }}">{{ $province->areaName }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">-</div>
-					<div>
-						<select name="city">
-							@if(Request::input('city') && isset($cities))
-								@foreach($cities as $city)
-									<option @if(Request::input('city') == $city->areaId)selected @endif value="{{ $city->areaId }}">{{ $city->areaName }}</option>
+					<div class="select_div">
+						<div>
+							<select name="province">
+								<option value="0">选择地区</option>
+								@foreach($provinces as $province)
+									<option @if($province->areaId == Request::input('province')) selected @endif value="{{ $province->areaId }}">{{ $province->areaName }}</option>
 								@endforeach
-							@else
-								<option value="0">选择城市</option>
-							@endif
-						</select>
+							</select>
+						</div>
+						<div class="div1">-</div>
+						<div>
+							<select name="city">
+								@if(Request::input('city') && isset($cities))
+									@foreach($cities as $city)
+										<option @if(Request::input('city') == $city->areaId)selected @endif value="{{ $city->areaId }}">{{ $city->areaName }}</option>
+									@endforeach
+								@else
+									<option value="0">选择城市</option>
+								@endif
+							</select>
+						</div>
+						<div>
+							<select class="w1" name="variety">
+								<option value="0">选择品种</option>
+								@foreach ( $varieties as $variety)
+									<option @if (Request::input('variety') == $variety->name) selected @endif >{{ $variety->name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div>
+							<select class="w1" name="standard">
+								<option value="0">选择标准</option>
+								@foreach ( $standards as $standard)
+									<option @if (Request::input('standard') == $standard->name) selected @endif >{{ $standard->name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div>
+							<select class="w1" name="material">
+								<option value="0">选择材质</option>
+								@foreach ( $materials as $material)
+									<option @if (Request::input('material') == $material->name) selected @endif >{{ $material->name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div>
+							<select class="w1" name="steelmill">
+								<option value="0">选择钢厂</option>
+								@foreach ( $steelmills as $steelmill)
+									<option @if (Request::input('steelmill') == $steelmill->name) selected @endif >{{ $steelmill->name }}</option>
+								@endforeach
+							</select>
+						</div><br>
+						<div>外径</div>
+						<div>
+							{{--<select name="outer_diameter1">
+                                <option value="0">选择外径</option>
+                                @foreach ( config('const.goods_outer_diameter1') as $outer_diameter)
+                                    <option @if (Request::input('outer_diameter1') == $outer_diameter) selected @endif >{{ $outer_diameter }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 100px;" name="outer_diameter1" placeholder="输入外径范围" value="@if (Request::input('outer_diameter1') != null){{ Request::input('outer_diameter1') }}@endif">
+						</div>
+						<div class="div1">-</div>
+						<div>
+							{{--<select class="w2"  name="outer_diameter2">
+                                <option value="0">选择外径</option>
+                                @foreach ( config('const.goods_outer_diameter2') as $outer_diameter)
+                                    <option @if (Request::input('outer_diameter2') == $outer_diameter) selected @endif >{{ $outer_diameter }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 100px;" name="outer_diameter2" placeholder="输入外径范围" value="@if (Request::input('outer_diameter2') != null){{ Request::input('outer_diameter2') }}@endif">
+						</div>
+						<div class="div1">mm</div>
+						<div></div>
+						<div>厚度</div>
+						<div>
+							{{--<select class="w2" name="thickness1">
+                                <option value="0">选择厚度</option>
+                                @foreach ( config('const.goods_thickness1') as $thickness)
+                                    <option @if (Request::input('thickness1') == $thickness) selected @endif >{{ $thickness }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 100px;" name="thickness1" placeholder="输入厚度范围" value="@if (Request::input('thickness1') != null){{ Request::input('thickness1') }}@endif">
+						</div>
+						<div class="div1">-</div>
+						<div>
+							{{--<select class="w2" name="thickness2">
+                                <option value="0">选择厚度</option>
+                                @foreach ( config('const.goods_thickness2') as $thickness)
+                                    <option @if (Request::input('thickness2') == $thickness) selected @endif >{{ $thickness }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 100px;" name="thickness2" placeholder="输入厚度范围" value="@if (Request::input('thickness2') != null){{ Request::input('thickness2') }}@endif">
+						</div>
+						<div class="div1">mm</div>
+						<div></div>
+						<div>长度</div>
+						<div>
+							{{--<select class="w2" name="length1">
+                                <option value="0">选择长度</option>
+                                @foreach ( config('const.goods_length1') as $length)
+                                    <option @if (Request::input('length1') == $length) selected @endif >{{ $length }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 100px;" name="length1" placeholder="输入长度范围" value="@if (Request::input('length1') != null){{ Request::input('length1') }}@endif">
+						</div>
+						<div class="div1">-</div>
+						<div>
+							{{--<select class="w2" name="length2">
+                                <option value="0">选择长度</option>
+                                @foreach ( config('const.goods_length2') as $length)
+                                    <option @if (Request::input('length2') == $length) selected @endif >{{ $length }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 100px;" name="length2" placeholder="输入长度范围" value="@if (Request::input('length2') != null){{ Request::input('length2') }}@endif">
+						</div>
+						<div class="div1">m</div><br>
+						<div>价格（出厂价）</div>
+						<div>
+							{{--<select class="w2" name="price1">
+                                <option value="0">选择价格</option>
+                                @foreach ( config('const.goods_price1') as $price)
+                                    <option @if (Request::input('price1') == $price) selected @endif >{{ $price }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 110px;" name="price1" placeholder="输入价格范围" value="@if (Request::input('price1') != null){{ Request::input('price1') }}@endif">
+						</div>
+						<div class="div1">-</div>
+						<div>
+							{{--<select class="w2" name="price2">
+                                <option value="0" >选择价格</option>
+                                @foreach ( config('const.goods_price2') as $price)
+                                    <option @if (Request::input('price2') == $price) selected @endif >{{ $price }}</option>
+                                @endforeach
+                            </select>--}}
+							<input type="text" style="width: 110px;" name="price2" placeholder="输入价格范围" value="@if (Request::input('price2') != null){{ Request::input('price2') }}@endif">
+						</div>
+						<div class="div1">元</div>
+						<div></div>
+						<div class="div1">
+							<select class="w3" name="search_key">
+								<option @if (Request::input('search_key') == 'variety') selected @endif value="variety">产品</option>
+								<option @if (Request::input('search_key') == 'steelmill') selected @endif value="steelmill">钢厂</option>
+							</select>
+						</div>
+						<div class="div1"><input type="text" name="search_content" placeholder="输入搜索内容" value="@if (Request::input('search_content') != null){{ Request::input('search_content') }}@endif"></div>
+						<div class="div1"><button class="btn" type="submit" id="search_btn">搜索</button></div>
 					</div>
-					<div>
-						<select class="w1" name="variety">
-							<option value="0">选择品种</option>
-							@foreach ( config('const.goods_variety') as $variety)
-								<option @if (Request::input('variety') == $variety) selected @endif >{{ $variety }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div>
-						<select class="w1" name="standard">
-							<option value="0">选择标准</option>
-							@foreach ( config('const.goods_standard') as $standard)
-								<option @if (Request::input('standard') == $standard) selected @endif >{{ $standard }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div>
-						<select class="w1" name="material">
-							<option value="0">选择材质</option>
-							@foreach ( config('const.goods_material') as $material)
-								<option @if (Request::input('material') == $material) selected @endif >{{ $material }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div>
-						<select class="w1" name="steelmill">
-							<option value="0">选择钢厂</option>
-							@foreach ( config('const.goods_steelmill') as $steelmill)
-								<option @if (Request::input('steelmill') == $steelmill) selected @endif >{{ $steelmill }}</option>
-							@endforeach
-						</select>
-					</div><br>
-					<div>外径</div>
-					<div>
-						<select name="outer_diameter1">
-							<option value="0">选择外径</option>
-							@foreach ( config('const.goods_outer_diameter1') as $outer_diameter)
-								<option @if (Request::input('outer_diameter1') == $outer_diameter) selected @endif >{{ $outer_diameter }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">-</div>
-					<div>
-						<select class="w2"  name="outer_diameter2">
-							<option value="0">选择外径</option>
-							@foreach ( config('const.goods_outer_diameter2') as $outer_diameter)
-								<option @if (Request::input('outer_diameter2') == $outer_diameter) selected @endif >{{ $outer_diameter }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">mm</div>
-					<div></div>
-					<div>厚度</div>
-					<div>
-						<select class="w2" name="thickness1">
-							<option value="0">选择厚度</option>
-							@foreach ( config('const.goods_thickness1') as $thickness)
-								<option @if (Request::input('thickness1') == $thickness) selected @endif >{{ $thickness }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">-</div>
-					<div>
-						<select class="w2" name="thickness2">
-							<option value="0">选择厚度</option>
-							@foreach ( config('const.goods_thickness2') as $thickness)
-								<option @if (Request::input('thickness2') == $thickness) selected @endif >{{ $thickness }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">mm</div>
-					<div></div>
-					<div>长度</div>
-					<div>
-						<select class="w2" name="length1">
-							<option value="0">选择长度</option>
-							@foreach ( config('const.goods_length1') as $length)
-								<option @if (Request::input('length1') == $length) selected @endif >{{ $length }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">-</div>
-					<div>
-						<select class="w2" name="length2">
-							<option value="0">选择长度</option>
-							@foreach ( config('const.goods_length2') as $length)
-								<option @if (Request::input('length2') == $length) selected @endif >{{ $length }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">m</div><br>
-					<div>价格（出厂价）</div>
-					<div>
-						<select class="w2" name="price1">
-							<option value="0">选择价格</option>
-							@foreach ( config('const.goods_price1') as $price)
-								<option @if (Request::input('price1') == $price) selected @endif >{{ $price }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">-</div>
-					<div>
-						<select class="w2" name="price2">
-							<option value="0" >选择价格</option>
-							@foreach ( config('const.goods_price2') as $price)
-								<option @if (Request::input('price2') == $price) selected @endif >{{ $price }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="div1">mm</div>
-					<div></div>
-					<div class="div1">
-						<select class="w3" name="search_key">
-							<option @if (Request::input('search_key') == 'name') selected @endif value="name">产品</option>
-							<option @if (Request::input('search_key') == 'steelmill') selected @endif value="steelmill">钢厂</option>
-						</select>
-					</div><div class="div1"><input type="text" name="search_content" placeholder="输入搜索内容" value="@if (Request::input('search_content') != null){{ Request::input('search_content') }}@endif"></div>
-					<div class="div1"><button class="btn" type="submit" id="search_btn">搜索</button></div>
-				</div>
-			</form>
+				</form>
 			<!--search_content-->
 			<form action="{{ route('shop.order.checknow.post') }}" method="post">
 			<div class="list_eleven">
 				<div class="eleven_t clear">
-					<div class="one L xl_menu"><span class="s0">地区</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="one L xl_menu">地区
 					</div>
-					<div class="two L xl_menu"><span class="s0">品种</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="two L xl_menu">品种
 					</div>
-					<div class="three L xl_menu"><span class="s0">标准</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="three L xl_menu">{{--<span class="s01">--}}标准{{--</span>--}}
 					</div>
-					<div class="four L xl_menu"><span class="s0">材质</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="four L xl_menu" style="cursor:pointer">{{--<span class="s01">--}}材质{{--</span>--}}
 					</div>
-					<div class="five L xl_menu"><span class="s0">外径</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="five L xl_menu" style="cursor:pointer">{{--<span class="s01">--}}外径{{--</span>--}}
 					</div>
-					<div class="six L xl_menu"><span class="s0">厚度</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="six L xl_menu" style="cursor:pointer">{{--<span class="s01">--}}厚度{{--</span>--}}
 					</div>
-					<div class="seven L xl_menu"><span class="s0">长度</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="seven L xl_menu" style="cursor:pointer">{{--<span class="s01">--}}长度{{--</span>--}}
 					</div>
-					<div class="eight L xl_menu"><span class="s0">钢厂</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="eight L xl_menu">钢厂
 					</div>
-					<div class="nine L xl_menu"><span class="s0">供应商</span>
-						<div class="xl_div">
-							<ul>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>全部</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>天津</span></li>
-								<li class="clear"><input class="check_btn" type="checkbox" value=""><span>北京</span></li>
-							</ul>
-						</div>
+					<div class="nine L xl_menu">供应商
 					</div>
-					<div class="ten L"><span class="s01">吨数</span></div>
-					<div class="eleven L"><span class="s01">价格</span></div>
+					<div class="ten L" style="cursor:pointer">{{--<span class="s01">--}}吨数{{--</span>--}}</div>
+					<div class="eleven L" style="cursor:pointer">{{--<span class="s01">--}}价格{{--</span>--}}</div>
 				</div>
 				<div class="list">
 					<ul id="exchanlist">

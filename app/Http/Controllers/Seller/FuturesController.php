@@ -50,11 +50,30 @@ class FuturesController extends Controller
     		$future_db->whereBetween('delivery_date',[Request::input('start'),Request::input('end')]);
     	}
     	
-    	$futures = $future_db->groupby('order_id')->orderby('order_id','desc')->paginate(5);
+    	$futures = $future_db
+    				->leftJoin('areas', 'areas.areaId', '=', 'order_futures.area_id')
+    				->groupby('order_id')
+    				->orderby('order_id','desc')
+    				->paginate(10);
 		
     	$allArea = DB::table('areas')->where('parentId',0)->get();
+    	//品种
+    	$db1 = App\Variety::query();
+    	$parameter['varieties'] = $db1->get();
     	
-    	return view('seller.futures.futuresList',['futures'=>$futures,'areas'=>$allArea]);
+    	//材质
+    	$db2 = App\Material::query();
+    	$parameter['materials'] = $db2->get();
+    	
+    	//标准
+    	$db3 = App\Standard::query();
+    	$parameter['standards'] = $db3->get();
+    	
+    	//钢厂
+    	$db4 = App\SteelMill::query();
+    	$parameter['steelmills'] = $db4->get();
+    	
+    	return view('seller.futures.futuresList',['futures'=>$futures,'areas'=>$allArea],$parameter);
     }
     
     /**
@@ -63,26 +82,44 @@ class FuturesController extends Controller
     protected function getDetail($order_id){
     	$order_db = App\Order::query();
     	$get_order = $order_db->where('id',$order_id)->first();
-    	
-    	return view('seller.futures.detail',['order'=>$get_order]);
+    	$areas = DB::table('areas')->where('parentId',0)->get();
+//     	$user_id = Auth::user()->id;
+//     	$user_db = App\User::query();
+//     	$user = $user_db->where('id',$user_id)->first();
+//     	$seller_db = App\Seller::query();
+//     	$seller = $seller_db->where('user_id',$user_id)->first();
+    	$futureNum = $order_db->where('user_id',$get_order->user_id)->count();
+    	return view('seller.futures.detail',['order'=>$get_order,'areas'=>$areas,'futureNum'=>$futureNum]);
     }
     
     /**
      * 期货报单
      */
     protected function getOfferFutures(){
-    	$seller_id = Auth::user()->id;
-    	$db_offers = App\FutureOffers::query();
-    	$order_ids = $db_offers->where('seller_id',$seller_id)->groupby('order_id')->get(['order_id']);
+    	$user_id = Auth::user()->id;
+    	$seller_db = App\Seller::query();
+    	$seller = $seller_db->where('user_id',$user_id)->first();
     	
-//     	$orderids = DB::table('future_offers')->where('seller_id',$seller_id)->lists('order_id');
+    	$db_offers = App\FutureOffers::query();
+    	$order_ids = $db_offers->where('seller_id',$seller->id)->groupby('order_id')->lists('order_id');
+    	
+    	//$orderids = DB::table('future_offers')->where('seller_id',$seller_id)->lists('order_id');
 //     	$list = DB::table('orders')->whereIn('id',$orderids)->get();
     	$db_orders = App\Order::query();
 //     	 ->join('future_offers',)
-        $orders = $db_orders->where('type',2)->where('seller_id',$seller_id)->whereIn('id',$order_ids)->get();
+        $orders = $db_orders->where('type',2)->whereIn('id',$order_ids)->orderBy('id','desc')->get();
+        
+        /*$contract_db = App\Contract::query();
+        //签约中的订单
+        $order_ids1 = $contract_db->where('status','<',3)->whereIn('order_id',$order_ids)->lists('order_id');
+        $orders1 = $db_orders->where('type',2)->whereIn('id',$order_ids1)->orderBy('id','desc')->get();
+        //签约完成的订单
+        $order_ids2 = $contract_db->where('status',3)->whereIn('order_id',$order_ids)->lists('order_id');
+        $orders2 = $db_orders->where('type',2)->whereIn('id',$order_ids2)->orderBy('id','desc')->get();*/
+        
 //         print_r($orders);die;
 
-    	return view('seller.futures.offer',['list'=>$orders,'seller_id'=>$seller_id]);
+    	return view('seller.futures.offer',['list'=>$orders,'seller_id'=>$seller->id]);
     }
     
     /**
@@ -91,6 +128,11 @@ class FuturesController extends Controller
     protected function getOrders(){
     	$seller_id = Auth::user()->id;
     	$order_db = App\Order::query();
+    	$status = Request::input('status');
+    	if (Request::input('status') != null)
+    	{
+    		$order_db->where('status' , $status);
+    	}
 //     	$status = Request::input('status');
 //     	if($status==1){
     		
@@ -99,7 +141,7 @@ class FuturesController extends Controller
 //     	}
     	$orders = $order_db->where('type',2)->where('seller_id',$seller_id)->orderby('id','desc')->get();
     	
-    	return view('seller.futures.orders',['orders'=>$orders]);
+    	return view('seller.futures.orders',['orders'=>$orders,'status'=>$status]);
     }
     
     /**
@@ -118,10 +160,21 @@ class FuturesController extends Controller
      */
     protected function postLogistics(){
     	$new_logistics = new App\Logistics();
-    	$new_logistics->order_id = Request::input('order_id');
+    	$order_id = Request::input('order_id');
+    	$new_logistics->order_id = $order_id;
     	$new_logistics->message = Request::input('message');
     	$new_logistics->save();
-    	return redirect(route('seller.futures.logistics',['order_id'=>Request::input('order_id')]));
+    	return redirect(route('seller.futures.logistics',['order_id'=>$order_id]));
+    }
+    
+    /**
+     * 查看发票信息
+     */
+    protected function getInvoice($order_id){
+    	$order_db = App\Order::query();
+    	$order = $order_db->where('id',$order_id)->first();
+//     	dd($order);
+    	return view('seller.futures.invoice',['order'=>$order]);
     }
     
     /**

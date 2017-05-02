@@ -96,10 +96,10 @@ Cart.prototype.deleteSelected = function(selected, target)
         _token  : $('#csrfToken').val()
     };
 
-    if (self.waiting === true) {
+    /*if (self.waiting === true) {
         alert('请稍候...有其他操作正在执行');
     }
-    self.waiting = true;
+    self.waiting = true;*/
 
     $.post('/cart/delete', data, function(response) {
         if (response.result !== true) {

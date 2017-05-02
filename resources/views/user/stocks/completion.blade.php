@@ -17,14 +17,17 @@
 			</div>
 			<div style=" width: 1131px; margin: -37px 0px 0px 69px; padding-top: 40px; border-top: 1px solid #426dcc;">
 				<div style="text-align: center;">
-					<h2 style="font-size: 18px;"><img src="/assets/shop/img/qhtx_03.png" width="30" style="vertical-align: middle;"> 交易完成，请对本次交易进行评价</h2>
+					<h2 style="font-size: 18px;">
+						<img src="/assets/shop/img/qhtx_03.png" width="30" style="vertical-align: middle;">
+						@if($comment)交易完成@else交易完成，请对本次交易进行评价@endif
+					</h2>
 					<div class="com_distance" style="padding: 15px 0px;">
 						<span>订单号： {{ $order->order_sn or '' }} </span>
 						<span>（签约日期：<?php echo substr($order->created_at,0,4) ?>年<?php echo substr($order->created_at,5,2) ?>月<?php echo substr($order->created_at,8,2) ?>日）</span>
 						<span> 商家名称： {{ $order->seller->name or '' }}</span>
 					</div>
 					<h3 style="font-size: 16px; color: #436bcd; margin-bottom: 15px;">综合评价</h3>
-					<span id="notice" style="color: red">@if($comment) 评价完成 @endif</span>
+					{{--<span id="notice" style="color: red">@if($comment) 评价完成 @endif</span>--}}
 					@if($comment)
 						<div class="com_star">
 							@for($i=0;$i<$comment->star;$i++)
@@ -66,7 +69,7 @@
 				<div class="com_div" style="margin: 20px auto; text-align: center;">
 					@if($comment)
 					@else
-						<a href="#" class="com_btn">确 认 提 交</a>
+						<a href="javascript:;" class="com_btn">确 认 提 交</a>
 					@endif
 				</div>
 			</div>
@@ -130,11 +133,7 @@
                         datatype: "json",
                         success:function(e){
                             console.log(e);
-                            if (e.result == true){
-                                window.location.href="{{ route('user.home') }}";
-							}else {
-                                $('#notice').html(e.message);
-							}
+                            window.location.href="{{ route('user.home') }}";
                         },
                         error: function(){
                         }

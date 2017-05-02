@@ -3,75 +3,74 @@
 
 @section('main-content')
 		<!--banner-->
+		<div class="mid_div" style="position: relative; margin-top: 2px;">
+			<div class="index_xiaoxi" @if(!Auth::check()) style="opacity:0.6;" @endif>
+				<h2>消息中心  {{--<a href="#" class="R"><img style="padding-top: 10px;" src="/assets/shop/img/ygsy_05.png" /></a>--}}</h2>
+				<div style=" height: 336px; margin-top: 8px; overflow: hidden;" class="msg">
+					<ul>
+					
+						{{--<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>
+						<li><a href="#">2017年4月5日您有来自于天津派普斯有限公司的合同待签约。</a></li>--}}
+					
+					</ul>
+				</div>
+			</div>
+		</div>
 		<div id="banner_tabs" class="flexslider">
+			<!--
+				<div class="mid_div clear" style="margin-top: 10px;">
+			<div class="L index_xiaoxi" style="width: 280px;">
+				<h2>消息中心</h2>
+				
+			</div>
+			<div class="R" style="width: 900px;">
+			-->
 		    <ul class="slides">
+				{{--@foreach($banners as $banner)--}}
 		        <li>
-		            <a title="" target="_blank" href="#">
-		                <img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner1.jpg);" />
+		            <a title="" target="_blank" href="javascript:;">
+		                <img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner2_02.jpg);" />
 		            </a>
 		        </li>
-		        <li>
-		            <a title="" href="#">
-		                <img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner1.jpg);" />
-		            </a>
-		        </li>
-		        <li>
-		            <a title="" href="#">
-		                <img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner1.jpg);" /></span>
-		            </a>
-		        </li>
+				<li>
+					<a title="" target="_blank" href="javascript:;">
+						<img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner1_02.jpg);" />
+					</a>
+				</li>
+				<li>
+					<a title="" target="_blank" href="javascript:;">
+						<img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner3_02.jpg);" />
+					</a>
+				</li>
+				<li>
+					<a title="" target="_blank" href="javascript:;">
+						<img src="/assets/shop/img/alpha.png" style="background-image:url(/assets/shop/img/banner4_02.jpg);" />
+					</a>
+				</li>
+				{{--@endforeach--}}
+		        
 		    </ul>
 		    <ol id="bannerCtrl" class="flex-control-nav flex-control-paging">
 		        <li class="active"><a>1</a></li>
 		        <li><a>2</a></li>
-		        <li><a>2</a></li>
+		        <li><a>3</a></li>
+		        <li><a>4</a></li>
 		    </ol>
 		</div>
+		
 		<script src="/assets/shop/js/slider.js"></script>
 		<script src="/assets/shop/js/lh.js"></script>
 		<!--lit_menu-->
-		<div class="index_div mid_div">
-			<ul class="clear lit_menu">
-				<li class="L">
-					<div class="L"><a href="#"><img src="/assets/shop/img/find1.jpg"></a></div>
-					<div class="R">
-						<a href="#">
-						<h2><span>找车</span></h2>
-						<div class="font">专业配送，让货主省心</div>
-						</a>
-					</div>
-				</li>
-				<li class="L">
-					<div class="L"><a href="#"><img src="/assets/shop/img/find2.jpg"></a></div>
-					<div class="R">
-						<a href="#">
-						<h2><span>找货</span></h2>
-						<div class="font">选好钢，享实惠，够省心</div>
-						</a>
-					</div>
-				</li>
-				<li class="L">
-					<div class="L"><a href="#"><img src="/assets/shop/img/find3.jpg"></a></div>
-					<div class="R">
-						<a href="#">
-						<h2><span>找加工</span></h2>
-						<div class="font">创造高技术含量精品钢铁</div>
-						</a>
-					</div>
-				</li>
-				<li class="L">
-					<div class="L"><a href="#"><img src="/assets/shop/img/find4.jpg"></a></div>
-					<div class="R">
-						<a href="#">
-						<h2><span>找资金</span></h2>
-						<div class="font">助您快速找到资金</div>
-						</a>
-					</div>
-				</li>
-			</ul>
+		<div class="index_div mid_div" style="margin-top: 40px;">
 			<!--今日特卖-->
 			<div class="lit_title">
-				<a href="#" class="clear"><img src="/assets/shop/img/lit1_03.png" class="img1 L"><span class="font1 L">今日特卖</span><span class="font2 L">Today's special offer</span><img src="/assets/shop/img/index_22.png" class="L img2"></a>
+				<a href="{{ route('shop.special') }}" class="clear"><img src="/assets/shop/img/lit1_03.png" class="img1 L"><span class="font1 L">今日特卖</span><span class="font2 L">Today's special offer</span><img src="/assets/shop/img/index_22.png" class="L img2"></a>
 			</div>
 			<!--筛选列表-->
 			{{--<div class="select_div clear">
@@ -100,7 +99,7 @@
 				<div class="nine_t clear">
 					<div class="one L">品种</div>
 					<div class="two L">规格</div>
-					<div class="three L">标准</div>
+					{{--<div class="three L">标准</div>--}}
 					<div class="four L">材质</div>
 					<div class="five L">钢厂</div>
 					<div class="six L">地区</div>
@@ -114,7 +113,7 @@
 						<li class="clear">
 							<div class="one single_txt L">{{ $good->variety or '其他' }}</div>
 							<div class="two single_txt L">9.75×1500</div>
-							<div class="three single_txt L">{{ $good->standard or '' }}</div>
+							{{--<div class="three single_txt L">{{ $good->standard or '' }}</div>--}}
 							<div class="four single_txt L">{{ $good->material or '' }}</div>
 							<div class="five single_txt L">{{ $good->steelmill or '' }}</div>
 							<div class="six single_txt L">{{ $good->areaName or '' }}</div>
@@ -129,109 +128,49 @@
 			</div>
 			<!--期货动态-->
 			<div class="lit_title">
-				<a href="#" class="clear"><img src="/assets/shop/img/lit2_10.png" class="img1 L"><span class="font1 L">期货动态</span><span class="font2 L">Futures dynamic</span><img src="/assets/shop/img/index_30.png" class="L img2"></a>
+				<a href="{{ route('shop.futures') }}" class="clear"><img src="/assets/shop/img/lit2_10.png" class="img1 L"><span class="font1 L">最新成交信息</span><span class="font2 L">Futures dynamic</span><img src="/assets/shop/img/index_30.png" class="L img2"></a>
 			</div>
 			<div class="news clear">
 				<div class="L">
-					<a href="#"><img src="/assets/shop/img/dt_14.jpg"></a>
+					<a href="javascript:;"><img src="/assets/shop/img/dt_14.jpg"></a>
 				</div>
 				<div class="R">
 					<ul>
 						@foreach ($futures as $future)
 						<li>
 							<a href="#" class="clear">
-								<div class="L one single_txt"><i><?php echo substr($future->created_at,11,6) ?></i></div>
-								<div class="L two single_txt">{{ $future->area_id }}</div>
+								<div class="L one single_txt"><i><?php echo substr($future->created_at,11,5); ?></i></div>
+								<div class="L two single_txt">{{ $future->areaName }}</div>
 								<div class="L three single_txt">{{ $future->variety }}</div>
 								<div class="L four single_txt">{{ $future->standard }}</div>
 								<div class="L five single_txt">{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length }}</div>
 								<div class="L six single_txt">{{ $future->stock }}</div>
 								<div class="L seven single_txt">交货日期 <em><?php echo substr($future->delivery_date,0,10); ?></em></div>
-								<div class="L eight single_txt">张先生</div>
+								<div class="L eight single_txt">{{$future->order->user->realname or ''}}</div>
 							</a>
 						</li>
 						@endforeach
-						<!-- <li>
-							<a href="#" class="clear">
-								<div class="L one single_txt"><i>11:50</i></div>
-								<div class="L two single_txt">上海北宁</div>
-								<div class="L three single_txt">无缝管</div>
-								<div class="L four single_txt">#20</div>
-								<div class="L five single_txt">19×89×12.3-12.5</div>
-								<div class="L six single_txt">50吨</div>
-								<div class="L seven single_txt">交货日期 <em>10月5日</em></div>
-								<div class="L eight single_txt">张先生</div>
-							</a>
-						</li>
-						<li>
-							<a href="#" class="clear">
-								<div class="L one single_txt"><i>11:50</i></div>
-								<div class="L two single_txt">上海北宁</div>
-								<div class="L three single_txt">无缝管</div>
-								<div class="L four single_txt">#20</div>
-								<div class="L five single_txt">19×89×12.3-12.5</div>
-								<div class="L six single_txt">50吨</div>
-								<div class="L seven single_txt">交货日期 <em>10月5日</em></div>
-								<div class="L eight single_txt">张先生</div>
-							</a>
-						</li>
-						<li>
-							<a href="#" class="clear">
-								<div class="L one single_txt"><i>11:50</i></div>
-								<div class="L two single_txt">上海北宁</div>
-								<div class="L three single_txt">无缝管</div>
-								<div class="L four single_txt">#20</div>
-								<div class="L five single_txt">19×89×12.3-12.5</div>
-								<div class="L six single_txt">50吨</div>
-								<div class="L seven single_txt">交货日期 <em>10月5日</em></div>
-								<div class="L eight single_txt">张先生</div>
-							</a>
-						</li> -->
+						
 					</ul>
 				</div>
 			</div>
 			<!--明星商城-->
 			<div class="lit_title">
-				<a href="#" class="clear"><img src="/assets/shop/img/lit2_10.png" class="img1 L"><span class="font1 L">明星商城</span><span class="font2 L">Star Shopping Mall</span></a>
+				<a href="javascript:;" class="clear"><img src="/assets/shop/img/lit2_10.png" class="img1 L"><span class="font1 L">本周明星商城</span><span class="font2 L">Star Shopping Mall</span></a>
 			</div>
 			<div class="shop clear">
 				<div class="L">
 					<ul class="clear">
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_18.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<h3>主营：管材</h3>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_20.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<h3>主营：管材</h3>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_20.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<h3>主营：管材</h3>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_20.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<h3>主营：管材</h3>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_20.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<h3>主营：管材</h3>
-							</a>
-						</li>
+						@foreach($sellers as $seller)
+								<li>
+									<a href="{{ route('shop.shop.home', ['seller_id'=>$seller->id]) }}">
+										<div class="img_div"><img src="{{ $seller->logo_pic }}" onerror="javascript:this.src='/assets/shop/img/hb_18.png';" alt="pic" ></div>
+										<h2>{{ $seller->name }}</h2>
+										<h3>主营：{{ $seller->business_product }}</h3>
+									</a>
+								</li>
+						@endforeach
+						
 					</ul>
 				</div>
 				<div class="R">
@@ -239,210 +178,73 @@
 					<h2>浏览量 <span><i class="i01">{{ $visits->value or 100 }}</i> 次</span></h2>
 				</div>
 			</div>
+			
+			<!--增值服务-->
+			<div class="lit_title">
+				<a href="javascript:;" style="background: none;" class="clear"><img src="/assets/shop/img/lit2_10.png" class="img1 L"><span class="font1 L">增值服务</span><span class="font2 L">Value-added Services</span></a>
+			</div>
+			<ul class="clear lit_menu" style="padding-top: 0px;text-align: center;">
+				<li class="L">
+					<div class=""><a href="javascript:;"><img src="/assets/shop/img/find1.jpg"></a></div>
+					<div class="">
+						<a href="javascript:;">
+						<h2><span>物流服务</span></h2>
+						<div class="font">专业配送，让货主省心</div>
+						</a>
+					</div>
+				</li>
+				<li class="L">
+					<div class=""><a href="javascript:;"><img src="/assets/shop/img/find3.jpg"></a></div>
+					<div class="">
+						<a href="#">
+							<h2><span>委托加工</span></h2>
+							<div class="font">创造高技术含量精品钢铁</div>
+						</a>
+					</div>
+				</li>
+				<li class="L">
+					<div class=""><a href="javascript:;"><img src="/assets/shop/img/find4.jpg"></a></div>
+					<div class="">
+						<a href="javascript:;">
+							<h2><span>金融服务</span></h2>
+							<div class="font">助您快速找到资金</div>
+						</a>
+					</div>
+				</li>
+				<li class="L">
+					<div class=""><a href="javascript:;"><img src="/assets/shop/img/find2.jpg"></a></div>
+					<div class="">
+						<a href="javascript:;">
+						<h2><span>找货服务</span></h2>
+						<div class="font">选好钢，享实惠，够省心</div>
+						</a>
+					</div>
+				</li>
+				<li class="L">
+					<div class=""><a href="javascript:;"><img src="/assets/shop/img/new.png"></a></div>
+					<div class="">
+						<a href="javascript:;">
+							<h2><span>技术服务</span></h2>
+							<div class="font">突破创新，开发新技术</div>
+						</a>
+					</div>
+				</li>
+			</ul>
 		</div>
 		
-		<!--box-->
-		<div class="com_div">
-			<div class="box_shadow"></div>
-			<div class="box_content" style="width: 1000px; margin-left: -520px; padding-bottom: 60px;">
-				<div style="width: 1000px;">
-					<div class="index_tab">
-						<ul>
-							<li class="cur">
-								<h2>方案一</h2>
-								<h3>同供应商总价排名（升序）</h3>
-							</li><li>
-								<h2>方案二</h2>
-								<h3>同供应商总价排名（升序）</h3>
-							</li>
-						</ul>
-					</div>
-					<div class="order_pay shop_car order_com tanchu fangan">	
-						<div class="ten_t clear">
-							<div class="L one">商家</div>
-							<div class="L two">品种</div>
-							<div class="L three">标准</div>
-							<div class="L four">材质</div>
-							<div class="L five">钢厂</div>
-							<div class="L six">规格</div>							
-							<div class="L eight">吨数</div>
-							<div class="L seven">单价(元/吨)</div>
-							<div class="L nine">总计</div>
-							<div class="L eleven">选择</div>							
-						</div>
-						<!--订单情况-->
-						<div class="order_list">
-							<ul class="order_ul">
-								<li class="clear shangpin">
-									<div>
-										<div class="clear">
-											<div class="L one single_txt shop_dname">山东鲁业钢铁销售有限公司</div>
-										</div>
-									</div>
-									<div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>											
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">3120</div>
-										</div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>											
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">31200</div>
-										</div>
-									</div>
-									<div>
-										<div class="L nine">￥325000.00</div>
-										<div class="L eleven">
-											<input type="checkbox" class="check_btn" value="1">
-										</div>	
-									</div>
-								</li>
-							</ul>
-						</div>
-						<div class="order_list">
-							<ul class="order_ul">
-								<li class="clear shangpin">
-									<div>
-										<div class="clear">
-											<div class="L one single_txt shop_dname">山东鲁业钢铁销售有限公司</div>
-										</div>
-									</div>
-									<div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">3120</div>											
-										</div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">31200</div>											
-										</div>
-									</div>
-									<div>
-										<div class="L nine">￥325000.00</div>
-										<div class="L eleven">
-											<input type="checkbox" class="check_btn" value="1">
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="order_pay shop_car order_com tanchu fangan" style="display: none;">	
-						<div class="ten_t clear">
-							<div class="L one">商家</div>
-							<div class="L two">品种</div>
-							<div class="L three">标准</div>
-							<div class="L four">材质</div>
-							<div class="L five">钢厂</div>
-							<div class="L six">规格</div>							
-							<div class="L eight">吨数</div>
-							<div class="L seven">单价(元/吨)</div>
-							<div class="L nine">总计</div>
-							<div class="L eleven">选择</div>							
-						</div>
-						<!--订单情况-->
-						<div class="order_list">
-							<ul class="order_ul">
-								<li class="clear shangpin">
-									<div>
-										<div class="clear">
-											<div class="L one single_txt shop_dname">山东鲁业钢铁销售有限公司</div>
-										</div>
-									</div>
-									<div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>											
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">3120</div>
-										</div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>											
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">31200</div>
-										</div>
-									</div>
-									<div>
-										<div class="L nine">￥325000.00</div>
-										<div class="L eleven">
-											<input type="checkbox" class="check_btn" value="1">
-										</div>	
-									</div>
-								</li>
-							</ul>
-						</div>
-						<div class="order_list">
-							<ul class="order_ul">
-								<li class="clear shangpin">
-									<div>
-										<div class="clear">
-											<div class="L one single_txt shop_dname">山东鲁业钢铁销售有限公司</div>
-										</div>
-									</div>
-									<div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">3120</div>											
-										</div>
-										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>
-											<div class="L eight">30</div>
-											<div class="L seven single_txt">31200</div>											
-										</div>
-									</div>
-									<div>
-										<div class="L nine">￥325000.00</div>
-										<div class="L eleven">
-											<input type="checkbox" class="check_btn" value="1">
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-					
-					<div class="clear operate_btn">
-						<button type="button" class="fabubtn gray back_infor">取消</button>
-						<button type="button" class="fabubtn submit_infor">确定</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		<script type="text/javascript"> 
+			function autoScroll(obj){  
+			$(obj).find("ul").animate({
+				marginTop : "-42px"  
+			},500,function(){  
+				$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);  
+			})  
+			}  
+			$(function(){  
+				setInterval('autoScroll(".index_xiaoxi")',2000);	  
+			})
+		</script> 
+		
 @endsection
 
 @section('footer')

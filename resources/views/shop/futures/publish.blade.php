@@ -65,7 +65,7 @@
 							var data = JSON.parse(json);
 							if(data!=""){
 								for(var i=0;i<data.length;i++){
-									str += '<option value="'+data[i].areaId+'">'+data[i].areaName+'</option>';
+									str += '<option value="'+data[i].areaId+'" data-name="'+data[i].areaName+'">'+data[i].areaName+'</option>';
 								}
 								$('select[name="city"]').append(str);
 							}
@@ -74,55 +74,125 @@
 				});
 				//发布按钮
 				$("#publish_order").click(function(){
-					var region=$("select[name='region']").val();	//地区
-					var city=$("select[name='city']").val();		//城市
+					var region=$("select[name='region'] :selected").attr("data-name");	//地区
+					var area_id=$("select[name='region']").val();	//地区
+					if(area_id==""){
+						write_alert("请选择地区");
+						return false;
+					}
+					var city=$("select[name='city'] :selected").attr("data-name");		//城市
+					var city_id=$("select[name='city']").val();		//城市
+					if(city_id==""){
+						write_alert("请选择城市");
+						return false;
+					}
 					var variety=$("select[name='variety']").val();	//品种
+					if(variety==""){
+						write_alert("请选择品种");
+						return false;
+					}
 					var standard=$("select[name='standard']").val();//标准
+					if(standard==""){
+						write_alert("请选择标准");
+						return false;
+					}
 					var material=$("select[name='material']").val();//材质
+					if(material==""){
+						write_alert("请选择材质");
+						return false;
+					}
 					var gangchang = $('input[name="steelmill"]').val();//钢厂
+					if(gangchang==""){
+						write_alert("请选择钢厂");
+						return false;
+					}
+					//console.log(region);return;
 					//var gangchang="";
 					//gangchang=$(".gangchang .gangchang_content").html();//钢厂
 					//console.log(gangchang);
 					var waijing_x=$("input[name='waijing_x']").val();
+					if(waijing_x==""){
+						write_alert("请填写外径");
+						return false;
+					}
 					//var waijing_d=$("input[name='waijing_d']").val();
 					var houdu_x=$("input[name='houdu_x']").val();
+					if(houdu_x==""){
+						write_alert("请填写厚度");
+						return false;
+					}
 					//var houdu_d=$("input[name='houdu_d']").val();
 					
 					var dingchi_pd=$("input[name='dingchi']:checked").val();
 					var dingchi_x=$("input[name='dingchi_x']").val();
+					if(dingchi_x==""){
+						write_alert("请填写长度");
+						return false;
+					}
 					var dingchi_d=$("input[name='dingchi_d']").val();
 					if(dingchi_pd==2)
 					{
 						//dingchi_x=0;
 						dingchi_d="";
+					}else{
+						if(dingchi_d==""){
+							write_alert("请填写长度最大值");
+							return false;
+						}
 					}
 					
 					var shuliang_dw=$("input[name='shuliang']:checked").val();
-					var unit = 0;
-					if(shuliang_dw=="支"){
-						unit = 1;
-					}
+
+					var unit = shuliang_dw;
+					
 					var shuliang_num=$("input[name='shuliang_num']").val();
+					if(shuliang_num==""){
+						write_alert("请填写数量");
+						return false;
+					}
 					
 					var wucha_x=$("input[name='wucha_x']").val();
+					if(wucha_x==""){
+						write_alert("请填写允差");
+						return false;
+					}
 					//var wucha_d=$("input[name='wucha_d']").val();
 					
 					var date_start=$("input[name='date_start']").val();
+					if(date_start==""){
+						write_alert("请选择交货日期");
+						return false;
+					}
 					//var date_end=$("input[name='date_end']").val();
 					//console.log(region+" "+city+" "+variety+" "+standard+" "+material+" "+waijing_d+" "+waijing_d+" "+houdu_x+" "+houdu_d+" "+dingchi_pd+" "+dingchi_x+" "+dingchi_d+" "+shuliang_dw+" "+shuliang_num+" "+wucha_x+" "+wucha_d+" "+date_start+" "+date_end);
 					//联系人
 					var lxr_name=$("input[name='lxr_name']").val();
+					if(lxr_name==""){
+						write_alert("请填写联系人姓名");
+						return false;
+					}
 					var lxr_tel=$("input[name='lxr_tel']").val();
+					if(lxr_tel==""){
+						write_alert("请填写联系电话");
+						return false;
+					}else if(!/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(lxr_tel)){
+						write_alert("请填写正确的手机号");
+						return false;
+					}
+					
 					var lxr_addr=$("input[name='lxr_addr']").val();
+					if(lxr_addr==""){
+						write_alert("请填写收货地址");
+						return false;
+					}
 					var lxr_code=$("input[name='lxr_code']").val();
-					if(lxr_tel!=""){
-						if(!/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(lxr_tel))
-						{
-							write_alert("请输入正确的手机");
-							return false;
-						}
+					if(lxr_code==""){
+						write_alert("请填写邮编");
+						return false;
 					}
 					var infos = {region:region,
+							area_id:area_id,
+							city_id:city_id,
 							city:city,
 							variety:variety,
 							standard:standard,
@@ -143,15 +213,14 @@
 							code:lxr_code,
 							_token:"{{ csrf_token() }}"
 							};
-					
+					//console.log(infos);return;
 					$.ajax({
 						type:"POST",
-						url:"/futures/addFuture",
+						url:"{{route('shop.futures.addFuture')}}",
 						data:infos,
 						datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
-						
 						success:function(json){
-							location.href = "/futures/publish2/";
+							location.href = "{{route('shop.futures.publish2')}}";
 							/*console.log(json);
 							if(json.status==1){
 								//alert(json.status);
@@ -174,13 +243,13 @@
 			<div class="contract futures_fb clear" style="border: 1px solid #416ccb;">
 				<div class="L left_div com_kj">
 					<div>
-						<span>地区</span><span><select name="region"><option>全部</option>@foreach($areas as $area)<option value="{{ $area->areaId}}">{{ $area->areaName }}</option>@endforeach</select></span>
+						<span>地区</span><span><select name="region"><option>全部</option>@foreach($areas as $area)<option value="{{$area->areaId}}" data-name="{{ $area->areaName }}">{{ $area->areaName }}</option>@endforeach</select></span>
 						<span class="s01">城市</span><span><select name="city"><option>全部</option></select></span>
-						<span class="s01">品种</span><span><select name="variety"><option>全部</option>@foreach(config('const.goods_variety') as $variety)<option>{{$variety}}</option>@endforeach</select></span>
+						<span class="s01">品种</span><span><select name="variety"><option>全部</option>@foreach($varieties as $variety)<option>{{$variety->name}}</option>@endforeach</select></span>
 					</div>
 					<div>
-						<span>标准</span><span><select name="standard"><option>全部</option>@foreach ( config('const.goods_standard') as $standard)<option>{{$standard}}</option>@endforeach</select></span>
-						<span class="s01">材质</span><span><select name="material"><option>全部</option> @foreach ( config('const.goods_material') as $material)<option>{{$material}}</option>@endforeach</select></span>
+						<span>标准</span><span><select name="standard"><option>全部</option>@foreach ( $standards as $standard)<option>{{$standard->name}}</option>@endforeach</select></span>
+						<span class="s01">材质</span><span><select name="material"><option>全部</option> @foreach ( $materials as $material)<option>{{$material->name}}</option>@endforeach</select></span>
 					</div>
 					<div class="clear">
 						<div class="L leftone" style="height: auto; padding-right: 0px; border: none;">钢厂</div>
@@ -286,51 +355,24 @@
 			<div class="index_div" style="margin: 20px 0px 20px 60px;">
 				<div class="shop futures_shop">
 					<ul class="clear">
+						@foreach($sellers as $seller)
 						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_18.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
+							<a href="{{ route('shop.shop.home', ['seller_id'=>$seller->id]) }}">
+								<div class="img_div"><img src="{{ $seller->logo_pic }}" onerror="javascript:this.src='/assets/shop/img/hb_18.png';"></div>
+								<h2>{{ $seller->name or ''}}</h2>
 								<div class="com_star">
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
+	                        		@for($i=0;$i<($seller->credit_degree);$i++)
+	                                <span class="on"></span>
+	                                @endfor
+	                                @for($j=0;$j<(5-$seller->credit_degree);$j++)
+									<span class="off"></span>
+									@endfor
 								</div>
-								<h3>主营：管材</h3>
-								<h3>历史交易：36890单</h3>
+								<h3>主营：{{ $seller->business_product or ''}}</h3>
+								<!-- <h3>历史交易：36890单</h3> -->
 							</a>
 						</li>
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_18.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<div class="com_star">
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-								</div>
-								<h3>主营：管材</h3>
-								<h3>历史交易：36890单</h3>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="img_div"><img src="/assets/shop/img/hb_18.png"></div>
-								<h2>黑龙江建龙钢铁</h2>
-								<div class="com_star">
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-									<span class="on"></span>
-								</div>
-								<h3>主营：管材</h3>
-								<h3>历史交易：36890单</h3>
-							</a>
-						</li>
+						@endforeach
 						<li style="width: 550px;">
 							<a href="#" style="padding: 0px; height: 100%;">
 								<img src="/assets/shop/img/dt_14.jpg" width="100%" height="100%">
@@ -349,7 +391,7 @@
 					<div class="gc_pass_select"><span>已选择：</span></div>
 					<div>
 						<ul class="gc_ul">
-							@foreach(config('const.goods_steelmill') as $steelmill)<li>{{$steelmill}}</li>@endforeach
+							@foreach($steelmills as $steelmill)<li>{{$steelmill->name}}</li>@endforeach
 						</ul>
 					</div>
 					<div class="operate_btn"><a href="javascript:;" class="fabubtn gray gangchang_cancel_btn">取消</a><a href="javascript:;" class="fabubtn gangchang_ok_btn">确定</a></div>

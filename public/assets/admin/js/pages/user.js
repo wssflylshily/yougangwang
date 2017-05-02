@@ -16,6 +16,7 @@ User.prototype.deleteSelected = function()
         alert('您没有选中要删除的用户');
         return;
     }
+    //console.log(selected);return;
 
     var data = {
         user_id: selected,
@@ -33,6 +34,7 @@ User.prototype.deleteSelected = function()
 
     $.post('/admin/user/delete', data, function(response) {
         if (response.result !== true) {
+            console.log(response.message);
             $.toaster({ priority : 'danger', title : '失败', message : response.message });
             return false;
         }

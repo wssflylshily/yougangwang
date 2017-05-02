@@ -34,8 +34,8 @@
                             <li>品种
                                 <select name="variety">
                                     {{--<option value="">全部</option>--}}
-                                    @foreach ( config('const.goods_variety') as $variety)
-                                        <option value="{{ $variety }}" @if ($goods->variety == $variety) selected @endif > {{ $variety }}</option>
+                                    @foreach ( $varieties as $variety)
+                                        <option value="{{ $variety->name }}" @if ($goods->variety == $variety->name) selected @endif > {{ $variety->name }}</option>
                                     @endforeach
                                 </select>
                             </li>
@@ -43,27 +43,27 @@
                         <ul class="clear">
                             <li>标准
                                 <select name="standard">
-                                    @foreach ( config('const.goods_standard') as $standard)
-                                        <option value="{{ $standard }}" @if ($goods->standard == $standard) selected @endif > {{ $standard }}</option>
+                                    @foreach ( $standards as $standard)
+                                        <option value="{{ $standard->name }}" @if ($goods->standard == $standard->name) selected @endif > {{ $standard->name }}</option>
                                     @endforeach
                                 </select>
                             </li>
                             <li>材质
                                 <select name="material">
-                                    @foreach ( config('const.goods_material') as $material)
-                                        <option value="{{ $material }}" @if ($goods->material == $material) selected @endif > {{ $material }}</option>
+                                    @foreach ( $materials as $material)
+                                        <option value="{{ $material->name }}" @if ($goods->material == $material->name) selected @endif > {{ $material->name }}</option>
                                     @endforeach
                                 </select>
                             </li>
                             <li>钢厂
                                 <select name="steelmill">
-                                    @foreach ( config('const.goods_steelmill') as $steelmill)
-                                        <option value="{{ $steelmill }}" @if ($goods->steelmill == $steelmill) selected @endif > {{ $steelmill }}</option>
+                                    @foreach ( $steelmills as $steelmill)
+                                        <option value="{{ $steelmill->name }}" @if ($goods->steelmill == $steelmill->name) selected @endif > {{ $steelmill->name }}</option>
                                     @endforeach
                                 </select>
                             </li>
                         </ul>
-                        <ul class="clear">
+                        {{--<ul class="clear">
                             <li>价格
                                 <select name="goods_price">
                                     @foreach ( config('const.goods_price') as $price)
@@ -72,7 +72,7 @@
                                 </select>
                                 元/吨
                             </li>
-                        </ul>
+                        </ul>--}}
                         <ul class="tr">
                             <li class="td1">规格</li>
                             <li class="td2" style="width: 245px;">
@@ -101,6 +101,18 @@
                                         <span><input type="radio" name="chi" class="chi"/> 定尺</span>
                                     </li>--}}
                                     <li class="last"><input name="length" type="text" value="{{ $goods->length }}" /> m</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="tr">
+                            <li class="td1">价格</li>
+                            <li class="td2">
+                                <ul>
+                                    {{--<li>
+                                        <span><input type="radio" name="chi" class="chi" checked /> 不定尺</span>
+                                        <span><input type="radio" name="chi" class="chi"/> 定尺</span>
+                                    </li>--}}
+                                    <li class="last"><input name="goods_price" type="text" value="{{ $goods->price }}" /> 元/吨</li>
                                 </ul>
                             </li>
                         </ul>

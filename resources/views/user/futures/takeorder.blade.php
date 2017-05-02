@@ -18,8 +18,29 @@
 					$(this).addClass("cur");
 					$(".box_shadow").hide();
 					$(".box_content").hide();
-					$(".shop_name").html($(this).parents("li").find("shop_dname").html());
+					$(".shop_name").html($(this).parents("li").find(".shop_dname").html());
+					var sellerid = $(this).parents("li").attr('data-seller');
+					$('#seller_id').val(sellerid);
 				});
+
+				///futures/signContract签约合同
+				$(".com_btn").click(function(){
+					var seller = $('#seller_id').val();		//选择的商家id
+					if(seller==""){
+						alert("请选择商家");return;
+					}
+					var order = $('#order_id').val();		//订单id
+					var data = {
+							_token:"{{ csrf_token() }}",
+							seller_id:seller,
+							order_id:order
+						}
+					$.post("/user/futures/selectSeller",data).success(function(){
+						//console.log(order);
+						location.href = '/futures/signContract/'+order;
+					});
+				});
+				
 			})
 		</script>
 	
@@ -40,12 +61,12 @@
 			</div>
 			<div class="com_content com_div futures_fb clear">
 				<div class="com_distance">
-					<span>订单号：GDYGHT120003765</span>
-					<span>起始日期：2016年6月14日</span>
-					<span>截止日期：2016年6月29日</span>
-					<span>剩余天数：15天</span><br>
-					<span>接单商家：<a href="javascript:;" class="shop_name">山东鲁业钢铁销售有限公司</a></span>
-					<span><a href="javascript:;">3家</a></span>
+					<span>订单号：{{$order->order_sn}}</span>
+					<span>起始日期：{{date('Y年m月d日',$stime)}}</span>
+					<span>截止日期：{{date('Y年m月d日',$etime)}}</span>
+					<span>剩余天数：{{$days}}天</span><br>
+					<span>接单商家：<a href="javascript:;" class="shop_name">@if($order->seller_id >0){{$order->seller->name}}@endif</a></span>
+					<span><a href="javascript:;">{{ $order->offers_cnt() }}家</a></span>
 					<span><a href="javascript:;" class="check_detail">查看详情</a></span>
 				</div>
 				<div class="list_eleven" style="margin-top: 0px;">
@@ -64,14 +85,14 @@
 						<ul>
 							@foreach($order->futures as $future)
 							<li class="clear">
-								<div class="one single_txt L">{{$future->area_id}}</div>
-								<div class="two single_txt L">{{$future->variety}}</div>
-								<div class="three single_txt L">{{$future->standard}}</div>
-								<div class="four single_txt L">{{$future->material}}</div>
-								<div class="five single_txt L">{{$future->steelmill}}</div>
+								<div class="one single_txt L">{{$future->area or '全部'}}</div>
+								<div class="two single_txt L">{{$future->variety or '全部'}}</div>
+								<div class="three single_txt L">{{$future->standard or '全部'}}</div>
+								<div class="four single_txt L">{{$future->material or '全部'}}</div>
+								<div class="five single_txt L">{{$future->steelmill or '全部'}}</div>
 								<div class="nine single_txt L">@if($future->length_type==1){{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}~{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}@else{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}@endif</div>
-								<div class="seven single_txt L">{{$future->deviation}}</div>
-								<div class="eight single_txt L">{{$future->stock}}@if($future->unit==1)支@else吨@endif</div>
+								<div class="seven single_txt L">{{$future->deviation}}%</div>
+								<div class="eight single_txt L">{{$future->stock}} {{$future->unit}}</div>
 								<div class="ten single_txt L"><?php echo substr($future->delivery_date,0,10); ?></div>
 							</li>
 							@endforeach
@@ -81,7 +102,7 @@
 						<div class="L">
 							<div>详细说明：</div>
 							<div class="two_div" style="border: none; padding-top: 0px; width: 920px;">
-								<p>{{ $future->detail }}</p>
+								<p>{{ $order->detail }}</p>
 							</div>
 						</div>
 					</div>
@@ -91,9 +112,11 @@
 						<span class="tit">邮编：   {{ $order->zip_code }}</span>
 						<span class="tit">收货地址：   {{ $order->address }}</span>
 					</div>
+					<input type="hidden" id="seller_id" value="{{$order->seller_id}}" />
+					<input type="hidden" id="order_id" value="{{$order->id}}" />
 				</div>	
 				<div style="text-align: right; padding: 20px;">
-					<a href="/futures/signContract" class="com_btn">签约合同</a>
+					<a href="javascript:;" class="com_btn">签约合同</a>
 				</div>
 			</div>
 			
@@ -112,25 +135,33 @@
 							<div class="L eight">交货天数</div>
 						</div>
 						<!--订单情况-->
+						@foreach($offers as $offer)
 						<div class="order_list">
 							<ul class="order_ul">
-								<li class="clear shangpin">
+								<li class="clear shangpin" data-seller="{{$offer->seller_id}}">
 									<div>
 										<div class="clear">
-											<div class="L one single_txt shop_dname">山东鲁业钢铁销售有限公司</div>
+											<div class="L one single_txt shop_dname">{{ $offer->seller->name }}</div>
 										</div>
 									</div>
 									<div>
+										@foreach($offer->detail as $detail)
 										<div class="clear">
-											<div class="L two single_txt">无缝管</div>
-											<div class="L three single_txt">API 5L</div>
-											<div class="L four single_txt">#20</div>
-											<div class="L five single_txt">鞍钢</div>
-											<div class="L six single_txt">219*9.8*12000</div>
-											<div class="L seven single_txt">3120</div>
-											<div class="L eight">30</div>
+											<div class="L two single_txt">{{$detail->variety}}</div>
+											<div class="L three single_txt">{{$detail->standard}}</div>
+											<div class="L four single_txt">{{$detail->material}}</div>
+											<div class="L five single_txt">{{$detail->steelmill}}</div>
+											<div class="L six single_txt">
+											@if($detail->length_type==1)
+											{{ $detail->outer_diameter }}*{{ $detail->thickness }}*{{ $detail->length*100 }}~{{ $detail->outer_diameter }}*{{ $detail->thickness }}*{{ $detail->max_length*100 }}
+											@else{{ $detail->outer_diameter }}*{{ $detail->thickness }}*{{ $detail->length*100 }}
+											@endif
+											</div>
+											<div class="L seven single_txt">{{$detail->unit_price}}</div>
+											<div class="L eight">{{$detail->days}}</div>
 										</div>
-										<div class="clear">
+										@endforeach
+										<!-- <div class="clear">
 											<div class="L two single_txt">无缝管</div>
 											<div class="L three single_txt">API 5L</div>
 											<div class="L four single_txt">#20</div>
@@ -138,7 +169,7 @@
 											<div class="L six single_txt">219*9.8*12000</div>
 											<div class="L seven single_txt">31200</div>
 											<div class="L eight">30</div>
-										</div>
+										</div> -->
 									</div>
 									<div>
 										<div class="L nine"><a href="javascript:;" class="select_shop">选择</a></div>
@@ -146,7 +177,8 @@
 								</li>
 							</ul>
 						</div>
-						<div class="order_list">
+						@endforeach
+						<!-- <div class="order_list">
 							<ul class="order_ul">
 								<li class="clear shangpin">
 									<div>
@@ -179,7 +211,8 @@
 									</div>
 								</li>
 							</ul>
-						</div>
+						</div> -->
+						
 					</div>
 					<div class="clear operate_btn">
 						<button type="button" class="fabubtn gray back_infor">取消</button>

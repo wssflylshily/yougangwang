@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Request;
 use Validator;
+use App;
 
 class CaptchaController extends Controller
 {
@@ -35,8 +36,8 @@ class CaptchaController extends Controller
 
             // 生成验证码和短信内容
             $captcha = rand_len_int();
-            $sms_tpl = '您的验证码是:' . $captcha . '。请不要把验证码泄露给其他人。【百分信息】';
-
+            // $sms_tpl = '您的验证码是:' . $captcha . '。请不要把验证码泄露给其他人。【百分信息】';
+             /*
             // 生成发送验证码api的调用参数
             $post_data = http_build_query([
                 'sname'     => 'DL-wanglu',
@@ -57,13 +58,46 @@ class CaptchaController extends Controller
                 captcha_store($captcha, Request::input('mobile'));
             } else {
                 throw new Exception('验证码发送失败，请重试');
+            }*/
+            $instance = new SendMessage();
+            $tem = "SMS_61735016";
+            $status=$instance->run(Request::input('mobile'),$captcha,$tem);
+            if($status == false){
+                $response['result']  = false;
+                $response['message'] = '网络错误'; 
+            }else{
+                // 把验证码相关信息保存到session里
+                captcha_store($captcha, Request::input('mobile'));
             }
-
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $response['result']  = false;
-            $response['message'] = $e->getMessage();
+            $response['message'] = '网络错误'; 
         }
 
         return $response;
+    }
+
+    //获得所有钢铁参数
+    public function getSteelParameter()
+    {
+        $result = null;
+
+        //品种
+        $db1 = App\Variety::query();
+        $result['varieties'] = $db1->get();
+
+        //材质
+        $db2 = App\Material::query();
+        $result['materials'] = $db2->get();
+
+        //标准
+        $db3 = App\Standard::query();
+        $result['standards'] = $db3->get();
+
+        //钢厂
+        $db4 = App\SteelMill::query();
+        $result['steelmills'] = $db4->get();
+
+        return $result;
     }
 }

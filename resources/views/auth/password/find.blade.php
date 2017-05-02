@@ -33,7 +33,7 @@
     			</tr>
     			<tr>
     				<td colspan="2" align="center">
-    					<a href="#" onclick="javascript:shuchu();">返回登录</a><br>
+						<a href="{{ route('auth.login') }}">返回登录</a><br>
     				</td>
     			</tr>
     		</table>

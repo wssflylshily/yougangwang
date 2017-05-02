@@ -51,8 +51,8 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
+  @include('admin._layouts.header')
+{{--  <header class="main-header">
     <!-- Logo -->
     <a href="/admin" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -211,7 +211,7 @@
       </ul>
     </section>
     <!-- /.sidebar -->
-  </aside>
+  </aside>--}}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

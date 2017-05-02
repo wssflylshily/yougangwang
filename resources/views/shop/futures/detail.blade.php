@@ -38,7 +38,7 @@
                     <p class="headimg L" style="background-image: url({{$order->user->avatar_pic or '/assets/shop/img/shangpu/sp_03.png'}})"></p>
                     <ul class="L one">
                         <!-- 如果是认证过的，则类名是这两个renzheng ok    没通过的则类名为renzheng-->
-                        <li class="first"><b class="name">{{$order->user->name}}</b>@if($order->user->gender==1)先生@else女士@endif<span class="renzheng ok"></span></li>
+                        <li class="first"><b class="name">{{$order->user->realname or ''}}</b>@if($order->user->gender==1)先生@else女士@endif<span class="renzheng ok"></span></li>
                         <li>信誉等级：
                             <p class="xinyu">
                         	@if($order->user->credit_degree>0)
@@ -58,7 +58,7 @@
                         <li class="fabu">
                             发布订单数：{{$futureNum}}
                         </li>
-                        <li class="huoyue" style="display:none;">活跃地区：北京、天津、上海</li>
+                        <li class="huoyue" style="display:none;">活跃地区：{{$order->user->seller->business_area or '暂无'}}</li>
                     </ul>
                 </div>
                 <div class="seePaiming">
@@ -91,17 +91,17 @@
                     <div class="tbody">
                     	@foreach ($order->futures as $item)
                         <ul class="tr">
-                            <li class="td1">{{ $item->area_id }}</li>
-                            <li class="td2">{{ $item->variety }}</li>
-                            <li class="td3">{{ $item->standard }}</li>
-                            <li class="td4">{{ $item->material }}</li>
-                            <li class="td5">{{ $item->steelmill }}</li>
+                            <li class="td1">{{ $item->area or '全部' }}</li>
+                            <li class="td2">{{ $item->variety or '全部' }}</li>
+                            <li class="td3">{{ $item->standard or '全部' }}</li>
+                            <li class="td4">{{ $item->material or '全部' }}</li>
+                            <li class="td5">{{ $item->steelmill or '全部' }}</li>
                             <li class="td6">@if($item->length_type==1){{ $item->outer_diameter }}*{{ $item->thickness }}*{{ $item->length*100 }}~{{ $item->outer_diameter }}*{{ $item->thickness }}*{{ $item->max_length*100 }}@else{{ $item->outer_diameter }}*{{ $item->thickness }}*{{ $item->length*100 }}@endif</li>
-                            <li class="td7">{{ $item->deviation }}</li>
-                            <li class="td8">{{ $item->stock }}</li>
+                            <li class="td7">{{ $item->deviation or ''}}</li>
+                            <li class="td8">{{ $item->stock or ''}} {{$item->unit or ''}}</li>
                             <!-- <li class="td9">125</li> -->
                             <li class="td10"><?php echo substr($item->delivery_date,0,10); ?></li>
-                            <li class="td11"><a href="javascript:;" class="btnBlue4" data_id="{{ $item->id }}">报价</a></li>
+                            <li class="td11"><a href="javascript:;" class="btnBlue4" data_id="{{ $item->id or ''}}">报价</a></li>
                         </ul>
                         @endforeach
                         <!-- <ul class="tr oushu">
@@ -125,7 +125,7 @@
                     <div class="L one"><p class="tit">详细说明：</p></div>
                     <div class="L two" style="width:500px">
                     	<div style="padding: 10px 15px; border: 1px solid #cccccc; width: 450px;">
-                    		<textarea readonly style="width:100%; height:140px">{{ $order->detail }}</textarea>
+                    		<textarea readonly style="width:100%; height:140px">{{ $order->detail or ''}}</textarea>
                     	</div>
                     </div>
                     <!-- <ul class="L two">
@@ -135,12 +135,12 @@
                         <li>3) 长度：+0/-20mm；</li>
                     </ul> -->
                     <ul class="L three">
-                        <li><span class="tit">联系人：</span>{{ $order->linkman }}</li>
-                        <li><span class="tit">联系方式：</span>{{ $order->mobile }}</li>
-                        <li><span class="tit">邮编：</span>{{ $order->zip_code }}</li>
-                        <li><span class="tit">收货地址：</span>{{ $order->address }}</li>
+                        <li><span class="tit">联系人：</span>{{ $order->linkman or ''}}</li>
+                        <li><span class="tit">联系方式：</span>{{ $order->mobile or ''}}</li>
+                        <li><span class="tit">邮编：</span>{{ $order->zip_code or ''}}</li>
+                        <li><span class="tit">收货地址：</span>{{ $order->address or ''}}</li>
                     </ul>
-                    <input type="hidden" id="order_id" value="{{$order->id}}" />
+                    <input type="hidden" id="order_id" value="{{$order->id or ''}}" />
                 </div>
                 <!--<form class="form">
                   <div class="buchong" style="text-align: left; margin-bottom: 25px;">
@@ -189,7 +189,9 @@
 				datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
 				
 				success:function(json){
-					
+					console.log(json);
+					//write_alert(json.info);
+					alert(json.info);
 				},
 				error: function(){
 				}
@@ -200,7 +202,7 @@
         //点击提交表单
         $('.spQihuoXundanDet .form .tijiao').on('click',function(){
         	var inputv=$('.spQihuoXundanDet .buchong input').val();
-        	console.log(inputv);
+        	//console.log(inputv);
         });
         
         //补充说明 input

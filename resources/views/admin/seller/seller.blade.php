@@ -32,173 +32,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="/admin" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>后台</b></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg text-left"><b>优钢（管理后台）</b></span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="/assets/admin/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>超级管理员</p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">资料</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">退出</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p style="line-height: 36px;">您好，管理员</p>
-        </div>
-      </div>
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li class="header"><!--主导航--></li>
-        <li>
-          <a href="/admin">
-            <i class="fa fa-dashboard"></i> <span>后台首页</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>会员管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/seller"><i class="fa fa-circle-o"></i> 商家会员</a></li>
-            <li><a href="/admin/user"><i class="fa fa-circle-o"></i> 注册会员</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>商品管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/stock"><i class="fa fa-circle-o"></i> 现货管理</a></li>
-            <li><a href="/admin/future"><i class="fa fa-circle-o"></i> 期货管理</a></li>
-            <li><a href="/admin/hot"><i class="fa fa-circle-o"></i> 特卖管理</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>合同管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/contract"><i class="fa fa-circle-o"></i> 合同列表</a></li>
-          </ul>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>订单管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            {{--<li><a href="admin/order"><i class="fa fa-circle-o"></i> 订单列表</a></li>--}}
-              <li><a href="/admin/order"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-              <li><a href="{{URL::route('admin.order.future')}}"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            {{--<li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-            <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}
-          </ul>
-        </li>
-       {{-- <li class="treeview">
-        	<a href="javascript:;">
-        		<i class="fa fa-book"></i>
-        		<span>网站设置</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        	</a>
-        	<ul class="treeview-menu">
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
-          	<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
-        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
-        	</ul>
-        </li>--}}
-        <li class="treeview">
-        	<a href="javascript:;">
-        		<i class="fa fa-book"></i>
-        		<span>基本信息</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        	</a>
-        	<ul class="treeview-menu">
-              <li><a href="/admin/banner"><i class="fa fa-circle-o"></i> banner管理</a></li>
-            <li><a href="website_city.html"><i class="fa fa-circle-o"></i> 城市管理</a></li>
-            <li><a href="website_steel.html"><i class="fa fa-circle-o"></i> 钢铁信息</a></li>
-            <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
-        	</ul>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+  @include('admin._layouts.header')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -234,14 +68,14 @@
               <label for="inputEmail3" class="col-sm-2 control-label">用户</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName" placeholder="用户名">
+                <input type="text" class="form-control" id="inputName" placeholder="用户名" name="name" value="{{Request()->name}}">
               </div>
             </div>
             <div class="form-group">
               <label for="inputPassword3" class="col-sm-2 control-label">手机</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTel" placeholder="手机号">
+                <input type="text" class="form-control" id="inputTel" placeholder="手机号" name="mobile" value="{{Request()->mobile}}">
               </div>
             </div>
           </div>
@@ -262,11 +96,13 @@
 
               <div class="box-tools">
                   <div class="btn-group" style="margin-bottom: 5px;">
-					<button type="button" class="btn btn-sm text-warning start-selected"><i class="fa fa-archive"></i> 启用</button>
-					<button type="button" class="btn btn-sm text-warning end-selected"><i class="fa fa-archive"></i> 禁用</button>
-					<button type="button" class="btn btn-sm text-success" onclick="javascript:location.href='#';"><i class="fa fa-plus"></i> 新增</button>
-					<button type="button" class="btn btn-sm text-success time-back"> 按星级排序</button>
-                    <button type="button" class="btn btn-sm text-danger delete-selected"><i class="fa fa-trash"></i> 删除</button>
+					{{--<button type="button" class="btn btn-sm text-warning start-selected"><i class="fa fa-archive"></i> 启用</button>
+					<button type="button" class="btn btn-sm text-warning end-selected"><i class="fa fa-archive"></i> 禁用</button>--}}
+                    <button type="button" class="btn btn-sm text-warning star-selected"><i class="fa fa-archive"></i> 设为明星商城</button>
+                    <button type="button" class="btn btn-sm text-warning nostar-selected"><i class="fa fa-archive"></i> 取消明星商城</button>
+					{{--<button type="button" class="btn btn-sm text-success" onclick="javascript:location.href='#';"><i class="fa fa-plus"></i> 新增</button>--}}
+					{{--<button type="button" class="btn btn-sm text-success time-back"> 按星级排序</button>--}}
+                    {{--<button type="button" class="btn btn-sm text-danger delete-selected"><i class="fa fa-trash"></i> 删除</button>--}}
                     
                   </div>
               </div>
@@ -283,13 +119,63 @@
                     <th>注册日期</th>
                     <th>明星商家</th>
                     <th>星级</th>                    
-                    <th>状态</th>
-                    <th>角色</th>
+                   {{-- <th>状态</th>--}}
+                    <th>审核状态</th>
+                    {{--<th>角色</th>--}}
                     <th width="140">操作</th>
                   </tr>
                 </thead>
                 <tbody>
+                @foreach($seller_list as $seller)
                   <tr>
+                    <td><input type="checkbox" name="user_id[]" value="{{$seller->id}}"></td>
+                    <td>{{$seller->id}}</td>
+                    <td>{{$seller->name}}</td>
+                    <td>{{$seller->mobile}}</td>
+                    <td>{{ $seller->created_at }}</td>
+                    <td>
+                        @if($seller->is_star==1)
+                            <span class="label label-success">是</span>
+                        @else
+                            <span class="label label-danger">否</span>
+                        @endif
+                    </td>
+                    <td style="color: #FF0000;" class="evaluate" data_score="{{$seller->credit_degree}}">
+                        {{--<a href="{{route('admin.seller.evaluate.list',['seller_id'=>$seller->id])}}">查看详情</a>--}}
+                    </td>
+                   {{-- <td>
+                        @if($seller->deleted_at!=null)
+                            <span class="label label-danger">已禁用</span>
+                        @else
+                            <span class="label label-success">已启用</span>
+                        @endif
+                        --}}{{--<span class="label label-danger">已删除</span>--}}{{--
+                    </td>--}}
+                      <td>
+                          @if($seller->shop_status==0)
+                              <span class="label label-default">待审核</span>
+                          @elseif($seller->shop_status==1)
+                              <span class="label label-success">已通过</span>
+                          @elseif($seller->shop_status==2)
+                              <span class="label label-danger">未通过</span>
+                          @endif
+                          {{--<span class="label label-danger">已删除</span>--}}
+                      </td>
+                    {{--<td>商户</td>--}}
+                    <td>
+                        <a href="{{route('admin.seller.edit',['id'=>$seller->id])}}" class="btn btn-xs btn-default">
+                            <i class="fa fa-edit"></i> 编辑
+                        </a>
+                        {{--<a href="shop_edit.html" class="btn btn-xs btn-default">
+                            <i class="fa fa-edit"></i> 编辑
+                        </a>
+                        <a href="person_detail.html" class="btn btn-xs btn-default">
+                            查看详情
+                        </a>--}}
+                    </td>
+                  </tr>
+                  @endforeach
+                  {{--<tr>
                     <td><input type="checkbox" name="user_id[]" value="1"></td>
                     <td>1</td>
                     <td>用户名1</td>
@@ -380,13 +266,14 @@
                            查看详情
                         </a>
                     </td>
-                  </tr>
+                  </tr>--}}
                 </tbody>
               </table>
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="border: none;">
               {{--<!--{!! page_render($seller_list) !!}-->--}}
+                {!! $seller_list->appends(Request::query())->render() !!}
             </div>
             <!-- /.box-body -->
           </div>
@@ -402,6 +289,9 @@
     <strong>Copyright &copy; 2016 <a href="#">YouGang</a>.</strong> All rights
     reserved.
   </footer>
+</div>
+<div id="hidden-items" style="display: none;">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="csrfToken">
 </div>
 <!-- ./wrapper -->
 
@@ -419,8 +309,13 @@
 <script src="/assets/admin/js/app.min.js"></script>
 <!-- page script 全选-->
 <script src="/assets/base.js"></script>
-<script src="/assets/admin/js/user.js"></script>
+<script src="/assets/admin/js/seller.js"></script>
 <!-- Page script -->
+{{--ajax js文件--}}
+<script src="/plugins/jquery-toaster/jquery.toaster.js"></script>
+<!-- pages script -->
+<script src="/plugins/jquery-form/jquery.form.min.js"></script>
+<script src="/assets/base.js"></script>
 <script>
   $(function () {
   	
@@ -475,29 +370,277 @@
     });
 
     var user = new User();
-    //删除
+    /*//删除
     $(document).on('click', '.delete-selected', function() {
         user.deleteSelected();//user_js
-    });
-    //启用
+    });*/
+
+     /* //删除
+      $(document).on('click', '.delete-selected', function() {
+          if($("tbody input[name='user_id[]']:checked").length==0)
+          {
+              alert("您没有选中的数据")
+          }
+          else
+          {
+              if(!confirm("您确定删除选中的商家"))
+              {
+                  return;
+              }else{
+                  var seller_ids = [];
+                  $("input[name='user_id[]']:checked").each(function(){
+                      seller_ids.push($(this).val());
+                  });
+
+                  self.waiting = true;
+
+                  var data = {
+                      seller_ids: seller_ids,
+                      _token  : $('#csrfToken').val()
+                  };
+                  /!*console.log(data)*!/
+                  $.post('{{ route('admin.seller.todel') }}', data, function(response) {
+                      if (response.result !== true) {
+                          $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                          return false;
+                      }
+
+                      $.toaster({ priority : 'success', title : '成功', message : response.message });
+                      window.location.reload();
+                  }).complete(function(){
+                      self.waiting = false;
+                  }).error(function(){
+                      $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+                  });
+                  {{--$.ajax({--}}
+                  {{--type:"get",--}}
+                  {{--url:"{{ route('admin.article.del') }}",--}}
+                  {{--datatype: "json",--}}
+                  {{--data: { 'article_ids':article_ids},--}}
+                  {{--success:function(json){--}}
+                  {{--console.log(json);--}}
+                  {{--if (json.result == true){--}}
+                  {{--window.location.href="{{ route('admin.admin.role') }}";--}}
+                  {{--}--}}
+                  {{--},--}}
+                  {{--error: function(){--}}
+                  {{--}--}}
+                  {{--});--}}
+              }
+          }
+      });*/
+    /*//启用
     $(document).on('click','.start-selected',function(){
     	user.startSelected();//user_js
-    });
-    //禁用
+    });*/
+      //启用
+      $(document).on('click','.start-selected',function(){
+          if($("tbody input[name='user_id[]']:checked").length==0)
+          {
+              alert("您没有选中的数据")
+          }
+          else
+          {
+              if(!confirm("您确定启用选中的商家"))
+              {
+                  return;
+              }else{
+                  //获取所有的选中id
+                  var seller_ids = [];
+                  $("input[name='user_id[]']:checked").each(function(){
+                      seller_ids.push($(this).val());
+                  });
+                  self.waiting = true;
+
+                  var data = {
+                      seller_ids: seller_ids,
+                      _token  : $('#csrfToken').val()
+                  };
+                  /*console.log(data);*/
+                  /*$.ajax({
+                   type:"post",
+                   url:"{{ route('admin.article.start') }}",
+                   datatype: "json",
+                   data: { 'data':data},
+                   success:function(json){
+                   console.log(json);
+                   if (json.result == true){
+                   window.location.href="{{ route('admin.admin.role') }}";
+                   }
+                   },
+                   error: function(){
+                   }
+                   });*/
+
+                  $.post('{{ route('admin.seller.start') }}', data, function(response) {
+                      if (response.result !== true) {
+                          $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                          return false;
+                      }
+
+                      $.toaster({ priority : 'success', title : '成功', message : response.message });
+                      window.location.reload();
+                  }).complete(function(){
+                      self.waiting = false;
+                  }).error(function(){
+                      $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+                  });
+
+              }
+          }
+      });
+    /*//禁用
     $(document).on('click','.end-selected',function(){
     	user.endSelected();//user_js
-    });
+    });*/
+      //禁用
+      $(document).on('click','.end-selected',function(){
+          if($("tbody input[name='user_id[]']:checked").length==0)
+          {
+              alert("您没有选中的数据")
+          }
+          else
+          {
+              if(!confirm("您确定禁用选中的商家"))
+              {
+                  return;
+              }else{
+                  //获取所有的选中id
+                  var seller_ids = [];
+                  $("input[name='user_id[]']:checked").each(function(){
+                      seller_ids.push($(this).val());
+                  });
+                  self.waiting = true;
+
+                  var data = {
+                      seller_ids: seller_ids,
+                      _token  : $('#csrfToken').val()
+                  };
+                  /*console.log(data);*/
+                  /*$.ajax({
+                   type:"post",
+                   url:"{{ route('admin.article.start') }}",
+                   datatype: "json",
+                   data: { 'data':data},
+                   success:function(json){
+                   console.log(json);
+                   if (json.result == true){
+                   window.location.href="{{ route('admin.admin.role') }}";
+                   }
+                   },
+                   error: function(){
+                   }
+                   });*/
+
+                  $.post('{{ route('admin.user.userDel') }}', data, function(response) {
+                      if (response.result !== true) {
+                          $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                          return false;
+                      }
+
+                      $.toaster({ priority : 'success', title : '成功', message : response.message });
+                      window.location.reload();
+                  }).complete(function(){
+                      self.waiting = false;
+                  }).error(function(){
+                      $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+                  });
+              }
+          }
+      });
+
+      $(document).on('click','.star-selected',function(){
+          if($("tbody input[name='user_id[]']:checked").length==0)
+          {
+              alert("您没有选中的数据")
+          }
+          else
+          {
+              if(!confirm("您确定将选中的商家设置为明星商家吗"))
+              {
+                  return;
+              }else{
+                  //获取所有的选中id
+                  var seller_ids = [];
+                  $("input[name='user_id[]']:checked").each(function(){
+                      seller_ids.push($(this).val());
+                  });
+                  self.waiting = true;
+
+                  var data = {
+                      seller_ids: seller_ids,
+                      _token  : $('#csrfToken').val()
+                  };
+
+                  $.post('{{ route('admin.seller.star') }}', data, function(response) {
+                      if (response.result !== true) {
+                          $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                          return false;
+                      }
+
+                      $.toaster({ priority : 'success', title : '成功', message : response.message });
+                      window.location.reload();
+                  }).complete(function(){
+                      self.waiting = false;
+                  }).error(function(){
+                      $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+                  });
+
+              }
+          }
+      });
+
+      $(document).on('click','.nostar-selected',function(){
+          if($("tbody input[name='user_id[]']:checked").length==0)
+          {
+              alert("您没有选中的数据")
+          }
+          else
+          {
+              if(!confirm("您确定将选中的商家设置为明星商家吗"))
+              {
+                  return;
+              }else{
+                  //获取所有的选中id
+                  var seller_ids = [];
+                  $("input[name='user_id[]']:checked").each(function(){
+                      seller_ids.push($(this).val());
+                  });
+                  self.waiting = true;
+
+                  var data = {
+                      seller_ids: seller_ids,
+                      _token  : $('#csrfToken').val()
+                  };
+
+                  $.post('{{ route('admin.seller.nostar') }}', data, function(response) {
+                      if (response.result !== true) {
+                          $.toaster({ priority : 'danger', title : '失败', message : response.message });
+                          return false;
+                      }
+
+                      $.toaster({ priority : 'success', title : '成功', message : response.message });
+                      window.location.reload();
+                  }).complete(function(){
+                      self.waiting = false;
+                  }).error(function(){
+                      $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+                  });
+
+              }
+          }
+      });
     //按星级排序
     $(document).on('click','.time-back',function(){
     	//按星级排序
     });    
     //按条件筛选
     $(".form-horizontal").submit(function(){
-    	if($("#inputName").val()==""&&$("#inputTel").val()=="")
+    	/*if($("#inputName").val()==""&&$("#inputTel").val()=="")
     	{
     		alert("没有任何筛选条件");
     		return false;
-    	}
+    	}*/
     	if($("#inputName").val()=="")
     	{
     		

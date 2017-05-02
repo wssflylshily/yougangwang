@@ -50,40 +50,40 @@
 					<div class="L nine">价格（元/吨）</div>
 				</div>
 				<!--订单情况-->
-				@php($seller = 0; $idx = 0; $checkout_cnt = count($cart_goods);)
+				{{--@php($seller = 0; $idx = 0; $checkout_cnt = count($cart_goods);)--}}
 
 				@foreach ($cart_goods as $goods)
-					@if ($goods->seller->id != $seller && $seller != 0)
+					{{--@if ($goods->seller->id != $seller && $seller != 0)
 						<li class="final clear">
 							<div class="L">
 								<span>物流方式：</span>
-								<span><label><input type="radio" class="radio_btn wlfangshi" checked="checked" value="1"> 买家自提</label></span>
-<!--								<span><label><input type="radio" class="radio_btn wlfangshi" value="2"> 商家承担</label></span>
-								<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>-->
+								<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" checked="checked" value="1"> 买家自提</label></span>
+								<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" value="2"> 送货上门</label></span>
+								<!--<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>-->
 							</div>
 							<div class="R">
 								<span>付款方式：</span>
-								<span><label><input type="radio" class="radio_btn fkfangshi" value="1" checked="checked"> 全额付款</label></span>
-<!--								<span><label><input type="radio" class="radio_btn fkfangshi" value="1"> 货到付款</label></span>-->
+								<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="1" checked="checked"> 全额付款</label></span>
+								<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="2"> 货到付款</label></span>
 							</div>
 						</li>
 						<li class="final clear">
 							<div class="L another" style="display: none;">
-								<span><input type="checkbox" value="1" class="check_btn lwzhifu"> 加工</span>
-								<span><input type="checkbox" value="2" class="check_btn lwzhifu"> 防腐</span>
-								<span><input type="checkbox" value="3" class="check_btn lwzhifu"> 苫盖</span>
+								<span><input type="checkbox" value="加工" name="technology[]" class="check_btn lwzhifu"> 加工</span>
+								<span><input type="checkbox" value="防腐" name="technology[]" class="check_btn lwzhifu"> 防腐</span>
+								<span><input type="checkbox" value="苫盖" name="technology[]" class="check_btn lwzhifu"> 苫盖</span>
 							</div>
 							<div class="R">（货款）：<em class="one_pay">￥0.00</em></div>
 						</li>
 						</ul>
 					</div>
-					@endif
+					@endif--}}
 
-					@if ($goods->seller->id != $seller)
+					{{--@if ($goods->seller->id != $seller)--}}
 					<div class="order_list">
 						<h2>{{ $goods->seller->name }}</h2>
 						<ul class="order_ul">
-					@endif
+					{{--@endif--}}
 
 						<li class="clear shangpin">
 							<div class="L two single_txt">{{ $goods->ori->area_code or '' }}</div>
@@ -96,33 +96,57 @@
 							<div class="L nine single_txt">￥<span class="s_price">{{ $goods->buy_price }}</span></div>
 						</li>
 
-					@php($seller = $goods->seller->id; $idx++;)
-					@if ($idx == $checkout_cnt)
-						<li class="final clear">
+					{{--@php($seller = $goods->seller->id; $idx++;)
+					@if ($idx == $checkout_cnt)--}}
+						{{--<li class="final clear">
 							<div class="L">
 								<span>物流方式：</span>
-								<span><label><input type="radio" class="radio_btn wlfangshi" checked="checked" value="1"> 买家自提</label></span>
-<!--								<span><label><input type="radio" class="radio_btn wlfangshi" value="2"> 商家承担</label></span>
-								<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>-->
+								<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" checked="checked" value="1"> 买家自提</label></span>
+								<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" value="2"> 送货上门</label></span>
+								<!--<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>-->
 							</div>
 							<div class="R">
 								<span>付款方式：</span>
-								<span><label><input type="radio" class="radio_btn fkfangshi" value="1" checked="checked"> 全额付款</label></span>
-<!--								<span><label><input type="radio" class="radio_btn fkfangshi" value="1"> 货到付款</label></span>-->
+								<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="1" checked="checked"> 全额付款</label></span>
+								<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="2"> 货到付款</label></span>
 							</div>
 						</li>
 						<li class="final clear">
 							<div class="L another" style="display: none;">
-								<span><input type="checkbox" value="1" class="check_btn lwzhifu"> 加工</span>
-								<span><input type="checkbox" value="2" class="check_btn lwzhifu"> 防腐</span>
-								<span><input type="checkbox" value="3" class="check_btn lwzhifu"> 苫盖</span>
+								<span><input type="checkbox" value="加工" name="technology[]" class="check_btn lwzhifu"> 加工</span>
+								<span><input type="checkbox" value="防腐" name="technology[]" class="check_btn lwzhifu"> 防腐</span>
+								<span><input type="checkbox" value="苫盖" name="technology[]" class="check_btn lwzhifu"> 苫盖</span>
 							</div>
 							<div class="R">（货款）：<em class="one_pay">￥0.00</em></div>
-						</li>
+						</li>--}}
 						</ul>
+
 					</div>
-					@endif
+					{{--@endif--}}
 				@endforeach
+				<ul class="order_ul">
+					<li class="final clear">
+						<div class="L">
+							<span>物流方式：</span>
+							<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" checked="checked" value="1"> 买家自提</label></span>
+							<span><label><input type="radio" class="radio_btn wlfangshi" name="receive_type" value="2"> 送货上门</label></span>
+							<!--<span><label><input type="radio" class="radio_btn wlfangshi" value="3"> 拼车</label></span>-->
+						</div>
+						<div class="R">
+							<span>付款方式：</span>
+							<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="1" checked="checked"> 全额付款</label></span>
+							<span><label><input type="radio" class="radio_btn fkfangshi" name="pay_type" value="2"> 货到付款</label></span>
+						</div>
+					</li>
+					<li class="final clear">
+						<div class="L another" style="display: none;">
+							<span><input type="checkbox" value="加工" name="technology[]" class="check_btn lwzhifu"> 加工</span>
+							<span><input type="checkbox" value="防腐" name="technology[]" class="check_btn lwzhifu"> 防腐</span>
+							<span><input type="checkbox" value="苫盖" name="technology[]" class="check_btn lwzhifu"> 苫盖</span>
+						</div>
+						<div class="R">（货款）：<em class="one_pay">￥0.00</em></div>
+					</li>
+				</ul>
 
 				<!--订单确认-->
 				<div class="confirm_infor">

@@ -22,27 +22,34 @@
                 <!-- 个人信息-->
                 <div class="personInfo spQihuoXundanDetInfo clear">
                     <!--<a href="#" class="set"><img src="../img/person/set.jpg"/></a>-->
-                    <p class="headimg L" style="background-image: url(/assets/shop/img/shangpu/sp_03.png)"></p>
+                    <p class="headimg L" style="background-image: url({{$order->user->avatar_pic or '/assets/shop/img/shangpu/sp_03.png'}})"></p>
                     <ul class="L one">
                         <!-- 如果是认证过的，则类名是这两个renzheng ok    没通过的则类名为renzheng-->
-                        <li class="first"><b class="name">李百万</b>先生<span class="renzheng ok"></span></li>
+                        <li class="first"><b class="name">{{$order->user->realname or ''}}</b>@if($order->user->gender==1)先生@else女士@endif<span class="renzheng ok"></span></li>
                         <li>信誉等级：
                             <p class="xinyu">
+	                            @if($order->user->credit_degree>0)
+	                        		@for($i=1;$i<=$order->user->credit_degree;$i++)
+	                        		<span class="ok"></span>
+	                        		@endfor
+	                            @else
+	                            	暂无等级
+	                            @endif
+                                <!-- <span class="ok"></span>
                                 <span class="ok"></span>
                                 <span class="ok"></span>
                                 <span class="ok"></span>
-                                <span class="ok"></span>
-                                <span class="ok"></span>
+                                <span class="ok"></span> -->
                             </p>
                         </li>
-                        <li>收货地址：天津市武清河里镇中山西路233号</li>
-                        <li>我的公司：天津津城金鼎钢铁销售有限公司</li>
+                        <li>收货地址：{{$order->user->consignee or '暂未填写'}}</li>
+                        <li>我的公司：{{$order->user->compony or '暂未填写'}}</li>
                     </ul>
                     <ul class="L two">
                         <li class="fabu">
-                            发布订单数：23
+                            发布订单数：{{$futureNum or ''}}
                         </li>
-                        <li class="huoyue">活跃地区：北京、天津、上海</li>
+                        <li class="huoyue">活跃地区：{{$order->user->seller->business_area or '暂无'}}</li>
                     </ul>
                 </div>
                 <div class="seePaiming">
@@ -75,15 +82,15 @@
                     <div class="tbody">
                     	@foreach($order->futures as $future)
                         <ul class="tr">
-                            <li class="td1">{{$future->area_id}}</li>
-                            <li class="td2">{{$future->variety}}</li>
-                            <li class="td3">{{$future->standard}}</li>
-                            <li class="td4">{{$future->material}}</li>
-                            <li class="td5">{{$future->steelmill}}</li>
+                            <li class="td1">{{$future->area or '全部'}}</li>
+                            <li class="td2">{{$future->variety or '全部'}}</li>
+                            <li class="td3">{{$future->standard or '全部'}}</li>
+                            <li class="td4">{{$future->material or '全部'}}</li>
+                            <li class="td5">{{$future->steelmill or '全部'}}</li>
                             <li class="td6">@if($future->length_type==1){{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}~{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}@else{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}@endif</li>
                             <li class="td7">{{$future->deviation}}</li>
                             <!-- <li class="td8">69</li> -->
-                            <li class="td9">{{$future->stock}}@if($future->unit==1)支@else吨@endif</li>
+                            <li class="td9">{{$future->stock}} {{$future->unit}}</li>
                             <li class="td10"><?php echo substr($future->delivery_date,0,10); ?></li>
                             <li class="td11"><a href="javascript:;" class="btnBlue4" data_id="{{$future->id}}">报价</a></li>
                         </ul>
@@ -134,11 +141,7 @@
                   <input type="submit" class="tijiao" value="提交表单" />
                 </form> -->
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
@@ -175,7 +178,9 @@
 				datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
 				
 				success:function(json){
-					
+					//console.log(json);
+					//write_alert(json.info);
+					alert(json.info);
 				},
 				error: function(){
 				}
@@ -185,7 +190,7 @@
         //点击提交表单
         $('.spQihuoXundanDet .form .tijiao').on('click',function(){
         	var inputv=$('.spQihuoXundanDet .buchong input').val();
-        	console.log(inputv);
+        	//console.log(inputv);
         });
         
         //补充说明 input

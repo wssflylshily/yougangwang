@@ -34,7 +34,6 @@ class CancelOrderController extends Controller
         }
         $orders =$db_orders
             ->where('user_id', Auth::user()->id)
-            ->where('type',1)
             ->where('status', '100')
             ->orderBy('created_at', 'desc')
             ->with('goods')

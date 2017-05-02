@@ -13,8 +13,11 @@
                 <!-- 我的期货-->
                 <div class="orderQihuo">
                     <ul class="tab clear" style="margin-bottom: 10px;">
-                        <li class="on"><a href="{{ route('user.order.cancel.index') }}">现货订单</a></li>
-                        <li><a href="{{ route('user.order.cancel.futures') }}">期货订单</a></li>
+                      {{--  <li class="on"><a href="{{ route('user.order.cancel.index') }}">现货订单</a></li>
+                        <li><a href="{{ route('user.order.cancel.futures') }}">期货订单</a></li>--}}
+                        <li><a href="{{ route('user.contract') }}">未签约</a></li>
+                        <li ><a href="{{ route('user.contract.already') }}">已签约</a></li>
+                        <li class="on"><a href="{{ route('user.order.cancel.index') }}">已作废</a></li>
                     </ul>
                     <!-- 我的期货-->
                     <div class="orderCon">
@@ -96,15 +99,18 @@
                     {!! $order_goods->render() !!}
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
     <!-- footer-->
+    <script type="text/javascript">
+        $("#order_cancel").addClass("on");
+        $(document).on("click", ".thead .contact", function() {
+	        var tel=$(this).attr("data_tel");
+	        $.alert("请拨打电话："+tel, "联系方式");
+	    });
+    </script>
 @endsection
 
 @section('footer')

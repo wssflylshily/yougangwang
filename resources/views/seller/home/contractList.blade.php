@@ -18,6 +18,7 @@
                         <li class="on"><a href="{{ route('seller.contract.home') }}">未签约</a></li>
                         <li class="line"></li>
                         <li><a href="{{ route('seller.contract.already') }}">已签约</a></li>
+                        <li><a href="{{ route('seller.contract.cancel') }}">已作废</a></li>
                         <li class="right"><p class="tip"><b></b>优钢网提示您：如果您的订单合同自发起之日起买卖双方没有签约成功，系统将自动终止双方的签约。</p></li>
                     </ul>
                     <!-- table-->
@@ -40,76 +41,27 @@
                                         <li class="td4">{{ $order->seller->name }}</li>
                                         <li class="td5">待签约</li>
                                         <li class="td6">
+                                        	@if($order->type==2)
+                                        	<a href="{{ route('shop.futures.signContract', ['order_id' => $order->id]) }}" data-htid="1" class="btnRed4 go">签约</a>
+                                        	@else
                                             <a href="{{ route('user.stocks.contract', ['order_sn' => $order->order_sn]) }}" data-htid="1" class="btnRed4 go">签约</a>
+                                            @endif
                                             {{--<a href="javascript:;" data-htid="1" class="btnGrayBd4 qxqy_toast">取消签约</a>--}}
                                         </li>
                                     </ul>
                                 @endforeach
                             @endif
-                            {{--<ul class="tr clear">
-                                <li class="td1">2602065004365800</li>
-                                <li class="td2">2016-06-17</li>
-                                <li class="td3"><a href="#">GDB2345346</a></li>
-                                <li class="td4">方先生</li>
-                                <li class="td5">未处理</li>
-                                <li class="td6">
-                                    <a href="#" class="btnRed4 go">去签约</a>
-                                </li>
-                            </ul>
-                            <ul class="tr clear">
-                                <li class="td1">2602065004365800</li>
-                                <li class="td2">2016-06-17</li>
-                                <li class="td3"><a href="#">GDB2345346</a></li>
-                                <li class="td4">刘女士</li>
-                                <li class="td5">买家未回复</li>
-                                <li class="td6">
-                                    <a href="javascript:;" data-htid="1" class="btnGrayBd4 qxqy_toast">取消签约</a>
-                                </li>
-                            </ul>
-                            <ul class="tr clear">
-                                <li class="td1">2602065004365800</li>
-                                <li class="td2">2016-06-17</li>
-                                <li class="td3"><a href="#">GDB2345346</a></li>
-                                <li class="td4">苗先生</li>
-                                <li class="td5">买家未回复</li>
-                                <li class="td6">
-                                    <a href="javascript:;" data-htid="1" class="btnGrayBd4 qxqy_toast">取消签约</a>
-                                </li>
-                            </ul>
-                            <ul class="tr clear">
-                                <li class="td1">2602065004365800</li>
-                                <li class="td2">2016-06-17</li>
-                                <li class="td3"><a href="#">GDB2345346</a></li>
-                                <li class="td4">王先生</li>
-                                <li class="td5">买家已签约</li>
-                                <li class="td6">
-                                    <a href="javascript:;" data-htid="1" class="btnBlue4 htxz_toast">下载合同</a>
-                                </li>
-                            </ul>
-                            <ul class="tr clear">
-                                <li class="td1">2602065004365800</li>
-                                <li class="td2">2016-06-17</li>
-                                <li class="td3"><a href="#">GDB2345346</a></li>
-                                <li class="td4">王先生</li>
-                                <li class="td5">买家有疑义</li>
-                                <li class="td6">
-                                    <a href="javascript:;" data-htid="1" class="btnRed4 modify_toast">修改疑义</a>
-                                </li>
-                            </ul>--}}
                         </div>
                     </div>
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
     <!-- footer-->
     <script>
+        $("#contract").addClass("on");
        $(function(){
        	//取消签约
     	$('body').on('click','.qxqy_toast',function(){

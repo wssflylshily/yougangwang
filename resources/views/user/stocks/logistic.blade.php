@@ -39,9 +39,9 @@
 					@endif
 				</div>
 			</div>
-			<div style="text-align: right; padding: 20px;">
+			{{--<div style="text-align: right; padding: 20px;">
 				以上信息由第三方物流公司提供，如需查询详情请<a href="#">联系客服</a>
-			</div>
+			</div>--}}
 			<div class="advert">
 				<ul class="clear">
 					<li class="L">

@@ -32,8 +32,8 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
+  @include('admin._layouts.header')
+{{--  <header class="main-header">
     <!-- Logo -->
     <a href="/admin" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -92,7 +92,7 @@
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
-     {{-- <ul class="sidebar-menu">
+     --}}{{-- <ul class="sidebar-menu">
         <li class="header"><!--主导航--></li>
         <li>
           <a href="#">
@@ -192,7 +192,7 @@
             <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
         	</ul>
         </li>
-      </ul>--}}
+      </ul>--}}{{--
       <ul class="sidebar-menu">
         <li class="header"><!--主导航--></li>
         <li>
@@ -256,15 +256,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            {{--<li><a href="admin/order"><i class="fa fa-circle-o"></i> 订单列表</a></li>--}}
+            --}}{{--<li><a href="admin/order"><i class="fa fa-circle-o"></i> 订单列表</a></li>--}}{{--
             <li><a href="/admin/order"><i class="fa fa-circle-o"></i> 现货订单</a></li>
             <li><a href="{{URL::route('admin.order.future')}}"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            {{--<li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
+            --}}{{--<li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
             <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}
+            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}{{--
           </ul>
         </li>
-        {{--<li class="treeview">
+        <li class="treeview">
           <a href="javascript:;">
             <i class="fa fa-book"></i>
             <span>网站设置</span>
@@ -277,10 +277,11 @@
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 联系我们</a></li>
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
           </ul>
-        </li>--}}
+        </li>
         <li class="treeview">
           <a href="javascript:;">
             <i class="fa fa-book"></i>
@@ -299,7 +300,7 @@
       </ul>
     </section>
     <!-- /.sidebar -->
-  </aside>
+  </aside>--}}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -329,20 +330,20 @@
           </div>
         </div>
         <!-- form start -->
-        <form class="form-horizontal">
+        <form class="form-horizontal" action="" method="">
           <div class="box-body">
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">用户</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName" placeholder="用户名">
+                <input type="text" class="form-control" id="inputName" placeholder="用户名" name="username" value="{{Request()->username}}">
               </div>
             </div>
             <div class="form-group">
               <label for="inputPassword3" class="col-sm-2 control-label">手机</label>
 
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTel" placeholder="手机号">
+                <input type="text" class="form-control" id="inputTel" placeholder="手机号" name="mobile" value="{{Request()->mobile}}">
               </div>
             </div>
           </div>
@@ -364,8 +365,8 @@
                   <div class="btn-group" style="margin-bottom: 5px;">
 					<button type="button" class="btn btn-sm text-warning start-selected"><i class="fa fa-archive"></i> 启用</button>
 					<button type="button" class="btn btn-sm text-warning end-selected"><i class="fa fa-archive"></i> 禁用</button>
-					<button type="button" class="btn btn-sm text-success" onclick="javascript:location.href='#';"><i class="fa fa-plus"></i> 新增</button>
-					<button type="button" class="btn btn-sm text-success time-back"> 按时间倒叙</button>
+					{{--<button type="button" class="btn btn-sm text-success" onclick="javascript:location.href='#';"><i class="fa fa-plus"></i> 新增</button>--}}
+					{{--<button type="button" class="btn btn-sm text-success time-back"> 按时间倒叙</button>--}}
                     <button type="button" class="btn btn-sm text-danger delete-selected"><i class="fa fa-trash"></i> 删除</button>
                     
                   </div>
@@ -382,7 +383,7 @@
                     <th>手机号</th>
                     <th>注册日期</th>                
                     <th>状态</th>
-                    <th>角色审核</th>
+                    {{--<th>角色审核</th>--}}
                     <th width="140">操作</th>
                   </tr>
                 </thead>
@@ -395,11 +396,17 @@
                     <td>{{ $user->mobile }}</td>
                     <td>{{ $user->created_at->format('Y-m-d') }}</td>
                     <td>
+                      @if($user->deleted_at!=null)
                         <span class="label label-danger">已删除</span>
+                      @elseif($user->deleted_at==null && $user->user_status==1)
+                        <span class="label label-success">已启用</span>
+                      @elseif($user->deleted_at==null && $user->user_status==-1)
+                        <span class="label label-default">已禁用</span>
+                      @endif
                      </td>
-                    <td><span class="label label-default">未申请</span></td>
+                    {{--<td><span class="label label-default">未申请</span></td>--}}
                     <td>
-                        <a href="person_edit.html" class="btn btn-xs btn-default">
+                        <a href="{{route('admin.user.edit',['id'=>$user->id])}}" class="btn btn-xs btn-default">
                           <i class="fa fa-edit"></i> 编辑
                         </a>
                     </td>
@@ -460,7 +467,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="border: none;">
-              {!! page_render($user_list) !!}
+              {{--{!! page_render($user_list) !!}--}}
+              {!! $user_list->appends(Request::query())->render() !!}
             </div>
             <!-- /.box-body -->
           </div>
@@ -476,6 +484,9 @@
     <strong>Copyright &copy; 2016 <a href="#">YouGang</a>.</strong> All rights
     reserved.
   </footer>
+</div>
+<div id="hidden-items" style="display: none;">
+  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="csrfToken">
 </div>
 <!-- ./wrapper -->
 
@@ -494,6 +505,12 @@
 <!-- page script 全选-->
 <script src="/assets/base.js"></script>
 <script src="/assets/admin/js/user.js"></script>
+{{--ajax js文件--}}
+<script src="/plugins/jquery-toaster/jquery.toaster.js"></script>
+<!-- pages script -->
+<script src="/plugins/jquery-form/jquery.form.min.js"></script>
+<script src="/assets/base.js"></script>
+<!-- Page script -->
 <!-- Page script -->
 <script>
   $(function () {
@@ -521,17 +538,176 @@
     });
 
     var user = new User();
-    //删除
+    /*//删除
     $(document).on('click', '.delete-selected', function() {
         user.deleteSelected();//user_js
+
     });
     //启用
     $(document).on('click','.start-selected',function(){
     	user.startSelected();//user_js
+    });*/
+    //禁用
+    /*$(document).on('click','.end-selected',function(){
+    	user.endSelected();//user_js
+    });*/
+
+    //删除
+     $(document).on('click', '.delete-selected', function() {
+     if($("tbody input[name='user_id[]']:checked").length==0)
+     {
+     alert("您没有选中要删除的用户")
+     }
+     else
+     {
+     if(!confirm("您确定删除选中的用户吗？"))
+     {
+     return;
+     }else{
+     var user_ids = [];
+     $("input[name='user_id[]']:checked").each(function(){
+       user_ids.push($(this).val());
+     });
+
+     self.waiting = true;
+
+     var data = {
+       user_ids: user_ids,
+     _token  : $('#csrfToken').val()
+     };
+     /!*console.log(data)*!/
+     $.post('{{ route('admin.user.userDel') }}', data, function(response) {
+     if (response.result !== true) {
+     $.toaster({ priority : 'danger', title : '失败', message : response.message });
+     return false;
+     }
+
+     $.toaster({ priority : 'success', title : '成功', message : response.message });
+     window.location.reload();
+     }).complete(function(){
+     self.waiting = false;
+     }).error(function(){
+     $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+     });
+    {{--$.ajax({--}}
+    {{--type:"get",--}}
+    {{--url:"{{ route('admin.article.del') }}",--}}
+    {{--datatype: "json",--}}
+    {{--data: { 'article_ids':article_ids},--}}
+    {{--success:function(json){--}}
+    {{--console.log(json);--}}
+    {{--if (json.result == true){--}}
+    {{--window.location.href="{{ route('admin.admin.role') }}";--}}
+    {{--}--}}
+    {{--},--}}
+    {{--error: function(){--}}
+    {{--}--}}
+    {{--});--}}
+    }
+     }
+     });
+    /*//启用
+     $(document).on('click','.start-selected',function(){
+     user.startSelected();//user_js
+     });*/
+    //启用
+    $(document).on('click','.start-selected',function(){
+      if($("tbody input[name='user_id[]']:checked").length==0)
+      {
+        alert("您没有选中的数据")
+      }
+      else
+      {
+        if(!confirm("您确定启用选中的用户"))
+        {
+          return;
+        }else{
+          //获取所有的选中id
+          var user_ids = [];
+          $("input[name='user_id[]']:checked").each(function(){
+            user_ids.push($(this).val());
+          });
+          self.waiting = true;
+
+          var data = {
+            user_ids: user_ids,
+            _token  : $('#csrfToken').val()
+          };
+          /*console.log(data);*/
+          /*$.ajax({
+           type:"post",
+           url:"{{ route('admin.user.start') }}",
+           datatype: "json",
+           data: { 'data':data},
+           success:function(json){
+           console.log(json);
+           if (json.result == true){
+           window.location.href="{{ route('admin.admin.role') }}";
+           }
+           },
+           error: function(){
+           }
+           });*/
+
+          $.post('{{ route('admin.user.start') }}', data, function(response) {
+            if (response.result !== true) {
+              $.toaster({ priority : 'danger', title : '失败', message : response.message });
+              return false;
+            }
+
+            $.toaster({ priority : 'success', title : '成功', message : response.message });
+            window.location.reload();
+          }).complete(function(){
+            self.waiting = false;
+          }).error(function(){
+            $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+          });
+
+        }
+      }
     });
+    /*//禁用
+     $(document).on('click','.end-selected',function(){
+     user.endSelected();//user_js
+     });*/
     //禁用
     $(document).on('click','.end-selected',function(){
-    	user.endSelected();//user_js
+      if($("tbody input[name='user_id[]']:checked").length==0)
+      {
+        alert("您没有选中的数据")
+      }
+      else
+      {
+        if(!confirm("您确定禁用选中的用户"))
+        {
+          return;
+        }else{
+          //获取所有的选中id
+      var user_ids = [];
+      $("input[name='user_id[]']:checked").each(function(){
+        user_ids.push($(this).val());
+      });
+      self.waiting = true;
+
+      var data = {
+        user_ids: user_ids,
+        _token  : $('#csrfToken').val()
+      };
+      $.post('{{ route('admin.user.forbid') }}', data, function(response) {
+        if (response.result !== true) {
+          $.toaster({ priority : 'danger', title : '失败', message : response.message });
+          return false;
+        }
+
+        $.toaster({ priority : 'success', title : '成功', message : response.message });
+        window.location.reload();
+      }).complete(function(){
+        self.waiting = false;
+      }).error(function(){
+        $.toaster({ priority : 'danger', title : '失败', message : '网络错误' });
+      });
+    }
+  }
     });
     //按时间倒序
     $(document).on('click','.time-back',function(){
@@ -539,11 +715,11 @@
     });    
     //按条件筛选
     $(".form-horizontal").submit(function(){
-    	if($("#inputName").val()==""&&$("#inputTel").val()=="")
+    	/*if($("#inputName").val()==""&&$("#inputTel").val()=="")
     	{
     		alert("没有任何筛选条件");
     		return false;
-    	}
+    	}*/
     	if($("#inputName").val()=="")
     	{
     		

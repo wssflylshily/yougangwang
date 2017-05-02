@@ -163,7 +163,7 @@ class UserInfoController extends Controller
     {
         /*$user_id = $this->user_id;*/
         $user_id = Auth::user()->id;
-        
+        /*dd($user_id);*/
         // 个人资料
         $users = User::find($user_id);
         // $users['password'] = substr_replace($users->, replacement, start)
@@ -239,8 +239,10 @@ class UserInfoController extends Controller
         /*$user_id = $this->user_id;*/
         $user_id = Auth::user()->id;
         // $user_id = 3;
+        $user_id = Auth::user()->id;
         
         $shops = SellerAuthInfo::where('user_id','=',$user_id)->first();
+        
         if(!$shops){
            return view('user.userinfo.company_add',['user_id'=>$user_id,'status'=>1]);
         }
@@ -252,6 +254,7 @@ class UserInfoController extends Controller
 
     // 公司资料提交
     public function postCompanyInfo(){
+//        dd(request()->all());
         $req = request();
        $validator = Validator::make($req->all(),
             [
@@ -269,7 +272,7 @@ class UserInfoController extends Controller
        }
        if($req->status == 2){
             $shops = SellerAuthInfo::where('user_id','=',$req->user_id)->first();
-            $seller = Seller::where('user','=',$req->user_id)->first();
+            $seller = Seller::where('user_id','=',$req->user_id)->first();
             $shops->user_id = $req->user_id;
        }else{
             $shops = new SellerAuthInfo();
@@ -292,15 +295,19 @@ class UserInfoController extends Controller
         }
         $shops->company_name = $req->company_name;
         $shops->company_code = $req->company_code;
+        $shops->user_id = Auth::user()->id;
         $users = User::find($req->user_id);
         $users->compony = $req->company_name;
         $uok = $users->save();
         $sok = $shops->save();
         $user_id = Auth::user()->id;
-        /*$seller = new Seller();*/
         $seller =  Seller::find($user_id);
+        if (!$seller){
+            $seller = new Seller();
+        }
         $seller->name = Request::input('company_name');
         $seller->user_id = Auth::user()->id;
+        $seller->id = Auth::user()->id;
         $sellok = $seller->save();
 
 

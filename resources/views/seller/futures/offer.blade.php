@@ -29,7 +29,7 @@
                     	<li class="td5">钢厂</li>
                     	<li class="td6">规格</li>
                     	<li class="td7">允差</li>
-                    	<li class="td8">吨数</li>
+                    	<li class="td8">数量</li>
                     	<!-- <li class="td9">支数</li> -->
                     	<li class="td10">交货日期</li>
                     	<!-- <li class="td11">报价</li>
@@ -47,7 +47,7 @@
                                         <li class="td2">订单号：{{ $item['order_sn'] }}</li>
                                         <li class="td3">{{ $item->linkman }}</li>
                                         <li class="td4">
-                                            <a href="javascript:;" class="contact"></a>
+                                            <a href="javascript:;" data_tel="{{$item->user->mobile}}" class="contact" style="background-image: url(/assets/shop/img/contact_p.png);"></a>
                                         </li>
                                     </ul>
                                     <div class="tbody">
@@ -55,14 +55,14 @@
                                             <li class="td1w">
                                             	@foreach($item->futures as $future)
                                                 <ul class="tr">
-                                                    <li class="td1">{{ $future->area_id }}</li>
-                                                    <li class="td2">{{ $future->variety }}</li>
-                                                    <li class="td3">{{ $future->standard }}</li>
-                                                    <li class="td4">{{ $future->material }}</li>
-                                                    <li class="td5">{{ $future->steelmill }}</li>
+                                                    <li class="td1">{{ $future->area or '全部' }}</li>
+                                                    <li class="td2">{{ $future->variety or '全部' }}</li>
+                                                    <li class="td3">{{ $future->standard or '全部' }}</li>
+                                                    <li class="td4">{{ $future->material or '全部' }}</li>
+                                                    <li class="td5">{{ $future->steelmill or '全部' }}</li>
                                                     <li class="td6">@if($future->length_type==1){{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}~{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}@else{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}@endif</li>
-                                                    <li class="td7">{{ $future->deviation }}</li>
-                                                    <li class="td8">{{ $future->stock }}</li>
+                                                    <li class="td7">{{ $future->deviation }}%</li>
+                                                    <li class="td8">{{ $future->stock }} {{$future->unit}}</li>
                                                    <!--  <li class="td9">{{ $future->price }}</li> -->
                                                     <li class="td10"><?php echo substr($future->delivery_date,0, 10) ?></li>
                                                    <!--  <li class="td11"></li>
@@ -78,7 +78,7 @@
                                                 @elseif($item->status==-1&&$item->seller_id==$seller_id&&$item->contract==null)
                                                 <span class="red">待签约</span>
                                                 @elseif($item->status==-1&&$item->seller_id==$seller_id&&$item->contract->status<3)
-                                                <span class="blue">签约中</span>
+                                                <a href="{{route('shop.futures.signContract',['order_id'=>$item->id])}}" class="blue">签约中</a>
                                                 @elseif($item->status==-1&&$item->seller_id==$seller_id&&$item->contract->status==3)
                                                 <span class="green">签约完成</span>
                                                 @endif
@@ -93,27 +93,27 @@
                         <!-- 签约中-->
                         <div style="display: none" class="zhong">
                             <ul class="list">
-                            @foreach($list as $item)
-                            @if($item->contract!=null && $item->contract->status<3)
+                            @foreach($list as $order1)
+                            @if($order1->contract!=null && $order1->contract->status<3)
                                 <li>
                                     <ul class="thead">
-                                        <li class="td1"><?php echo substr($item->created_at,0,10); ?></li>
-                                        <li class="td2">订单号：{{$item->order_sn}}</li>
-                                        <li class="td3">{{$item->linkman}}</li>
+                                        <li class="td1"><?php echo substr($order1->created_at,0,10); ?></li>
+                                        <li class="td2">订单号：{{$order1->order_sn}}</li>
+                                        <li class="td3">{{$order1->linkman}}</li>
                                         <li class="td4">
-                                            <a href="javascript:;" class="contact"></a>
+                                            <a href="javascript:;" data_tel="{{$order1->user->mobile}}" class="contact" style="background-image: url(/assets/shop/img/contact_p.png);"></a>
                                         </li>
                                     </ul>
                                     <div class="tbody">
                                         <ul class="tr">
                                             <li class="td1w">
-                                            	@foreach($item->futures as $future)
+                                            	@foreach($order1->futures as $future)
                                                 <ul class="tr">
-                                                    <li class="td1">{{ $future->area_id }}</li>
-                                                    <li class="td2">{{ $future->variety }}</li>
-                                                    <li class="td3">{{ $future->standard }}</li>
-                                                    <li class="td4">{{ $future->material }}</li>
-                                                    <li class="td5">{{ $future->steelmill }}</li>
+                                                    <li class="td1">{{ $future->area or '全部' }}</li>
+                                                    <li class="td2">{{ $future->variety or '全部' }}</li>
+                                                    <li class="td3">{{ $future->standard or '全部' }}</li>
+                                                    <li class="td4">{{ $future->material or '全部' }}</li>
+                                                    <li class="td5">{{ $future->steelmill or '全部' }}</li>
                                                     <li class="td6">@if($future->length_type==1){{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}~{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}@else{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}@endif</li>
                                                     <li class="td7">{{ $future->deviation }}</li>
                                                     <li class="td8">{{ $future->stock }}</li>
@@ -126,7 +126,7 @@
                                                 
                                             </li>
                                             <li class="td2w">
-                                                <span class="blue">签约中</span>
+                                                <a href="{{route('shop.futures.signContract',['order_id'=>$order1->id])}}" class="blue">签约中</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -138,27 +138,27 @@
                         <!-- 签约完成-->
                         <div style="display: none" class="complete">
                             <ul class="list">
-                                @foreach($list as $item)
-                            @if($item->contract!=null and $item->contract->status==3)
+                                @foreach($list as $order2)
+                            @if($order2->contract!=null and $order2->contract->status==3)
                                 <li>
                                     <ul class="thead">
-                                        <li class="td1"><?php echo substr($item->created_at,0,10); ?></li>
-                                        <li class="td2">订单号：{{$item->order_sn}}</li>
-                                        <li class="td3">{{$item->linkman}}</li>
+                                        <li class="td1"><?php echo substr($order2->created_at,0,10); ?></li>
+                                        <li class="td2">订单号：{{$order2->order_sn}}</li>
+                                        <li class="td3">{{$order2->linkman}}</li>
                                         <li class="td4">
-                                            <a href="javascript:;" class="contact"></a>
+                                            <a href="javascript:;" data_tel="{{$order2->user->mobile}}" class="contact" style="background-image: url(/assets/shop/img/contact_p.png);"></a>
                                         </li>
                                     </ul>
                                     <div class="tbody">
                                         <ul class="tr">
                                             <li class="td1w">
-                                            	@foreach($item->futures as $future)
+                                            	@foreach($order2->futures as $future)
                                                 <ul class="tr">
-                                                    <li class="td1">{{ $future->area_id }}</li>
-                                                    <li class="td2">{{ $future->variety }}</li>
-                                                    <li class="td3">{{ $future->standard }}</li>
-                                                    <li class="td4">{{ $future->material }}</li>
-                                                    <li class="td5">{{ $future->steelmill }}</li>
+                                                    <li class="td1">{{ $future->area or '全部' }}</li>
+                                                    <li class="td2">{{ $future->variety or '全部' }}</li>
+                                                    <li class="td3">{{ $future->standard or '全部' }}</li>
+                                                    <li class="td4">{{ $future->material or '全部' }}</li>
+                                                    <li class="td5">{{ $future->steelmill or '全部' }}</li>
                                                     <li class="td6">@if($future->length_type==1){{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}~{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}@else{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}@endif</li>
                                                     <li class="td7">{{ $future->deviation }}</li>
                                                     <li class="td8">{{ $future->stock }}</li>
@@ -183,11 +183,7 @@
                     </div>
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
@@ -322,6 +318,7 @@
     </div>
 
     <script>
+        $("#futures_offer").addClass("on");
         //点击tab
         $('.qihuobaodan > .content > .R .orderQihuo .tab li').on('click',function(){
             var index=$(this).index();
@@ -334,9 +331,14 @@
                 $('.qihuobaodan > .content > .R .orderQihuo .baodanList .complete').show().siblings().hide();
             }
         });
-
+        
+        $(document).on("click", ".thead .contact", function() {
+	        var tel=$(this).attr("data_tel");
+	        $.alert("请拨打电话："+tel, "联系方式");
+	    });
+        
         //点击签约中
-        $('.qihuobaodan > .content > .R .orderQihuo .baodanList .tbody .tr > .td2w .blue').on('click',function(){
+        /*$('.qihuobaodan > .content > .R .orderQihuo .baodanList .tbody .tr > .td2w .blue').on('click',function(){
             $('.zhongK').show();
             $('#zhezhao').show();
             $('html,body').css('overflow','hidden');//页面不允许滚动
@@ -376,7 +378,7 @@
             $('.hetongKuang').hide();
             $('#zhezhao').hide();
             $('html,body').css('overflow','auto');//页面允许滚动
-        });
+        });*/
     </script>
     @endsection
 

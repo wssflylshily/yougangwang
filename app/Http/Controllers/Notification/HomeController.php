@@ -13,6 +13,7 @@ use Auth;
 use Request;
 use Validator;
 use Session;
+use DB;
 
 class HomeController extends Controller
 {
@@ -41,4 +42,16 @@ class HomeController extends Controller
         $rs = $db->where('id', $id)->update(['status'=> '-1']);
         return redirect(route('user.home'));
     }
+    public  function getCity()
+    {
+        $db =  DB::table('areas');
+        $city = $db
+            ->where('areaType',1)
+            ->select('areaName')
+            ->get();
+        //dd($rs);
+        //dump($rs);
+        return json_encode($city);
+    }
 }
+

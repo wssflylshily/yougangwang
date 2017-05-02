@@ -53,8 +53,8 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
+  @include('admin._layouts.header')
+{{--  <header class="main-header">
     <!-- Logo -->
     <a href="/admin" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -125,7 +125,7 @@
       </form>-->
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      {{--<ul class="sidebar-menu">
+      --}}{{--<ul class="sidebar-menu">
         <li class="header"><!--主导航--></li>
         <li>
           <a href="/admin">
@@ -210,7 +210,7 @@
         <li class="divider"></li>
 
         <li><a href="#"><i class="fa fa-book"></i> <span>网站设置</span></a></li>
-      </ul>--}}
+      </ul>--}}{{--
       <ul class="sidebar-menu">
         <li class="header"><!--主导航--></li>
         <li>
@@ -275,9 +275,9 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="admin/order"><i class="fa fa-circle-o"></i> 订单列表</a></li>
-            {{--<li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
+            --}}{{--<li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
             <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}
+            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}{{--
           </ul>
         </li>
         <li class="treeview">
@@ -293,8 +293,9 @@
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 联系我们</a></li>
             <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
+            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -315,7 +316,7 @@
       </ul>
     </section>
     <!-- /.sidebar -->
-  </aside>
+  </aside>--}}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

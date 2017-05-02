@@ -19,7 +19,7 @@
 			<form style=" width: 1131px; margin: -37px 0px 0px 69px; padding-top: 40px; border-top: 1px solid #426dcc;" method="post" action="{{ route('user.post.invoice') }}">
 				<div class="com_distance">
 					<span>发票类型：</span><span><input type="radio" name="invoice_type" value="1" class="radio_btn" @if(Request::input('invoice_type') == 1) checked @endif > 增值税发票</span>
-					<span><input type="radio" name="invoice_type" class="radio_btn" @if(Request::input('invoice_type') == 2) checked @endif> 普通发票</span>
+					<span><input type="radio" name="invoice_type" value="2" class="radio_btn" @if(Request::input('invoice_type') == 2) checked @endif> 普通发票</span>
 					<span style="color: red;">{{ $result }}</span>
 					<span style="margin-left: 150px;">发票邮寄地址： <input type="text" placeholder="在此填写您发票的寄送地址" value="{{ Request::input('send_address') }}" name="send_address" style="border-bottom: 1px solid #ddd; padding: 3px 6px; width: 370px;"</span>
 				</div>
@@ -80,15 +80,15 @@
 							@if($order->goods != null)
 								@foreach ($order->goods as $goods)
 									<li class="clear">
-										<div class="L one single_txt">{{ $goods->bak_area  or '' }}</div>
-										<div class="L two single_txt">{{ $goods->bak_variety or ''  }}</div>
-										<div class="L three single_txt" style="width: 120px;">{{ $goods->bak_standard or ''  }}</div>
-										<div class="L four single_txt">{{ $goods->bak_material or ''  }}</div>
-										<div class="L five single_txt">{{ $goods->bak_steelmill or ''  }}</div>
-										<div class="L six single_txt">{{ $goods->bak_attribute or ''  }}</div>
-										<div class="L eight single_txt"><span class="s_num">{{ $goods->buy_count or '' }}</span></div>
+										<div class="L one single_txt">{{ $goods->bak_area  or '-' }}</div>
+										<div class="L two single_txt">{{ $goods->bak_variety or '-'  }}</div>
+										<div class="L three single_txt" style="width: 120px;">{{ $goods->bak_standard or '-'  }}</div>
+										<div class="L four single_txt">{{ $goods->bak_material or '-'  }}</div>
+										<div class="L five single_txt">{{ $goods->bak_steelmill or '-'  }}</div>
+										<div class="L six single_txt">{{ $goods->bak_attribute or '-'  }}</div>
+										<div class="L eight single_txt"><span class="s_num">{{ $goods->buy_count or '-' }}</span></div>
 										<div class="L nine single_txt">￥<span class="s_price">{{ $goods->buy_count * $goods->buy_price }}</span></div>
-										<div class="L two single_txt" style="text-align: right; color: #ff4400;">￥<span class="s_price">{{ $goods->postsge or '' }}</span></div>
+										<div class="L two single_txt" style="text-align: right; color: #ff4400;">￥<span class="s_price">{{ $goods->postsge or '-' }}</span></div>
 									</li>
 								@endforeach
 							@endif

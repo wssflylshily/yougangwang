@@ -88,7 +88,7 @@
 							var data = JSON.parse(json);
 							if(data!=""){
 								for(var i=0;i<data.length;i++){
-									str += '<option value="'+data[i].areaId+'">'+data[i].areaName+'</option>';
+									str += '<option value="'+data[i].areaId+'" data-name="'+data[i].areaName+'">'+data[i].areaName+'</option>';
 								}
 								$('select[name="city"]').append(str);
 							}
@@ -97,39 +97,93 @@
 				});
 				//添加期货
 				$("#fabu_infor").click(function(){
-					var region=$("select[name='region']").val();
-					var city=$("select[name='city']").val();
+					var region=$("select[name='region'] :selected").attr('data-name');
+					var area_id=$("select[name='region']").val();
+					if(area_id==""){
+						write_alert("请选择地区");
+						return false;
+					}
+					var city=$("select[name='city'] :selected").attr('data-name');
+					var city_id=$("select[name='city']").val();
+					if(city_id==""){
+						write_alert("请选择城市");
+						return false;
+					}
 					var variety=$("select[name='variety']").val();
+					if(variety==""){
+						write_alert("请选择品种");
+						return false;
+					}
 					var standard=$("select[name='standard']").val();
+					if(standard==""){
+						write_alert("请选择标准");
+						return false;
+					}
 					var material=$("select[name='material']").val();
+					if(material==""){
+						write_alert("请选择材质");
+						return false;
+					}
 					var gangchang="";
-					gangchang=$(".gangchang .gangchang_content").html();
+					gangchang = $(".gangchang .gangchang_content").html();
+					if(gangchang==""){
+						write_alert("请选择钢厂");
+						return false
+					}
 					//console.log(gangchang);
 					var waijing_x=$("input[name='waijing_x']").val();
+					if(waijing_x==""){
+						write_alert("请填写外径");
+						return false;
+					}
 					//var waijing_d=$("input[name='waijing_d']").val();
 					var houdu_x=$("input[name='houdu_x']").val();
+					if(houdu_x==""){
+						write_alert("请填写厚度");
+						return false;
+					}
 					//var houdu_d=$("input[name='houdu_d']").val();
 					
 					var dingchi_pd=$("input[name='dingchi']:checked").val();
 					var dingchi_x=$("input[name='dingchi_x']").val();
+					if(dingchi_x==""){
+						write_alert("请填写长度");
+						return false;
+					}
 					var dingchi_d=$("input[name='dingchi_d']").val();
 					if(dingchi_pd==2)
 					{
 						//dingchi_x="";
 						dingchi_d="";
+					}else{
+						if(dingchi_d==""){
+							write_alert("请填写长度最大值");
+							return false;
+						}
 					}
 					
 					var shuliang_dw=$("input[name='shuliang']:checked").val();
-					var unit = 0;
-					if(shuliang_dw=="支"){
+					var unit = shuliang_dw;
+					/*if(shuliang_dw=="支"){
 						unit = 1;
-					}
+					}*/
 					var shuliang_num=$("input[name='shuliang_num']").val();
-					
+					if(shuliang_num==""){
+						write_alert("请填写数量");
+						return false;
+					}
 					var wucha_x=$("input[name='wucha_x']").val();
+					if(wucha_x==""){
+						write_alert("请填写允差");
+						return false;
+					}
 					//var wucha_d=$("input[name='wucha_d']").val();
 					
 					var date_start=$("input[name='date_start']").val();
+					if(date_start==""){
+						write_alert("请选择交货日期");
+						return false;
+					}
 					//var date_end=$("input[name='date_end']").val();
 //					console.log(region+" "+city+" "+variety+" "+standard+" "+material+" "+waijing_x+" "+waijing_d+" "+houdu_x+" "+houdu_d+" "+dingchi_pd+" "+dingchi_x+" "+dingchi_d+" "+shuliang_dw+" "+shuliang_num+" "+wucha_x+" "+wucha_d+" "+date_start+" "+date_end);	
 					var stra="";
@@ -147,6 +201,8 @@
 					$(".box_content").hide();
 
 					var infos = {region:region,
+							area_id:area_id,
+							city_id:city_id,
 							city:city,
 							variety:variety,
 							standard:standard,
@@ -175,7 +231,6 @@
 						datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
 						success:function(json){
 							//location.href = "/futures/addFutureDetail/";
-							
 						},
 						error: function(){
 						}
@@ -189,9 +244,17 @@
 					$(".box_shadow").hide();
 					$("#search_shoper").hide();					
 					var str="";
+					var sellers_id = "";
 					$(".gangchang_ul li.on").each(function(){
-						str+="<li>"+$(this).find("h2").html()+"</li>";						
+						str+="<li>"+$(this).find("h2").html()+"</li>";	
+						sellers_id += $(this).attr('data-id')+"|";				
 					});
+					sellers_id = sellers_id.substring(0,sellers_id.length-1);
+					$('#sellers_id').val(sellers_id);
+					if($(".gangchang_ul li.on").length==0)
+					{
+						str="<li>暂未选择商家</li>";
+					}
 					$(".futures_fb .select_div ul").html(str);
 					$(".futures_fb .select_num em").html(" "+$(".gangchang_ul li.on").length+" ");
 				});
@@ -224,11 +287,31 @@
 				$('.czbtn1').click(function(){
 					var detail = $('#detail').val();
 					var lxr_name=$("input[name='lxr_name']").val();
+					if(lxr_name==""){
+						write_alert("请填写联系人姓名");
+						return false;
+					}
 					var lxr_tel=$("input[name='lxr_tel']").val();
+					if(lxr_tel==""){
+						write_alert("请填写联系电话");
+						return false;
+					}else if(!/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(lxr_tel)){
+						write_alert("请填写正确的手机号");
+						return false;
+					}
 					var lxr_addr=$("input[name='lxr_addr']").val();
+					if(lxr_addr==""){
+						write_alert("请填写收货地址");
+						return false;
+					}
 					var lxr_code=$("input[name='lxr_code']").val();
+					if(lxr_code==""){
+						write_alert("请填写邮编");
+						return false;
+					}
 					var way = $("input[name='way']:checked").val();
 					var tsway = $("input[name='tsway']:checked").val();
+					var sellers = $('#sellers_id').val();
 					var data = {
 						_token:"{{ csrf_token() }}",
 						detail:detail,
@@ -237,11 +320,12 @@
 						addr:lxr_addr,
 						code:lxr_code,
 						way:way,
-						tsway:tsway
+						tsway:tsway,
+						sellers:sellers
 					}
 					$.post('/futures/addFutureOrder',data).success(function(data){
-						//console.log(data);
-						//location.href = data.url;
+						
+						location.href = "{{ route('user.futures') }}";
 					});
 					//location.href = "/futures/takeOrder";
 					
@@ -284,11 +368,11 @@
 						<ul>
 							@foreach($futures as $future)
 							<li class="clear">
-								<div class="one single_txt L">{{ $future->area_id }}</div>
-								<div class="two single_txt L">{{$future->variety}}</div>
-								<div class="three single_txt L">{{$future->standard}}</div>
-								<div class="four single_txt L">{{$future->material}}</div>
-								<div class="five single_txt L">{{$future->steelmill}}</div>
+								<div class="one single_txt L">{{ $future->area or '全部'}}</div>
+								<div class="two single_txt L">{{$future->variety or '全部'}}</div>
+								<div class="three single_txt L">{{$future->standard or '全部'}}</div>
+								<div class="four single_txt L">{{$future->material or '全部'}}</div>
+								<div class="five single_txt L">{{$future->steelmill or '全部'}}</div>
 								<div class="nine L">
 								@if($future->length_type==1)
 								{{ $future->outer_diameter}}*{{$future->thickness}}*{{$future->length*100 }} ~ {{ $future->outer_diameter}}*{{$future->thickness}}*{{$future->max_length*100 }}
@@ -297,7 +381,7 @@
 								@endif
 								</div>								
 								<!--<div class="eight L">69</div>-->								
-								<div class="six L">{{$future->stock}}@if($future->unit==1)支@else吨@endif</div>
+								<div class="six L">{{$future->stock}}{{$future->unit}}</div>
 								<div class="seven single_txt L">{{$future->deviation}}</div>
 								<div class="ten L"><?php echo substr($future->delivery_date,0,10); ?></div>
 							</li>
@@ -342,11 +426,13 @@
 							<div class="select_div">
 								<div class="sj"></div>
 								<ul>
+								<li class="single_txt">暂未选择商家</li>
 									<!-- <li class="single_txt">天津华远兴业</li>
 									<li class="single_txt">山东鲁业</li>
 									<li class="single_txt">天津派普斯</li> -->
 								</ul>
 							</div>
+							<input type="hidden" id="sellers_id" value="" />
 						</span>
 						<span><button class="czbtn" id="open_search">查找商家</button></span>
 					</div>
@@ -366,13 +452,13 @@
 					<h2 class="titleh2">添加期货</h2>
 					<div class="left_div com_kj" style="width: 740px;">
 						<div>
-							<span>地区</span><span><select name="region"><option>全部</option>@foreach($areas as $area)<option value="{{ $area->areaId}}">{{ $area->areaName }}</option>@endforeach</select></span>
+							<span>地区</span><span><select name="region"><option>全部</option>@foreach($areas as $area)<option value="{{ $area->areaId}}" data-name="{{ $area->areaName }}">{{ $area->areaName }}</option>@endforeach</select></span>
 							<span class="s01">城市</span><span><select name="city"><option>全部</option></select></span>
-							<span class="s01">品种</span><span><select name="variety"><option>全部</option>@foreach(config('const.goods_variety') as $variety)<option>{{$variety}}</option>@endforeach</select></span>
+							<span class="s01">品种</span><span><select name="variety"><option>全部</option>@foreach($varieties as $variety)<option>{{$variety->name}}</option>@endforeach</select></span>
 						</div>
 						<div>
-							<span>标准</span><span><select name="standard"><option>全部</option>@foreach ( config('const.goods_standard') as $standard)<option>{{$standard}}</option>@endforeach</select></span>
-							<span class="s01">材质</span><span><select name="material"><option>全部</option>@foreach ( config('const.goods_material') as $material)<option>{{$material}}</option>@endforeach</select></span>
+							<span>标准</span><span><select name="standard"><option>全部</option>@foreach ( $standards as $standard)<option>{{$standard->name}}</option>@endforeach</select></span>
+							<span class="s01">材质</span><span><select name="material"><option>全部</option>@foreach ( $materials as $material)<option>{{$material->name}}</option>@endforeach</select></span>
 					</div>
 						<div class="still_mill clear">
 							<div class="L leftone" style="height: auto; padding-right: 0px; border: none;">钢厂</div>
@@ -457,14 +543,14 @@
 			<!--search_shoper-->
 			<div id="search_shoper" class="box_content" style="padding-bottom: 60px;">
 				<div class="com_kj">
-					<h3 class="com_distance">选择推送商家 <span><select><option>选择钢厂</option>@foreach(config('const.goods_steelmill') as $steelmill)<option>{{$steelmill}}</option>@endforeach</select></span>
+					<h3 class="com_distance">选择推送商家 <span><select><option>选择钢厂</option>@foreach($steelmills as $steelmill)<option>{{$steelmill->name}}</option>@endforeach</select></span>
 						<span class="R"><input type="checkbox" class="check_btn" value="1" name="checkall"> 全部推送</span>
 					</h3>
 					
 					<div>
 						<ul class="gangchang_ul">
 							@foreach($suppliers as $item)
-							<li>
+							<li data-id="{{$item->id}}">
 								<div class="img_div"><img src="{{$item->logo_pic}}"></div>
 								<h2>{{$item->name}}</h2>
 								<h3>主营：{{$item->business_product}}</h3>
@@ -500,7 +586,7 @@
 					<div class="gc_pass_select"><span>已选择：</span></div>
 					<div>
 						<ul class="gc_ul">
-							@foreach(config('const.goods_steelmill') as $steelmill)<li>{{$steelmill}}</li>@endforeach
+							@foreach($steelmills as $steelmill)<li>{{$steelmill->name}}</li>@endforeach
 						</ul>
 					</div>
 					<div class="operate_btn"><a href="javascript:;" class="fabubtn gray gangchang_cancel_btn">取消</a><a href="javascript:;" class="fabubtn gangchang_ok_btn">确定</a></div>

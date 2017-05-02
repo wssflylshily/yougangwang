@@ -13,7 +13,8 @@
                 <!-- 我的现货-->
                 <div class="orderQihuo">
                     <ul class="tab clear">
-                        <li class="on"><a href="#">我的现货</a></li>
+                        <li class="on"><a href="{{ route('user.stocks') }}">现货</a></li>
+                        <li ><a href="{{ route('user.futures') }}">期货</a></li>
                     </ul>
                     <!-- 我的现货-->
                     <div class="orderCon">
@@ -55,7 +56,7 @@
                                         </li>
                                         <li class="two">{{ $order->seller->name  or '' }}</li>
                                         <li class="three">
-                                            <a href="#" class="contact"></a>
+                                            <a href="javascript:;" class="contact" data_tel="{{ $order->seller->user->mobile  or '' }}"></a>
                                         </li>
                                     </ul>
                                     <ul class="tbody">
@@ -102,8 +103,10 @@
                                                         <a href="#" class="f12 textBlue">待评价</a>
                                                     @elseif($order->status == 99)
                                                         <a href="#" class="f12">交易成功</a>
+                                                    @elseif($order->status == 100)
+                                                        <a href="#" class="f12">订单取消</a>
                                                     @endif
-                                                    <a href="#" class="f12">订单详情</a>
+                                                    {{--<a href="#" class="f12">订单详情</a>--}}
                                                 </li>
                                                 <li class="td10">
                                                     @if($order->status == 1)
@@ -150,14 +153,23 @@
                 </div>
 
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
+    <script>
+        $(function(){
+            $(document).on("click", ".thead .contact", function() {
+                var tel=$(this).attr("data_tel");
+                $.alert("请拨打电话："+tel, "联系方式");
+            });
+
+            $("#stocks").addClass("on");
+        })
+    </script>
+<script>
+    $("#user").addClass("on");
+</script>
 @endsection
 
 @section('footer')

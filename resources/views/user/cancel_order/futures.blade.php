@@ -96,15 +96,19 @@
                     {!! $order_goods->render() !!}
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
     <!-- footer-->
+    <script type="text/javascript">
+        $("#order_cancel").addClass("on");
+        
+        $(document).on("click", ".thead .contact", function() {
+	        var tel=$(this).attr("data_tel");
+	        $.alert("请拨打电话："+tel, "联系方式");
+	    });
+    </script>
 @endsection
 
 @section('footer')

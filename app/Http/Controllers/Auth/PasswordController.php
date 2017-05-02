@@ -17,6 +17,7 @@ class PasswordController extends Controller
         $this->middleware('guest');
     }
 
+
     public function getFind()
     {
         return view('auth.password.find');
@@ -74,4 +75,6 @@ class PasswordController extends Controller
 
         return $response;
     }
+
+    
 }

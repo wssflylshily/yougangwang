@@ -14,48 +14,68 @@ class OrderController extends Controller
     public function getIndex()
     {
         $query = App\Order::query();
-        /* dd($query);*/
-        $city = "";
+        /*dd(Request());*/
         if (!empty(Request::query())){
             //订单搜索
             if (Request::input('search_ddh'))
             {
-                $query->where('order_sn', Request::input('search_ddh'));
+                $query->where('order_sn','like', '%'.Request::input('search_ddh').'%');
             }
             //状态搜索
             if (Request::input('search_zt'))
             {
-                $query->where('status', Request::input('search_zt'));
+                $query->where('status','like','%'.Request::input('search_zt').'%');
             }
-            //物流号搜索
+            /*//物流号搜索
             if (Request::input('search_wlh'))
             {
-                $query->where('material', Request::input('search_wlh'));
-            }
+                $query->where('material','like','%'.Request::input('search_wlh').'%');
+            }*/
             //下单时间
             if (Request::input('search_datestart') &&!Request::input('search_dateend'))
             {
-                $query->where('created_at','>=', Request::input('search_datestart'));
+                $query->where('orders.created_at','>=', date('Y-m-d H:i:s',strtotime(Request::input('search_datestart'))));
             }
             if (!Request::input('search_datestart') && Request::input('search_dateend'))
             {
-                $query->where('created_at','<=', Request::input('search_datestart'));
+                $query->where('orders.created_at','<=', date('Y-m-d H:i:s',strtotime(Request::input('search_datestart'))));
             }
             if (Request::input('search_datestart') && Request::input('search_dateend'))
             {
-                $query->whereBetween('created_at',[Request::input('search_datestart'), Request::input('search_dateend')]);
+                $query->whereBetween('orders.created_at',[date('Y-m-d H:i:s',strtotime(Request::input('search_datestart'))), date('Y-m-d H:i:s',strtotime(Request::input('search_dateend')))]);
             }
 
         }
-        $orders['orders_list'] = $query->where('type','1')
+        $orders['orders_list'] = $query->where('type',1)
             ->leftJoin('users', 'users.id', '=', 'orders.user_id')
             ->orderBy('orders.created_at', 'desc')
             ->paginate(10);
-        /*dd($goods);*/
+//         print_r($orders);die;
+       
         /* return view('shop.stocks.index', ['goods' => $goods, 'provinces' => $area, 'cities' => $city]);*/
         return view('admin.orders.order_now', $orders);
         /*$result['user_list'] = \App\Order::withTrashed()->orderBy('id', 'desc')->paginate(20);
         return view('admin.orders.order_now', $result);*/
+    }
+    
+    /**
+     * 现货订单详情
+     */
+    public function getOrdernowdetail($id){
+    	$order_db = App\Order::query();
+    	$info = $order_db->where('id',$id)->first();
+    	
+    	return view('admin.orders.ordernowdetail',['order'=>$info]);
+    }
+    
+    /**
+     * 期货订单详情
+     */
+    public function getOrderfutdetail($id){
+    	$order_db = App\Order::query();
+    	$info = $order_db->where('id',$id)->first();
+    	//print_r($info->futures);die;
+    	return view('admin.orders.orderfuturedetail',['order'=>$info]);
     }
 
     public function getFuture()
@@ -67,35 +87,38 @@ class OrderController extends Controller
             //订单搜索
             if (Request::input('search_ddh'))
             {
-                $query->where('order_sn', Request::input('search_ddh'));
+                $query->where('order_sn','like', '%'.Request::input('search_ddh').'%');
             }
             //状态搜索
             if (Request::input('search_zt'))
             {
-                $query->where('status', Request::input('search_zt'));
+                $query->where('status','like','%'.Request::input('search_zt').'%');
             }
-            //物流号搜索
+            /*//物流号搜索
             if (Request::input('search_wlh'))
             {
-                $query->where('material', Request::input('search_wlh'));
-            }
+                $query->where('material','like','%'.Request::input('search_wlh').'%');
+            }*/
             //下单时间
             if (Request::input('search_datestart') &&!Request::input('search_dateend'))
             {
-                $query->where('created_at','>=', Request::input('search_datestart'));
+                $query->where('orders.created_at','>=', date('Y-m-d H:i:s',strtotime(Request::input('search_datestart'))));
             }
             if (!Request::input('search_datestart') && Request::input('search_dateend'))
             {
-                $query->where('created_at','<=', Request::input('search_datestart'));
+                $query->where('orders.created_at','<=', date('Y-m-d H:i:s',strtotime(Request::input('search_datestart'))));
             }
             if (Request::input('search_datestart') && Request::input('search_dateend'))
             {
-                $query->whereBetween('created_at',[Request::input('search_datestart'), Request::input('search_dateend')]);
+                $query->whereBetween('orders.created_at',[date('Y-m-d H:i:s',strtotime(Request::input('search_datestart'))), date('Y-m-d H:i:s',strtotime(Request::input('search_dateend')))]);
             }
+
 
         }
         $orders['orders_list'] = $query->where('type','2')
             ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->leftJoin('future_offers','future_offers.order_id','=','orders.id')
+            ->select('orders.*','users.name','future_offers.created_at as futime')
             ->orderBy('orders.created_at', 'desc')
             ->paginate(10);
         /*dd($goods);*/
@@ -211,4 +234,39 @@ class OrderController extends Controller
 
         return $response;
     }
+
+    //现货签合同
+    public function postNowcon(){
+        $response = [
+            'result'    => true,
+            'message'   => '修改成功',
+        ];
+        try {
+            App\Order::whereIn('id', Request::input('order_ids'))
+                ->update(['status' => 1]);
+        } catch(Exception $e) {
+            $response['result']  = false;
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    //现货付款
+    public function postNowpay(){
+        $response = [
+            'result'    => true,
+            'message'   => '修改成功',
+        ];
+        try {
+            App\Order::whereIn('id', Request::input('order_ids'))
+                ->update(['status' => 1]);
+        } catch(Exception $e) {
+            $response['result']  = false;
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
 }

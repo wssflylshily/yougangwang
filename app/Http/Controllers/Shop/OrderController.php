@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
         $response = [
             'result'    => true,
-            'message'   => '',
+            'message'   => '订单提交成功',
         ];
 
         try {
@@ -32,6 +32,13 @@ class OrderController extends Controller
                 throw new Exception($validator->errors()->first());
             }
 
+            $onecheck = Request::input('onecheck');
+            $num = Request::input('dnum');
+            for($i=0;$i<count($onecheck);$i++)
+            {
+                App\Cart::where('id', $onecheck[$i])->update(['buy_number' => $num[$i]]);
+            }
+
             Session::set('onecheck', Request::input('onecheck'));
 
             // 检查要删除的是否都是自己购物车里的
@@ -44,9 +51,9 @@ class OrderController extends Controller
             } else {
                 // 验证要结算商品的有效性
                 $vaild_goods = App\Cart::whereIn('id', Request::input('onecheck'))
-                                       ->has('ori')
-                                       ->with('ori')
-                                       ->get();
+                    ->has('ori')
+                    ->with('ori')
+                    ->get();
 
                 if (count($vaild_goods) < count(Request::input('onecheck'))) {
                     throw new Exception('有现货刚被下架，请刷新购物车');
@@ -72,6 +79,11 @@ class OrderController extends Controller
                                                 ->orderByRaw('instr(\',' . implode(',', $sellers) . ',\', CONCAT(\',\',seller_id,\',\'))')
                                                 ->orderBy('created_at', 'desc')
                                                 ->get();
+//                $response['cart_goods'] = App\Cart::where('user_id', Auth::user()->id)
+//                                                ->whereIn('id', Request::input('onecheck'))
+//                                                ->groupBy('seller_id')
+//                                                ->orderBy('created_at', 'desc')
+//                                                ->get();
 
                 $response['consignees'] = App\Consignee::where('user_id', Auth::user()->id)
                                                 ->orderBy('is_default', 'desc')
@@ -87,16 +99,19 @@ class OrderController extends Controller
             $response['message'] = $e->getMessage();
             abort(500, $response['message']);
         }
-
+        // echo json_encode($response);
+        //  return;
         return view('shop.order.checkout', $response);
+        //return view('shop.order.order_confirm', $response);
     }
 
     public function postPay()
     {
         $response = [
             'result'    => true,
-            'message'   => '订单已经生成，正在跳往订单列表页做后续操作',
+            'message'   => '下单成功，请到个人中心做后续操作',
         ];
+       // return $response;
 
         try {
             $onecheck = Session::remove('onecheck');
@@ -157,7 +172,13 @@ class OrderController extends Controller
                 $new_order->mobile      = $consignee->mobile;
                 $new_order->address     = $consignee->province . $consignee->city . $consignee->county . ' ' . $consignee->detail_address;
                 $new_order->zip_code    = $consignee->postcode;
-                $new_order->receive_type= 1;
+                $new_order->receive_type= Request::input('receive_type');
+                $new_order->pay_type= Request::input('pay_type');
+                if (Request::input('receive_type') == 2){
+                    $new_order->technology= Request::input('technology');
+                }else{
+                    $new_order->postsge  = 0;
+                }
 
                 $new_order->save();
 
@@ -260,7 +281,7 @@ class OrderController extends Controller
                 ->orderBy('is_default', 'desc')
                 ->orderBy('id', 'desc')
                 ->get();
-
+           // return;
             if (count($response['consignees']) == 0) {
                 throw new Exception('您还未设置收货地址，请先<a href="' . route('user.address') . '">添加</a>一个');
             }
@@ -309,7 +330,11 @@ class OrderController extends Controller
             $new_order->mobile      = $consignee->mobile;
             $new_order->address     = $consignee->province . $consignee->city . $consignee->county . ' ' . $consignee->detail_address;
             $new_order->zip_code    = $consignee->postcode;
-            $new_order->receive_type= 1;
+            $new_order->receive_type= Request::input('receive_type');
+            $new_order->pay_type= Request::input('pay_type');
+            if (Request::input('receive_type') == 2){
+                $new_order->technology= Request::input('technology');
+            }
 
             $new_order->save();
 
@@ -351,7 +376,6 @@ class OrderController extends Controller
             $response['message'] = $e->getMessage();
             $response['trace'] = $e->getTrace();
         }
-
         return $response;
     }
 }

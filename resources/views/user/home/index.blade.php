@@ -15,7 +15,7 @@
                     <a href="/user/userinfo" class="set"><img src="/assets/shop/img/person/set.jpg"/></a>
                     <p class="headimg L" style="background-image: url({{$users->avatar_pic}})"></p>
                     <ul class="L one">
-                        <li><b class="name">{{$users->realname or ''}}</b> 先生</li>
+                        <li><b class="name">{{$users->realname or ''}}</b> @if($users->gender == 1)先生@else女士@endif</li>
                         <li>{{$users->nameauth or ''}}
                             <span class="renzheng"></span>
                         </li>
@@ -130,7 +130,7 @@
                                                     @elseif($order->status == 99)
                                                         <a href="#" class="f12">交易成功</a>
                                                     @endif
-                                                    <a href="#" class="f12">订单详情</a>
+                                                    {{--<a href="#" class="f12">订单详情</a>--}}
                                                 </li>
                                                 <li class="td10">
                                                     @if($order->status == 1)
@@ -159,7 +159,7 @@
                     </div>
                 </div>
                 <!-- 信任的商家-->
-                <div class="xinRen">
+                {{--<div class="xinRen">
                     <div class="tit clear">
                         <p class="L">信任的商家</p>
                         <a href="#" class="R">更多商家</a>
@@ -231,13 +231,9 @@
                             <p class="history f12">历史交易：36890单</p>
                         </li>
                     </ul>
-                </div>
+                </div>--}}
                 <!-- ad-->
-                <ul class="ads clear" id="ads_clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>

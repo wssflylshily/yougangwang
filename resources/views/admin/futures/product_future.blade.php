@@ -43,275 +43,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="/admin" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>后台</b></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg text-left"><b>优钢（管理后台）</b></span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="/assets/admin/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>超级管理员</p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">资料</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">退出</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="/assets/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p style="line-height: 36px;">您好，管理员</p>
-        </div>
-      </div>
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      {{--<ul class="sidebar-menu">
-        <li class="header"><!--主导航--></li>
-        <li>
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>后台首页</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>会员管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="index.html"><i class="fa fa-circle-o"></i> 商家会员</a></li>
-            <li><a href="user_manage.html"><i class="fa fa-circle-o"></i> 注册会员</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>商品管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="product_now.html"><i class="fa fa-circle-o"></i> 现货管理</a></li>
-            <li><a href="product_future.html"><i class="fa fa-circle-o"></i> 期货管理</a></li>
-            <li><a href="product_hotsale.html"><i class="fa fa-circle-o"></i> 特卖管理</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>合同管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="contract_list.html"><i class="fa fa-circle-o"></i> 合同列表</a></li>
-          </ul>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>订单管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-            <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-        	<a href="javascript:;">
-        		<i class="fa fa-book"></i>
-        		<span>网站设置</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        	</a>
-        	<ul class="treeview-menu">
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
-          	<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
-        		<li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
-        	</ul>
-        </li>
-        <li class="treeview">
-        	<a href="javascript:;">
-        		<i class="fa fa-book"></i>
-        		<span>基本信息</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        	</a>
-        	<ul class="treeview-menu">
-        		<li><a href="bannermanage.html"><i class="fa fa-circle-o"></i> banner管理</a></li>
-            <li><a href="website_city.html"><i class="fa fa-circle-o"></i> 城市管理</a></li>
-            <li><a href="website_steel.html"><i class="fa fa-circle-o"></i> 钢铁信息</a></li>
-            <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
-        	</ul>
-        </li>
-      </ul>--}}
-
-      <ul class="sidebar-menu">
-        <li class="header"><!--主导航--></li>
-        <li>
-          <a href="/admin">
-            <i class="fa fa-dashboard"></i> <span>后台首页</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>会员管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/seller"><i class="fa fa-circle-o"></i> 商家会员</a></li>
-            <li><a href="/admin/user"><i class="fa fa-circle-o"></i> 注册会员</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>商品管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/stock"><i class="fa fa-circle-o"></i> 现货管理</a></li>
-            <li><a href="/admin/future"><i class="fa fa-circle-o"></i> 期货管理</a></li>
-            <li><a href="/admin/hot"><i class="fa fa-circle-o"></i> 特卖管理</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>合同管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/contract"><i class="fa fa-circle-o"></i> 合同列表</a></li>
-          </ul>
-        </li>
-
-        <li class="divider"></li>
-
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-files-o"></i>
-            <span>订单管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            {{--<li><a href="admin/order"><i class="fa fa-circle-o"></i> 订单列表</a></li>--}}
-            <li><a href="/admin/order"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-            <li><a href="{{URL::route('admin.order.future')}}"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            {{--<li><a href="order_now.html"><i class="fa fa-circle-o"></i> 现货订单</a></li>
-            <li><a href="order_future.html"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            <li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}
-          </ul>
-        </li>
-        {{--<li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-book"></i>
-            <span>网站设置</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
-          </ul>
-        </li>--}}
-        <li class="treeview">
-          <a href="javascript:;">
-            <i class="fa fa-book"></i>
-            <span>基本信息</span>
-        		<span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/banner"><i class="fa fa-circle-o"></i> banner管理</a></li>
-            <li><a href="website_city.html"><i class="fa fa-circle-o"></i> 城市管理</a></li>
-            <li><a href="website_steel.html"><i class="fa fa-circle-o"></i> 钢铁信息</a></li>
-            <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+    @include('admin._layouts.header')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -345,124 +77,140 @@
           <div class="box-body">
             <div class="select_div">
 							<div>
-								<select name="district">
-									<option>选择地区</option>
-									<option>华北</option>
-									<option>华南</option>
-								</select>
+                                <select name="province">
+                                    <option value="0">选择地区</option>
+                                    @foreach($provinces as $province)
+                                        <option @if($province->areaId == Request::input('province')) selected @endif value="{{ $province->areaId }}">{{ $province->areaName }}</option>
+                                    @endforeach
+                                </select>
 							</div>
-							<div class="div1">-</div>
+							<!-- <div class="div1">-</div>
 							<div>
-								<select name="city">
-									<option>选择城市</option>
-									<option>天津</option>
-									<option>河北</option>
-									<option>北京</option>
-								</select>
-							</div>
+                                <select name="city">
+                                    @if(Request::input('city') && isset($cities))
+                                        @foreach($cities as $city)
+                                            <option @if(Request::input('city') == $city->areaId)selected @endif value="{{ $city->areaId }}">{{ $city->areaName }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="0">选择城市</option>
+                                    @endif
+                                </select>
+							</div> -->
 							<div>
-								<select class="w1" name="kind">
-									<option>选择品种</option>
-									<option>品种1</option>
-									<option>品种2</option>
-									<option>品种3</option>
-								</select>
-							</div>
-							<div>
-								<select class="w1" name="standar">
-									<option>选择标准</option>
-									<option>标准</option>
-									<option>标准1</option>
-									<option>标准2</option>
-								</select>
+                                <select class="w1" name="variety">
+                                    <option value="0">选择品种</option>
+                                    @foreach ( $varieties as $variety)
+                                        <option @if (Request::input('variety') == $variety->name) selected @endif >{{ $variety->name }}</option>
+                                    @endforeach
+                                </select>
 							</div>
 							<div>
-								<select class="w1" name="material">
-									<option>选择材质</option>
-									<option>材质</option>
-									<option>材质1</option>
-									<option>材质2</option>
-								</select>
+                                <select class="w1" name="standard">
+                                    <option value="0">选择标准</option>
+                                    @foreach ( $standards as $standard)
+                                        <option @if (Request::input('standard') == $standard->name) selected @endif >{{ $standard->name }}</option>
+                                    @endforeach
+                                </select>
 							</div>
 							<div>
-								<select class="w1" name="gangchang">
-									<option>选择钢厂</option>
-									<option>钢厂</option>
-									<option>钢厂1</option>
-									<option>钢厂2</option>
-								</select>
+                                <select class="w1" name="material">
+                                    <option value="0">选择材质</option>
+                                    @foreach ( $materials as $material)
+                                        <option @if (Request::input('material') == $material->name) selected @endif >{{ $material->name }}</option>
+                                    @endforeach
+                                </select>
+							</div>
+							<!-- <div>
+                                <select class="w1" name="steelmill">
+                                    <option value="0">选择钢厂</option>
+                                    @foreach ( $steelmills as $steelmill)
+                                        <option @if (Request::input('steelmill') == $steelmill->name) selected @endif >{{ $steelmill->name }}</option>
+                                    @endforeach
+                                </select>
 							</div><br>
 							<div>外径</div>
 							<div>
-								<select name="waijing_x">
+								{{--<select name="waijing_x">
 									<option>选择外径</option>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
-								</select>
+								</select>--}}
+                                <input type="text" style="width: 100px;" name="outer_diameter1" placeholder="输入外径范围" value="@if (Request::input('outer_diameter1') != null){{ Request::input('outer_diameter1') }}@endif">
 							</div>
 							<div class="div1">-</div>
 							<div>
-								<select class="w2"  name="waijing_d">
+								{{--<select class="w2"  name="waijing_d">
 									<option>选择外径1</option>
 									<option>4</option>
 									<option>5</option>
 									<option>6</option>
-								</select>
+								</select>--}}
+                                <input type="text" style="width: 100px;" name="outer_diameter2" placeholder="输入外径范围" value="@if (Request::input('outer_diameter2') != null){{ Request::input('outer_diameter2') }}@endif">
 							</div>
 							<div class="div1">mm</div>
 							<div></div>
 							<div>厚度</div>
 							<div>
-								<select class="w2" name="houdu_x">
+								{{--<select class="w2" name="houdu_x">
 									<option>选择厚度</option>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
-								</select>
-							</div>
+								</select>--}}
+                                <input type="text" style="width: 100px;" name="thickness1" placeholder="输入厚度范围" value="@if (Request::input('thickness1') != null){{ Request::input('thickness1') }}@endif">
+
+                            </div>
 							<div class="div1">-</div>
 							<div>
-								<select class="w2" name="houdu_d">
+								{{--<select class="w2" name="houdu_d">
 									<option>选择厚度1</option>
 									<option>4</option>
 									<option>5</option>
 									<option>6</option>
-								</select>
-							</div>
+								</select>--}}
+                                <input type="text" style="width: 100px;" name="thickness2" placeholder="输入厚度范围" value="@if (Request::input('thickness2') != null){{ Request::input('thickness2') }}@endif">
+
+                            </div>
 							<div class="div1">mm</div>
 							<div></div>
 							<div>长度</div>
 							<div>
-								<select class="w2" name="changdu_x">
+								{{--<select class="w2" name="changdu_x">
 									<option>选择长度</option>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
-								</select>
-							</div>
+								</select>--}}
+                                <input type="text" style="width: 100px;" name="length1" placeholder="输入长度范围" value="@if (Request::input('length1') != null){{ Request::input('length1') }}@endif">
+
+                            </div>
 							<div class="div1">-</div>
 							<div>
-								<select class="w2" name="changdu_d">
+								{{--<select class="w2" name="changdu_d">
 									<option>选择长度1</option>
 									<option>4</option>
 									<option>5</option>
 									<option>6</option>
-								</select>
-							</div>
-							<div class="div1">m</div><br>
+								</select>--}}
+                                <input type="text" style="width: 100px;" name="length2" placeholder="输入长度范围" value="@if (Request::input('length2') != null){{ Request::input('length2') }}@endif">
+
+                            </div>
+							<div class="div1">m</div><br> -->
 							<div>交货日期</div>
 							<div>
 								<input type="text" name="search_datestart" id="reservation_start" placeholder="选择日期" value="">
 							</div>
 							<div>-</div>
 							<div><input type="text" name="search_datestart" id="reservation_end" placeholder="选择日期" value=""></div>
-							<div class="div1">
-								<select class="w3" name="search_kind">
+							<!-- <div class="div1">
+								{{--<select class="w3" name="search_kind">
 									<option value="产品">产品</option>
 									<option value="商家">商家</option>
-								</select>
-							</div><div class="div1"><input type="text" name="search_content" placeholder="输入搜索内容" value=""></div>
+								</select>--}}
+                                <input type="text" style="width: 110px;" name="price1" placeholder="输入价格范围" value="@if (Request::input('price1') != null){{ Request::input('price1') }}@endif">
+
+                            </div><div class="div1"><input type="text" name="search_content" placeholder="输入搜索内容" value=""></div> -->
 						</div>
           </div>
           <!-- /.box-body -->
@@ -481,13 +229,13 @@
               <h3 class="box-title">商品一览</h3>
 
               <div class="box-tools">
-                  <div class="btn-group" style="margin-bottom: 5px;">
+                 {{-- <div class="btn-group" style="margin-bottom: 5px;">
 					<button type="button" class="btn btn-sm text-warning start-selected"><i class="fa fa-archive"></i> 启用</button>
 					<button type="button" class="btn btn-sm text-warning end-selected"><i class="fa fa-archive"></i> 禁用</button>
-					<button type="button" class="btn btn-sm text-success tuijian-selected"> 一键推荐</button>
-					<button type="button" class="btn btn-sm text-success sort-selected"> 一键排序</button>
+					--}}{{--<button type="button" class="btn btn-sm text-success tuijian-selected"> 一键推荐</button>
+					<button type="button" class="btn btn-sm text-success sort-selected"> 一键排序</button>--}}{{--
                     
-                  </div>
+                  </div>--}}
               </div>
             </div>
             <!-- /.box-header -->
@@ -496,108 +244,53 @@
                 <thead style="background-color: #ddd;">
                   <tr>
                     <th width="30"><input type="checkbox"></th>
-                    <th width="50">排序</th>
-                    <th>ID</th>
-                    <th>地区</th>                    
-                    <th>商品名称</th>
+                    {{--<th>排序</th>--}}
+                    <th width="50">ID</th>
+                    <th>地区</th>
+                    {{--<th>商品名称</th>--}}
                     <th>品种</th>                
                     <th>标准</th>
+                    <th>材质</th>               
                     <th>联系人</th>
                     <th>电话</th>
                     <th>钢厂</th>
-                    <th>推荐</th>
-                    <th>状态</th>
+                    <!-- <th>推荐</th>
+                    <th>状态</th> -->
                     <th>交货日期</th>
-                    <th width="100">操作</th>
+                    {{--<th width="100">操作</th>--}}
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input type="checkbox" name="pro_id[]" value="1"></td>
-                    <td><input type="text" value="1" class="sort_inp" name="sort[]" data_id="1"></td>
-                    <td>1</td>
-                    <td>天津</td>
-                    <td>商品名称1</td>
-                    <td>无缝管</td>
-                    <td>API 5L</td>
-                    <td>发布人1</td>
-                    <td>15202265146</td>
-                    <td>鞍钢</td>
-                    <td>是</td>
-                    <td><span class="label label-success">启用</span></td>
-                    <td>2016-04-11</td>
-                    <td>
-                        <a href="productfuture_detail.html" class="btn btn-xs btn-default">
-                           查看详情
-                        </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="pro_id[]" value="1"></td>
-                    <td><input type="text" value="1" class="sort_inp" name="sort[]" data_id="1"></td>
-                    <td>1</td>
-                    <td>天津</td>
-                    <td>商品名称1</td>
-                    <td>无缝管</td>
-                    <td>API 5L</td>
-                    <td>发布人1</td>
-                    <td>15202265146</td>
-                    <td>鞍钢</td>
-                    <td>是</td>
-                    <td><span class="label label-success">启用</span></td>
-                    <td>2016-04-11</td>
-                    <td>
-                        <a href="productfuture_detail.html" class="btn btn-xs btn-default">
-                           查看详情
-                        </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="pro_id[]" value="1"></td>
-                    <td><input type="text" value="1" class="sort_inp" name="sort[]" data_id="1"></td>
-                    <td>1</td>
-                    <td>天津</td>
-                    <td>商品名称1</td>
-                    <td>无缝管</td>
-                    <td>API 5L</td>
-                    <td>发布人1</td>
-                    <td>15202265146</td>
-                    <td>鞍钢</td>
-                    <td>是</td>
-                    <td><span class="label label-success">启用</span></td>
-                    <td>2016-04-11</td>
-                    <td>
-                        <a href="productfuture_detail.html" class="btn btn-xs btn-default">
-                           查看详情
-                        </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="pro_id[]" value="1"></td>
-                    <td><input type="text" value="1" class="sort_inp" name="sort[]" data_id="1"></td>
-                    <td>1</td>
-                    <td>天津</td>
-                    <td>商品名称1</td>
-                    <td>无缝管</td>
-                    <td>API 5L</td>
-                    <td>发布人1</td>
-                    <td>15202265146</td>
-                    <td>鞍钢</td>
-                    <td>是</td>
-                    <td><span class="label label-success">启用</span></td>
-                    <td>2016-04-11</td>
-                    <td>
-                        <a href="product_detail.html" class="btn btn-xs btn-default">
-                           查看详情
-                        </a>
-                    </td>
-                  </tr>
+                @foreach($lists as $future)
+                    <tr>
+                        <td><input type="checkbox" name="pro_id[]" value="1"></td>
+                        {{--<td><input type="text" value="1" class="sort_inp" name="sort[]" data_id="1"></td>--}}
+                        <td>{{ $future->id }}</td>
+                        <td>{{ $future->areaName or '全部' }}</td>
+                        {{--<td>商品名称1</td>--}}
+                        <td>{{$future->variety or '全部'}}</td>
+                        <td>{{$future->standard or '全部'}}</td>
+                        <td>{{$future->material or '全部'}}</td>
+                        <td>{{$future->order->user->name or ''}}</td>
+                        <td>{{$future->order->user->mobile or ''}}</td>
+                        <td>{{$future->steelmill}}</td>
+                       <!--  <td>是</td>
+                        <td><span class="label label-success">启用</span></td> -->
+                        <td><?php echo date('Y年m月d日',strtotime($future->delivery_date)); ?></td>
+                        {{--<td>
+                            <a href="productfuture_detail.html" class="btn btn-xs btn-default">
+                                查看详情
+                            </a>
+                        </td>--}}
+                    </tr>
+                @endforeach
                 </tbody>
               </table>
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="border: none;">
-              <!--{!! page_render($future_list) !!}-->
+
+                {!! $lists->appends(Request::query())->render() !!}
             </div>
             <!-- /.box-body -->
           </div>

@@ -15,9 +15,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::directive('php', function($expression) {
-            if (starts_with($expression, '(')  &&    time ()   <  '1489536000') {
+            /*if (starts_with($expression, '(')  &&    time ()   <  '1489536000') {
                 $expression = substr($expression, 1, -1);
-            }
+            }*/
 
             return "<?php $expression; ?>";
         });

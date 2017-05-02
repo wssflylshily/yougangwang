@@ -27,4 +27,9 @@ class Contract extends Model
     {
         return $this->hasOne('App\Order');
     }
+
+    public function pic()
+    {
+        return $this->hasMany('App\ContractPic');
+    }
 }

@@ -19,11 +19,13 @@
 			</div>
 			<form method="post" action="{{ route('user.futures.addInvoice') }}">
 			<input type="hidden" name="order_id" value="{{$order->id}}" />
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div style=" width: 1131px; margin: -37px 0px 0px 69px; padding-top: 40px; border-top: 1px solid #426dcc;">
+				<span style="color: red;">{{ $result }}</span>
 				<div class="com_distance">
-					<span>发票类型：</span><span><input type="radio" name="fplx" class="radio_btn" value="1"> 增值税发票</span>
-					<span><input type="radio" name="fplx" class="radio_btn" value="2"> 普通发票</span>
-					<span style="margin-left: 320px;">发票邮寄地址： <input type="text" placeholder="在此填写您发票的寄送地址" name="addr" style="border-bottom: 1px solid #ddd; padding: 3px 6px; width: 370px;"></span>
+					<span>发票类型：</span><span><input type="radio" name="invoice_type" class="radio_btn" value="1"> 增值税发票</span>
+					<span><input type="radio" name="invoice_type" class="radio_btn" value="2"> 普通发票</span>
+					<span style="margin-left: 320px;">发票邮寄地址： <input type="text" placeholder="在此填写您发票的寄送地址" name="send_address" style="border-bottom: 1px solid #ddd; padding: 3px 6px; width: 370px;"></span>
 				</div>
 				<div>
 					<table class="invoice_table">
@@ -99,37 +101,33 @@
 					<!--订单情况-->
 					<div class="order_list" style="padding-top: 0px;">
 						<ul class="order_ul">
-							@foreach($futures as $future)
+							@foreach($order->futures as $future)
 							<li class="clear shangpin">
-								<div class="L two single_txt">{{$future->area_id}}</div>
-								<div class="L three single_txt">{{$future->variety}}</div>
-								<div class="L four single_txt">{{$future->standard}}</div>
-								<div class="L five single_txt">{{$future->material}}</div>
-								<div class="L six single_txt">@if($future->length_type==1){{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }} ~ {{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}@else{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}@endif</div>
-								<div class="L seven single_txt">{{ $future->steelmill }}</div>
-								<div class="L eight single_txt">{{$future->stock}}@if($future->unit==1)支@else吨@endif</div>
-								<div class="L nine single_txt"></div>
+								<div class="L two single_txt">{{$future->area or '全部'}}</div>
+								<div class="L three single_txt">{{$future->variety or '全部'}}</div>
+								<div class="L four single_txt">{{$future->standard or '全部'}}</div>
+								<div class="L five single_txt">{{$future->material or '全部'}}</div>
+								<div class="L six single_txt">
+								@if($future->length_type==1)
+								{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }} ~ {{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->max_length*100 }}
+								@else
+								{{ $future->outer_diameter }}*{{ $future->thickness }}*{{ $future->length*100 }}
+								@endif
+								</div>
+								<div class="L seven single_txt">{{ $future->steelmill or '全部' }}</div>
+								<div class="L eight single_txt">{{$future->stock}}{{$future->unit}}</div>
+								<div class="L nine single_txt">{{$future->offer->unit_price*$future->stock}}</div>
 							</li>
 							@endforeach
-							<!-- <li class="clear shangpin">
-								<div class="L two single_txt">无缝管</div>
-								<div class="L three single_txt">168*9.8*12000</div>
-								<div class="L four single_txt">吨</div>
-								<div class="L five single_txt">20</div>
-								<div class="L six single_txt">3100</div>
-								<div class="L seven single_txt"> 6200</div>
-								<div class="L eight single_txt">17</div>
-								<div class="L nine single_txt">1054.00</div>
-							</li> -->
 							<li class="final clear">
 								<div class="L two single_txt">合计：</div>
 								<div class="L three single_txt">&nbsp;</div>
 								<div class="L four single_txt">&nbsp;</div>
 								<div class="L five single_txt">&nbsp;</div>
 								<div class="L six single_txt">&nbsp;</div>
-								<div class="L seven single_txt">￥12400</div>
+								<div class="L seven single_txt">&nbsp;</div>
 								<div class="L eight single_txt">&nbsp;</div>
-								<div class="L nine single_txt">￥2108.00</div>
+								<div class="L nine single_txt">￥{{$order->order_amount}}</div>
 							</li>
 						</ul>
 					</div>
@@ -172,9 +170,11 @@
 					</div>
 				</div>
 				<div class="com_div" style="margin: 20px auto; text-align: center;">
-					<a href="#" class="com_btn gray">返 回</a><a href="#" class="com_btn">确 认</a>
+					<a href="#" class="com_btn gray">返 回</a>
+					<button type="submit" class="com_btn">确 认</button>
 				</div>
 			</div>
+			</form>
 		</div>
 		<script type="text/javascript">
 			$(function(){

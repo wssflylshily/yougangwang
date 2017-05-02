@@ -105,16 +105,16 @@
                         <p>品种
                             <select name="variety" class="type">
                                 <option value="">全部</option>
-                                @foreach(config('const.goods_variety') as $variety)
-                                <option>{{ $variety }}</option>
+                                @foreach($varieties as $variety)
+                                <option>{{ $variety->name }}</option>
                                 @endforeach
                             </select>
                         </p>
                         <p>标准
                             <select name="standard" class="standard">
                                 <option value="">全部</option>
-                                @foreach(config('const.goods_standard') as $standard)
-                                <option>{{$standard}}</option>
+                                @foreach($standards as $standard)
+                                <option>{{$standard->name}}</option>
                                 @endforeach
                             </select>
                         </p>
@@ -143,12 +143,17 @@
                         <div class="tbody">
                         	@foreach($futures as $future)
                             <ul class="tr">
-                                <li class="td1">{{ $future->area_id }}</li>
-                                <li class="td2">{{ $future->variety }}</li>
-                                <li class="td3">{{ $future->standard }}</li>
-                                <li class="td4">{{ $future->outer_diameter*$future->thickness*$future->length }}</li>
-                                <li class="td5">{{ $future->steelmill }}</li>
-                                <li class="td6">{{ $future->stock }}</li>
+                                <li class="td1">{{ $future->area or '全部' }}</li>
+                                <li class="td2">{{ $future->variety or '全部' }}</li>
+                                <li class="td3">{{ $future->standard or '全部' }}</li>
+                                <li class="td4">
+                                @if($future->length_type==2)
+                                {{ $future->outer_diameter}}*{{$future->thickness}}*{{$future->length*100 }}
+                                @else
+                                {{ $future->outer_diameter}}*{{$future->thickness}}*{{$future->length*100 }} - {{ $future->outer_diameter}}*{{$future->thickness}}*{{$future->max_length*100 }}
+                                @endif</li>
+                                <li class="td5">{{ $future->steelmill or '全部' }}</li>
+                                <li class="td6">{{ $future->stock }} {{$future->unit}}</li>
                                 <li class="td7"><?php echo substr($future->created_at, 0,10); ?></li>
                                 <li class="td8"><?php echo substr($future->updated_at,0,10); ?>
                                     <a href="{{route('seller.futures.detail',['order_id'=>$future->order_id])}}" class="detail">详情</a>
@@ -279,16 +284,13 @@
                     </ul> -->
                 </div>
                 <!-- 广告-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                @include('_layouts.ads')
             </div>
         </div>
     </div>
     <!-- footer-->
     <script type="text/javascript">
+        $("#futures_list").addClass("on");
         //最新动态 select 改变的时候
         $('.meCenIndex_con > .content > .R .zuiXin .top select').on('change',function(){
             var selected=$(this).val();

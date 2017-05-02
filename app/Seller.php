@@ -33,6 +33,10 @@ class Seller extends Model
     {
         return $this->hasMany('App\Goods');
     }
+    
+    public function offers(){
+    	return $this->hasMany('App\futureOffers');
+    }
 
 //    public function cart_goods()
 //    {

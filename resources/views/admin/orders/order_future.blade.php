@@ -38,8 +38,8 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
+    @include('admin._layouts.header')
+{{--  <header class="main-header">
     <!-- Logo -->
     <a href="/admin" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -98,7 +98,7 @@
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
-     {{-- <ul class="sidebar-menu">
+     --}}{{-- <ul class="sidebar-menu">
         <li class="header"><!--主导航--></li>
         <li>
           <a href="#">
@@ -198,7 +198,7 @@
             <li><a href="website_footer.html"><i class="fa fa-circle-o"></i> 底部信息</a></li>
         	</ul>
         </li>
-      </ul>--}}
+      </ul>--}}{{--
 
       <ul class="sidebar-menu">
         <li class="header"><!--主导航--></li>
@@ -266,10 +266,10 @@
 
             <li><a href="/admin/order"><i class="fa fa-circle-o"></i> 现货订单</a></li>
             <li><a href="{{URL::route('admin.order.future')}}"><i class="fa fa-circle-o"></i> 期货订单</a></li>
-            {{--<li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}
+            --}}{{--<li><a href="order_hotsale.html"><i class="fa fa-circle-o"></i> 特卖订单</a></li>--}}{{--
           </ul>
         </li>
-        {{--<li class="treeview">
+        <li class="treeview">
           <a href="javascript:;">
             <i class="fa fa-book"></i>
             <span>网站设置</span>
@@ -278,14 +278,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
-            <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 现货文章</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 期货文章</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 聚划算</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 了解物流</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 联系我们</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 其他文章</a></li>
+              <li><a href="article_list.html"><i class="fa fa-circle-o"></i> 关于我们</a></li>
           </ul>
-        </li>--}}
+        </li>
         <li class="treeview">
           <a href="javascript:;">
             <i class="fa fa-book"></i>
@@ -304,7 +305,7 @@
       </ul>
     </section>
     <!-- /.sidebar -->
-  </aside>
+  </aside>--}}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -338,22 +339,31 @@
           <div class="box-body">
           	<div class="select_div">
           	<div>订单号</div>
-          	<div><input type="text" name="search_ddh" placeholder="订单号"></div>
+          	<div><input type="text" name="search_ddh" placeholder="订单号" value="{{Request()->search_ddh}}"></div>
           	<div>订单状态</div>
           	<div><select name="search_zt">
-          		<option>完成</option>
-          		<option>完成</option>
-          		<option>完成</option>
+                    <option value="" >全部</option>
+                    <option value="-1" @if(Request()->search_zt==-1) selected="selected" @endif>待签约</option>
+                    <option value="2" @if(Request()->search_zt==2) selected="selected" @endif>代付首款</option>
+                    <option value="3" @if(Request()->search_zt==3) selected="selected" @endif>代付尾款</option>
+                    <option value="4" @if(Request()->search_zt==4) selected="selected" @endif>代发货</option>
+                    <option value="5" @if(Request()->search_zt==5) selected="selected" @endif>代收货</option>
+                    <option value="6" @if(Request()->search_zt==6) selected="selected" @endif>待结算</option>
+                    <option value="7" @if(Request()->search_zt==7) selected="selected" @endif>代开票</option>
+                    <option value="8" @if(Request()->search_zt==8) selected="selected" @endif>已开发票</option>
+                    <option value="9" @if(Request()->search_zt==9) selected="selected" @endif>待评价</option>
+                    <option value="99" @if(Request()->search_zt==99) selected="selected" @endif>交易完成(售后处理中)</option>
+                    <option value="100" @if(Request()->search_zt==100) selected="selected" @endif>已取消</option>
           	</select></div>
-          	<div>物流号</div>
-          	<div><input type="text" name="search_wlh" placeholder="物流号"></div>
+          	{{--<div>物流号</div>
+          	<div><input type="text" name="search_wlh" placeholder="物流号"></div>--}}
 							<div>下单时间</div>
 							<div>
-								<input type="text" name="search_datestart" id="reservation_start" placeholder="选择日期" value="">
+								<input type="text" name="search_datestart" id="reservation_start" placeholder="选择日期" value="{{Request()->search_datestart}}">
 							</div>
 							<div class="div1">-</div>
 							<div>
-								<input type="text" name="search_dateend" id="reservation_end" placeholder="选择日期" value="">
+								<input type="text" name="search_dateend" id="reservation_end" placeholder="选择日期" value="{{Request()->search_dateend}}">
 							</div>
 						</div>
           </div>  
@@ -373,7 +383,7 @@
             <div class="box-header">
               <h3 class="box-title">订单一览</h3>
 
-              <div class="box-tools">
+              {{--<div class="box-tools">
                   <div class="btn-group" style="margin-bottom: 5px;">
 					<button type="button" class="btn btn-sm text-warning qdht-selected">签订合同</button>
                   <button type="button" class="btn btn-sm text-warning fk-selected">付款</button>
@@ -382,7 +392,7 @@
                   <button type="button" class="btn btn-sm text-warning fpcl-selected">发票处理</button>
                   <button type="button" class="btn btn-sm text-warning ddwc-selected">订单完成</button>
                   </div>
-              </div>
+              </div>--}}
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -393,10 +403,11 @@
                     <th>订单编号</th>
                     <th>下单用户</th>
                     <th>总金额</th>
-                    <th>允差</th>
+                    <!-- <th>允差</th> -->
                     <th>预付款</th>
                     <th>尾款</th>
-                    <th>物流号</th>
+                    <th>下单时间</th>
+                    <!-- <th>报价时间</th> -->
                     <th>状态</th>
                     <th width="210">操作</th>
                   </tr>
@@ -408,13 +419,18 @@
                     <td>{{$orders->order_sn}}</td>
                     <td>{{$orders->name}}</td>
                     <td>{{$orders->order_amount}}</td>
-                    <td>2%</td>
-                    <td>{{$orders->paid_amount}}</td>
-                    <td><?php echo($orders->order_amount-$orders->paid_amount)?></td>
-                    <td>2602065004365800</td>
+                    <!-- <td>2%</td> -->
+                    <td>{{$orders->order_amount*0.2}} {{--$orders->paid_amount--}}</td>
+                    <td>{{$orders->order_amount*0.8}}<?php //echo($orders->order_amount-$orders->paid_amount)?></td>
+                    <td>{{$orders->created_at}}</td>
+                    <!-- <td>{{$orders->futime}}</td> -->
                     <td>
-                      @if($orders->status == -1)
+                      @if($orders->status==0)
+                      	<span class="label label-danger">等待商家接单</span>
+                      @elseif($orders->status == -1)
                         <span class="label label-danger">待签合同</span>
+                      @elseif($orders->status == 1)
+                        <span class="label label-danger">待付款</span>
                       @elseif($orders->status == 2)
                         <span class="label label-danger">待付首款</span>
                       @elseif($orders->status == 3)
@@ -427,19 +443,19 @@
                         <span class="label label-danger">待结算</span>
                       @elseif($orders->status == 7)
                         <span class="label label-dafault">待开发票</span>
-                      @elseif($orders->status ==8)
+                      @elseif($orders->status == 8)
                         <span class="label label-default">已开发票</span>
-                      @elseif($orders->status ==9)
+                      @elseif($orders->status == 9)
                         <span class="label label-default">待评价</span>
-                      @elseif($orders->status ==99)
+                      @elseif($orders->status == 99)
                         <span class="label label-success">交易完成</span>
                       @endif
                     </td>
                     <td>
-                      <a href="ordernow_detail.html" class="btn btn-xs btn-default">
+                      <a href="{{route('admin.order.fut.detail',['order_id'=>$orders->id])}}" class="btn btn-xs btn-default">
                         查看详情
                       </a>
-                      <a href="contract_detail.html" class="btn btn-xs btn-default">
+                      {{--<a href="contract_detail.html" class="btn btn-xs btn-default">
                         查看合同
                       </a>
                       @if($orders->status==99)
@@ -447,7 +463,7 @@
                           查看评价
                         </a>
                       @endif
-                    </td>
+                    </td>--}}
                   </tr>
                 @endforeach
                   {{--<tr>
@@ -543,7 +559,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="border: none;">
-              {!! page_render($orders_list) !!}
+              {{--{!! page_render($orders_list) !!}--}}
+                {!! $orders_list->appends(Request::query())->render() !!}
             </div>
             <!-- /.box-body -->
           </div>
@@ -560,6 +577,9 @@
     reserved.
   </footer>
 </div>
+<div id="hidden-items" style="display: none;">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="csrfToken">
+</div><!-- /#hidden-items -->
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
@@ -580,6 +600,13 @@
 <!-- Page script -->
 <!-- bootstrap datepicker -->
 <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+
+{{--ajax js文件--}}
+<script src="/plugins/jquery-toaster/jquery.toaster.js"></script>
+<!-- pages script -->
+<script src="/plugins/jquery-form/jquery.form.min.js"></script>
+<script src="/assets/base.js"></script>
+<!-- Page script -->
 <script>
 	
   $(function () {

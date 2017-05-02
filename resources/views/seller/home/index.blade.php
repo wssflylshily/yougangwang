@@ -3,13 +3,13 @@
 @section('main-content')
     <!-- content-->
     <div class="meCenIndex_con mid_div min_w marok">
-        <div class="tit">
+        {{--<div class="tit">
             <img src="/assets/shop/img/shangpu/sptit.jpg"/>
             <p class="line"></p>
-        </div>
-        <div class="content clear">
-            @include('_layouts.seller_left')  
-            <div class="R">
+        </div>--}}
+        <div class="content clear" style="margin:0">
+            {{--@include('_layouts.seller_left')  --}}
+            <div class="R" style="width: 100%">
                 <!-- 个人信息-->
                 <div class="personInfo clear">
                     <a href="/seller/sellerinfo" class="set"><img src="/assets/shop/img/person/set.jpg"/></a>
@@ -31,7 +31,7 @@
                             
                         </li>
                         <li>我的公司：{{$seller->name}}</li>
-                        <li>收货地址：{{$seller->user->consignee}}</li>
+                        {{--<li>收货地址：{{$seller->user->consignee}}</li>--}}
                     </ul>
                     <ul class="L two" style="display:none;">
                         <li class="sum">总销售额：<span><b>454676</b>吨</span></li>
@@ -47,8 +47,8 @@
                         <li class="on"><a href="javascript:;">公司简介</a></li>
                         <li class="line"></li>
                         <li><a href="javascript:;">经营范围</a></li>
-                        <li class="line" style="display:none;"></li>
-                        <li style="display:none;"><a href="javascript:;">证件</a></li>
+                        <li class="line"></li>
+                        <li><a href="javascript:;">证件</a></li>
                     </ul>
                     <!-- 公司简介-->
                     <div class="con clear one">
@@ -72,11 +72,11 @@
                                 </li>
                                 <li class="clear">
                                     <p class="tit L">经营方式</p>
-                                    <p class="text L">{{$seller->business_type}}</p>
+                                    <p class="text L">{{$jyfs}}</p>
                                 </li>
                                 <li class="clear">
                                     <p class="tit L">物流</p>
-                                    <p class="text L">{{$seller->logistics_type}}</p>
+                                    <p class="text L">{{$wl}}</p>
                                 </li>
                                 <li class="clear">
                                     <p class="tit L">经营地区</p>
@@ -90,7 +90,7 @@
                         <ul class="line1 clear">
                             <li class="first z1">
                                 <div class="imgbd">
-                                    <img src="" alt=""/>
+                                    <img src="{{$seller->user->sellerAuthInfo->licence_path or ''}}" alt=""/>
                                 </div>
                                 <p class="name">营业执照</p>
                                 <p class="btns">
@@ -100,7 +100,7 @@
                             </li>
                             <li class="z2">
                                 <div class="imgbd">
-                                    <img src="" alt=""/>
+                                    <img src="{{$seller->user->sellerAuthInfo->code_path or ''}}" alt=""/>
                                 </div>
                                 <p class="name">组织机构代码证</p>
                                 <p class="btns">
@@ -112,7 +112,7 @@
                         <ul class="line2 clear">
                             <li class="first z3">
                                 <div class="imgbd">
-                                    <img src="" alt=""/>
+                                    <img src="{{$seller->user->sellerAuthInfo->gong_path or ''}}" alt=""/>
                                 </div>
                                 <p class="name">公章</p>
                                 <p class="btns">
@@ -122,7 +122,7 @@
                             </li>
                             <li class="z4">
                                 <div class="imgbd">
-                                    <img src="" alt=""/>
+                                    <img src="{{$seller->user->sellerAuthInfo->contract_path or ''}}" alt=""/>
                                 </div>
                                 <p class="name">合同章</p>
                                 <p class="btns">
@@ -132,7 +132,7 @@
                             </li>
                             <li class="last">
                                 <div class="imgbd">
-                                    <img src="" alt=""/>
+                                    <img src="{{$seller->user->sellerAuthInfo->owner_path or ''}}" alt=""/>
                                 </div>
                                 <p class="name">法人章</p>
                                 <p class="btns">
@@ -144,16 +144,39 @@
                     </div>
                 </div>
                 <!-- ad-->
-                <ul class="ads clear">
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li><img src="/assets/shop/img/person/ad.jpg"/></li>
-                    <li class="last"><img src="/assets/shop/img/person/ad.jpg"/></li>
-                </ul>
+                {{--@include('_layouts.ads')--}}
             </div>
         </div>
     </div>
+    <!-- 遮罩层-->
+    <div id="zhezhao" style="display: none"></div>
+    <!-- 证件 修改框-->
+    <div class="SPcenterModifyZhengjian" style="display: none">
+        <div class="tit">修改图片</div>
+        <div class="con">
+            <div class="upload clear">
+                <div class="bd L"></div>
+                <div class="input L">
+                    <span>浏览</span>
+                    <input type="file"/>
+                </div>
+            </div>
+            <a href="javascript:;" class="back">返回</a>
+            <a href="javascript:;" class="sure">确认修改</a>
+        </div>
+    </div>
+    <!-- 查看大图片-->
+    <div class="SPcenterBigImg" style="display: none;">
+        <div class="top">
+            <img src=""/>
+        </div>
+        <div class="bot">
+            <a href="javascript:;" class="back">返回</a>
+        </div>
+    </div>
+    
     <script type="text/javascript">
-
+        $("#seller").addClass("on");
 	    //点击tab的li
 	    $('.meCenIndex_con > .content > .R .orderQihuo .tab li').on('click',function(){
 	        if(this.className!='line'){
